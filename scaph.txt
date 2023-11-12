@@ -1,0 +1,404 @@
+# HELP scaph_process_power_consumption_microwatts Power consumption due to the process, measured on at the topology level, in microwatts
+# TYPE scaph_process_power_consumption_microwatts gauge
+scaph_process_power_consumption_microwatts{cmdline="/tmp/go-build3101204425/b001/exe/main",pid="306284",exe="main"} 0
+scaph_process_power_consumption_microwatts{cmdline="goruncmd/scrape/main.go",pid="306184",exe="go"} 220
+scaph_process_power_consumption_microwatts{cmdline="",exe="kworker/0:2H",pid="301768"} 0
+scaph_process_power_consumption_microwatts{exe="brave",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=477 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=66174833585 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144",pid="295534"} 185
+scaph_process_power_consumption_microwatts{exe="brave",pid="292750",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=445 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=65418796325 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 207
+scaph_process_power_consumption_microwatts{exe="brave",pid="281190",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=388 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=63531873263 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 267
+scaph_process_power_consumption_microwatts{pid="270851",exe="brave",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=316 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=61897572606 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 1084
+scaph_process_power_consumption_microwatts{exe="brave",pid="267505",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=291 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=61348083462 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 613
+scaph_process_power_consumption_microwatts{pid="203674",exe="code",cmdline="/usr/share/code/code --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --bypasscsp-schemes --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --streaming-schemes --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess"} 790
+scaph_process_power_consumption_microwatts{exe="brave",pid="196962",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=35 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=44874709018 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 358
+scaph_process_power_consumption_microwatts{exe="brave",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=32 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=44871401154 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144",pid="196930"} 358
+scaph_process_power_consumption_microwatts{cmdline="/opt/brave.com/brave/brave --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144",exe="brave",pid="196580"} 24551
+scaph_process_power_consumption_microwatts{pid="196360",exe="brave",cmdline="/opt/brave.com/brave/brave --type=renderer --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --extension-process --origin-trial-public-key=bYUKPJoPnCxeNvu72j4EmPuK7tr1PAC7SHh8ld9Mw3E=,fMS4mpO6buLQ/QMd+zJmxzty/VQ6B1EUZqoCU04zoRU= --change-stack-guard-on-fork=enable --brave_session_token=2608630725038952069 --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1693264279225976 --launch-time-ticks=44760324118 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 228
+scaph_process_power_consumption_microwatts{pid="196338",exe="brave",cmdline="/opt/brave.com/brave/brave --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144"} 2453
+scaph_process_power_consumption_microwatts{pid="196326",cmdline="/opt/brave.com/brave/brave --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10220575433559018087,3524140659066318128,262144",exe="brave"} 43418
+scaph_process_power_consumption_microwatts{cmdline="/opt/brave.com/brave/brave --type=zygote --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --change-stack-guard-on-fork=enable",pid="196300",exe="brave"} 267
+scaph_process_power_consumption_microwatts{pid="196298",exe="brave",cmdline="/opt/brave.com/brave/brave --type=zygote --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --change-stack-guard-on-fork=enable"} 0
+scaph_process_power_consumption_microwatts{pid="196297",exe="brave",cmdline="/opt/brave.com/brave/brave --type=zygote --no-zygote-sandbox --crashpad-handler-pid=196289 --enable-crash-reporter=d1a876a5-3794-49fa-893f-0dae8b85c20a, --change-stack-guard-on-fork=enable"} 0
+scaph_process_power_consumption_microwatts{pid="196291",exe="chrome_crashpad",cmdline="/opt/brave.com/brave/chrome_crashpad_handler--no-periodic-tasks--monitor-self-annotation=ptype=crashpad-handler--database=/home/lvs/.config/BraveSoftware/Brave-Browser/Crash Reports--url=https://cr.brave.com--annotation=lsb-release=Fedora Linux 38 (Workstation Edition)--annotation=plat=Linux--annotation=prod=Chrome_Linux--annotation=ver=116.1.57.53--initial-client-fd=4--shared-client-connection"} 0
+scaph_process_power_consumption_microwatts{pid="196289",exe="chrome_crashpad",cmdline="/opt/brave.com/brave/chrome_crashpad_handler--monitor-self--monitor-self-annotation=ptype=crashpad-handler--database=/home/lvs/.config/BraveSoftware/Brave-Browser/Crash Reports--metrics-dir=/home/lvs/.config/BraveSoftware/Brave-Browser--url=https://cr.brave.com--annotation=lsb-release=Fedora Linux 38 (Workstation Edition)--annotation=plat=Linux--annotation=prod=Chrome_Linux--annotation=ver=116.1.57.53--initial-client-fd=5--shared-client-connection"} 172
+scaph_process_power_consumption_microwatts{pid="196287",exe="brave",cmdline="/opt/brave.com/brave/brave"} 116715
+scaph_process_power_consumption_microwatts{exe="cat",pid="196286",cmdline="cat"} 0
+scaph_process_power_consumption_microwatts{cmdline="cat",pid="196285",exe="cat"} 0
+scaph_process_power_consumption_microwatts{exe="brave-browser-s",pid="196280",cmdline="/bin/bash/usr/bin/brave-browser-stable"} 0
+scaph_process_power_consumption_microwatts{pid="187830",cmdline="/usr/local/bin/scaphandreprometheus",exe="scaphandre"} 17
+scaph_process_power_consumption_microwatts{pid="187812",exe="containerd-shim",cmdline="/snap/docker/1779/bin/containerd-shim-runc-v2-namespacemoby-idde8cb48825da60373fd418729346cef15ddea6072613c84eaf6ba8680117afd7-address/run/snap.docker/containerd/containerd.sock"} 915
+scaph_process_power_consumption_microwatts{pid="187797",exe="docker-proxy",cmdline="/snap/docker/1779/bin/docker-proxy-prototcp-host-ip::-host-port8080-container-ip172.17.0.2-container-port8080"} 151
+scaph_process_power_consumption_microwatts{exe="docker-proxy",pid="187791",cmdline="/snap/docker/1779/bin/docker-proxy-prototcp-host-ip0.0.0.0-host-port8080-container-ip172.17.0.2-container-port8080"} 64
+scaph_process_power_consumption_microwatts{exe="docker",pid="187753",cmdline="dockerrun-v/sys/class/powercap:/sys/class/powercap-v/proc:/proc-p8080:8080-tihubblo/scaphandreprometheus"} 630
+scaph_process_power_consumption_microwatts{pid="187269",exe="bash",cmdline="bash"} 0
+scaph_process_power_consumption_microwatts{exe="polkitd",cmdline="/usr/lib/polkit-1/polkitd--no-debug",pid="113015"} 86
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/snapd/snapd",pid="105154",exe="snapd"} 453
+scaph_process_power_consumption_microwatts{exe="gopls",cmdline="/home/lvs/go/bin/gopls-mode=stdio",pid="68402"} 44001
+scaph_process_power_consumption_microwatts{pid="52326",cmdline="/usr/share/code/code--ms-enable-electron-run-as-node/usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain--node-ipc--clientProcessId=42766",exe="code"} 324
+scaph_process_power_consumption_microwatts{pid="46984",exe="bash",cmdline="bash"} 4
+scaph_process_power_consumption_microwatts{pid="42917",cmdline="/usr/share/code/code--ms-enable-electron-run-as-node/home/lvs/.vscode/extensions/redhat.vscode-yaml-1.14.0/dist/languageserver.js--node-ipc--clientProcessId=42766",exe="code"} 319
+scaph_process_power_consumption_microwatts{exe="code",cmdline="/usr/share/code/code--ms-enable-electron-run-as-node/home/lvs/.vscode/extensions/streetsidesoftware.code-spell-checker-2.20.5/packages/_server/dist/main.js--node-ipc--clientProcessId=42766",pid="42836"} 75128
+scaph_process_power_consumption_microwatts{exe="code",pid="42766",cmdline="/usr/share/code/code --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --inspect-port=0 --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --bypasscsp-schemes --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --streaming-schemes --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess"} 101892
+scaph_process_power_consumption_microwatts{pid="42747",exe="code",cmdline="/usr/share/code/code --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --bypasscsp-schemes --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --streaming-schemes --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess"} 872
+scaph_process_power_consumption_microwatts{cmdline="/usr/share/code/code --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --bypasscsp-schemes --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --streaming-schemes --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess",pid="42746",exe="code"} 3279
+scaph_process_power_consumption_microwatts{cmdline="/usr/share/code/code --type=renderer --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --bypasscsp-schemes --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --streaming-schemes --app-path=/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --first-renderer-process --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1693055042177161 --launch-time-ticks=8557652139 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess --vscode-window-config=vscode:fcc0c3c6-1399-4d9f-9d4e-60b6cf9098bc",pid="42717",exe="code"} 106420
+scaph_process_power_consumption_microwatts{pid="42692",exe="code",cmdline="/usr/share/code/code --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --bypasscsp-schemes --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --streaming-schemes --shared-files=v8_context_snapshot_data:100 --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess"} 561
+scaph_process_power_consumption_microwatts{exe="code",pid="42675",cmdline="/usr/share/code/code --type=gpu-process --crashpad-handler-pid=42657 --enable-crash-reporter=9760fe02-a61b-4b1e-b8b6-caaf44fc1786,no_channel --user-data-dir=/home/lvs/.config/Code --gpu-preferences=WAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAABgAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=0,i,10027527736626202317,18017421474941803922,131072 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess"} 29498
+scaph_process_power_consumption_microwatts{pid="42657",cmdline="/usr/share/code/chrome_crashpad_handler--monitor-self-annotation=ptype=crashpad-handler--no-rate-limit--database=/home/lvs/.config/Code/Crashpad--url=appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=d8b15b9d-87b1-4221-b9b7-48648065e254&iid=d8b15b9d-87b1-4221-b9b7-48648065e254&sid=d8b15b9d-87b1-4221-b9b7-48648065e254--annotation=IsOfficialBuild=1--annotation=_companyName=Microsoft--annotation=_productName=VSCode--annotation=_version=1.81.1--annotation=exe=/usr/share/code/code .--annotation=lsb-release=Fedora Linux 38 (Workstation Edition)--annotation=plat=Linux--annotation=prod=Electron--annotation=ver=22.3.18--initial-client-fd=44--shared-client-connection",exe="chrome_crashpad"} 0
+scaph_process_power_consumption_microwatts{exe="code",pid="42616",cmdline="/usr/share/code/code --type=zygote"} 0
+scaph_process_power_consumption_microwatts{exe="code",cmdline="/usr/share/code/code --type=zygote",pid="42583"} 4
+scaph_process_power_consumption_microwatts{cmdline="/usr/share/code/code --type=zygote --no-zygote-sandbox",pid="42582",exe="code"} 0
+scaph_process_power_consumption_microwatts{pid="42568",exe="code",cmdline="/usr/share/code/code ."} 17280
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gvfsd-recent--spawner:1.11/org/gtk/gvfs/exec_spaw/5",exe="gvfsd-recent",pid="37349"} 56
+scaph_process_power_consumption_microwatts{cmdline="catatonit-P",exe="catatonit",pid="32708"} 0
+scaph_process_power_consumption_microwatts{cmdline="scdaemon--multi-server--homedir/var/tmp/dnf-lvs-mq03abqd/virtualbox-c29b0d59ed25834e/pubring",pid="28236",exe="scdaemon"} 0
+scaph_process_power_consumption_microwatts{pid="28234",exe="gpg-agent",cmdline="gpg-agent--homedir/var/tmp/dnf-lvs-mq03abqd/virtualbox-c29b0d59ed25834e/pubring--use-standard-socket--daemon"} 82
+scaph_process_power_consumption_microwatts{cmdline="scdaemon--multi-server--homedir/var/tmp/dnf-lvs-mq03abqd/protonvpn-fedora-stable-63c2b99779521d35/pubring",pid="27691",exe="scdaemon"} 0
+scaph_process_power_consumption_microwatts{exe="gpg-agent",cmdline="gpg-agent--homedir/var/tmp/dnf-lvs-mq03abqd/protonvpn-fedora-stable-63c2b99779521d35/pubring--use-standard-socket--daemon",pid="27689"} 73
+scaph_process_power_consumption_microwatts{cmdline="",pid="24536",exe="kvm-pit/24492"} 0
+scaph_process_power_consumption_microwatts{pid="24527",exe="kvm-nx-lpage-recovery-24492",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="24526",exe="kvm"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/qemu-system-x86_64-nameguest=minikube,debug-threads=on-S-object{\_qom-type\_:\_secret\_,\_id\_:\_masterKey0\_,\_format\_:\_raw\_,\_file\_:\_/var/lib/libvirt/qemu/domain-1-minikube/master-key.aes\_}-machinepc-i440fx-7.2,usb=off,dump-guest-core=off,memory-backend=pc.ram-accelkvm-cpuhost,migratable=on-m3900-object{\_qom-type\_:\_memory-backend-ram\_,\_id\_:\_pc.ram\_,\_size\_:4089446400}-overcommitmem-lock=off-smp2,sockets=2,cores=1,threads=1-uuidf527c23b-9f5c-4f35-ac34-06adda32dbd9-displaynone-no-user-config-nodefaults-chardevsocket,id=charmonitor,fd=26,server=on,wait=off-monchardev=charmonitor,id=monitor,mode=control-rtcbase=utc-no-shutdown-bootmenu=off,strict=on-device{\_driver\_:\_piix3-usb-uhci\_,\_id\_:\_usb\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x1.0x2\_}-device{\_driver\_:\_lsi\_,\_id\_:\_scsi0\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x4\_}-blockdev{\_driver\_:\_file\_,\_filename\_:\_/home/lvs/.minikube/machines/minikube/boot2docker.iso\_,\_node-name\_:\_libvirt-2-storage\_,\_auto-read-only\_:true,\_discard\_:\_unmap\_}-blockdev{\_node-name\_:\_libvirt-2-format\_,\_read-only\_:true,\_driver\_:\_raw\_,\_file\_:\_libvirt-2-storage\_}-device{\_driver\_:\_scsi-cd\_,\_bus\_:\_scsi0.0\_,\_scsi-id\_:2,\_device_id\_:\_drive-scsi0-0-2\_,\_drive\_:\_libvirt-2-format\_,\_id\_:\_scsi0-0-2\_,\_bootindex\_:1}-blockdev{\_driver\_:\_file\_,\_filename\_:\_/home/lvs/.minikube/machines/minikube/minikube.rawdisk\_,\_aio\_:\_threads\_,\_node-name\_:\_libvirt-1-storage\_,\_auto-read-only\_:true,\_discard\_:\_unmap\_}-blockdev{\_node-name\_:\_libvirt-1-format\_,\_read-only\_:false,\_driver\_:\_raw\_,\_file\_:\_libvirt-1-storage\_}-device{\_driver\_:\_virtio-blk-pci\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x5\_,\_drive\_:\_libvirt-1-format\_,\_id\_:\_virtio-disk0\_,\_bootindex\_:2}-netdev{\_type\_:\_tap\_,\_fd\_:\_27\_,\_vhost\_:true,\_vhostfd\_:\_29\_,\_id\_:\_hostnet0\_}-device{\_driver\_:\_virtio-net-pci\_,\_netdev\_:\_hostnet0\_,\_id\_:\_net0\_,\_mac\_:\_52:54:00:27:d2:b7\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x2\_}-netdev{\_type\_:\_tap\_,\_fd\_:\_30\_,\_vhost\_:true,\_vhostfd\_:\_31\_,\_id\_:\_hostnet1\_}-device{\_driver\_:\_virtio-net-pci\_,\_netdev\_:\_hostnet1\_,\_id\_:\_net1\_,\_mac\_:\_52:54:00:7b:1e:d9\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x3\_}-chardevpty,id=charserial0-device{\_driver\_:\_isa-serial\_,\_chardev\_:\_charserial0\_,\_id\_:\_serial0\_,\_index\_:0}-audiodev{\_id\_:\_audio1\_,\_driver\_:\_none\_}-device{\_driver\_:\_virtio-balloon-pci\_,\_id\_:\_balloon0\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x6\_}-object{\_qom-type\_:\_rng-random\_,\_id\_:\_objrng0\_,\_filename\_:\_/dev/random\_}-device{\_driver\_:\_virtio-rng-pci\_,\_rng\_:\_objrng0\_,\_id\_:\_rng0\_,\_bus\_:\_pci.0\_,\_addr\_:\_0x7\_}-sandboxon,obsolete=deny,elevateprivileges=deny,spawn=deny,resourcecontrol=deny-msgtimestamp=on",pid="24492",exe="qemu-system-x86"} 640120
+scaph_process_power_consumption_microwatts{pid="24447",exe="dnsmasq",cmdline="/usr/sbin/dnsmasq--conf-file=/var/lib/libvirt/dnsmasq/mk-minikube.conf--leasefile-ro--dhcp-script=/usr/libexec/libvirt_leaseshelper"} 0
+scaph_process_power_consumption_microwatts{pid="24446",exe="dnsmasq",cmdline="/usr/sbin/dnsmasq--conf-file=/var/lib/libvirt/dnsmasq/mk-minikube.conf--leasefile-ro--dhcp-script=/usr/libexec/libvirt_leaseshelper"} 12
+scaph_process_power_consumption_microwatts{exe="virtqemud",cmdline="/usr/sbin/virtqemud--timeout120",pid="24313"} 17
+scaph_process_power_consumption_microwatts{pid="19171",cmdline="scdaemon--multi-server--homedir/var/cache/dnf/protonvpn-fedora-stable-63c2b99779521d35/pubring",exe="scdaemon"} 0
+scaph_process_power_consumption_microwatts{pid="19169",cmdline="gpg-agent--homedir/var/cache/dnf/protonvpn-fedora-stable-63c2b99779521d35/pubring--use-standard-socket--daemon",exe="gpg-agent"} 73
+scaph_process_power_consumption_microwatts{exe="ssh-agent",pid="16106",cmdline="/usr/bin/ssh-agent-D-a/run/user/1000/keyring/.ssh"} 47
+scaph_process_power_consumption_microwatts{pid="15924",cmdline="/usr/sbin/virtlogd",exe="virtlogd"} 0
+scaph_process_power_consumption_microwatts{exe="dnsmasq",pid="15587",cmdline="/usr/sbin/dnsmasq--conf-file=/var/lib/libvirt/dnsmasq/default.conf--leasefile-ro--dhcp-script=/usr/libexec/libvirt_leaseshelper"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/sbin/dnsmasq--conf-file=/var/lib/libvirt/dnsmasq/default.conf--leasefile-ro--dhcp-script=/usr/libexec/libvirt_leaseshelper",exe="dnsmasq",pid="15586"} 17
+scaph_process_power_consumption_microwatts{exe="gnome-clocks",cmdline="/usr/bin/gnome-clocks--gapplication-service",pid="13338"} 4713
+scaph_process_power_consumption_microwatts{exe="gnome-terminal-",cmdline="/usr/libexec/gnome-terminal-server",pid="11349"} 4177
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gvfsd-dnssd--spawner:1.11/org/gtk/gvfs/exec_spaw/4",pid="8645",exe="gvfsd-dnssd"} 8
+scaph_process_power_consumption_microwatts{pid="8603",exe="gvfsd-network",cmdline="/usr/libexec/gvfsd-network--spawner:1.11/org/gtk/gvfs/exec_spaw/2"} 0
+scaph_process_power_consumption_microwatts{cmdline="/bin/sh/snap/cups/980/scripts/run-cups-browsed",pid="6157",exe="run-cups-browse"} 12
+scaph_process_power_consumption_microwatts{pid="6153",cmdline="cups-proxyd/var/snap/cups/common/run/cups.sock/run/cups/cups.sock-l--logdir/var/snap/cups/980/var/log",exe="cups-proxyd"} 64
+scaph_process_power_consumption_microwatts{exe="cupsd",cmdline="cupsd-f-s/var/snap/cups/common/etc/cups/cups-files.conf-c/var/snap/cups/common/etc/cups/cupsd.conf",pid="6152"} 12
+scaph_process_power_consumption_microwatts{exe="run-cupsd",cmdline="/bin/sh/snap/cups/980/scripts/run-cupsd",pid="5991"} 4
+scaph_process_power_consumption_microwatts{pid="5984",exe="run-cups-browse",cmdline="/bin/sh/snap/cups/980/scripts/run-cups-browsed"} 0
+scaph_process_power_consumption_microwatts{exe="python3",cmdline="/usr/bin/python3/usr/share/ibus-typing-booster/engine/main.py--ibus",pid="4518"} 95
+scaph_process_power_consumption_microwatts{exe="tracker-miner-f",pid="3955",cmdline="/usr/libexec/tracker-miner-fs-3"} 220
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gvfsd-trash--spawner:1.11/org/gtk/gvfs/exec_spaw/1",pid="3903",exe="gvfsd-trash"} 8
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/xdg-desktop-portal-gtk",pid="3599",exe="xdg-desktop-por"} 259
+scaph_process_power_consumption_microwatts{pid="3567",exe="xdg-desktop-por",cmdline="/usr/libexec/xdg-desktop-portal-gnome"} 764
+scaph_process_power_consumption_microwatts{exe="abrt-dbus",cmdline="/usr/sbin/abrt-dbus-t133",pid="3540"} 8
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/ibus-engine-simple",pid="3480",exe="ibus-engine-sim"} 2220
+scaph_process_power_consumption_microwatts{pid="3287",exe="gjs",cmdline="/usr/bin/gjs/usr/share/gnome-shell/org.gnome.ScreenSaver"} 4
+scaph_process_power_consumption_microwatts{pid="3273",exe="gsd-printer",cmdline="/usr/libexec/gsd-printer"} 4
+scaph_process_power_consumption_microwatts{pid="3193",exe="ibus-portal",cmdline="/usr/libexec/ibus-portal"} 51
+scaph_process_power_consumption_microwatts{pid="3182",cmdline="/usr/libexec/ibus-x11--kill-daemon",exe="ibus-x11"} 77
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gsd-disk-utility-notify",pid="3177",exe="gsd-disk-utilit"} 0
+scaph_process_power_consumption_microwatts{pid="3165",exe="ibus-extension-",cmdline="/usr/libexec/ibus-extension-gtk3"} 1935
+scaph_process_power_consumption_microwatts{pid="3164",cmdline="/usr/libexec/ibus-dconf",exe="ibus-dconf"} 0
+scaph_process_power_consumption_microwatts{pid="3161",exe="evolution-alarm",cmdline="/usr/libexec/evolution-data-server/evolution-alarm-notify"} 108
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gvfsd-http--spawner:1.11/org/gtk/gvfs/exec_spaw/0",pid="3155",exe="gvfsd-http"} 38
+scaph_process_power_consumption_microwatts{pid="3141",exe="abrt-applet",cmdline="/usr/bin/abrt-applet--gapplication-service"} 30
+scaph_process_power_consumption_microwatts{pid="3132",exe="gnome-software",cmdline="/usr/bin/gnome-software--gapplication-service"} 4281
+scaph_process_power_consumption_microwatts{pid="3131",exe="gsd-xsettings",cmdline="/usr/libexec/gsd-xsettings"} 164
+scaph_process_power_consumption_microwatts{pid="3119",exe="gsd-wacom",cmdline="/usr/libexec/gsd-wacom"} 86
+scaph_process_power_consumption_microwatts{exe="gsd-usb-protect",pid="3105",cmdline="/usr/libexec/gsd-usb-protection"} 8
+scaph_process_power_consumption_microwatts{pid="3102",exe="gsd-sound",cmdline="/usr/libexec/gsd-sound"} 4
+scaph_process_power_consumption_microwatts{exe="gsd-smartcard",cmdline="/usr/libexec/gsd-smartcard",pid="3098"} 604
+scaph_process_power_consumption_microwatts{pid="3093",cmdline="/usr/libexec/gsd-sharing",exe="gsd-sharing"} 328
+scaph_process_power_consumption_microwatts{pid="3091",cmdline="/usr/libexec/gsd-screensaver-proxy",exe="gsd-screensaver"} 8
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gsd-rfkill",pid="3086",exe="gsd-rfkill"} 17
+scaph_process_power_consumption_microwatts{exe="gsd-print-notif",cmdline="/usr/libexec/gsd-print-notifications",pid="3085"} 4
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gsd-power",pid="3083",exe="gsd-power"} 198
+scaph_process_power_consumption_microwatts{pid="3082",exe="gsd-media-keys",cmdline="/usr/libexec/gsd-media-keys"} 220
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gsd-keyboard",pid="3076",exe="gsd-keyboard"} 77
+scaph_process_power_consumption_microwatts{pid="3071",exe="gsd-housekeepin",cmdline="/usr/libexec/gsd-housekeeping"} 384
+scaph_process_power_consumption_microwatts{exe="gsd-datetime",cmdline="/usr/libexec/gsd-datetime",pid="3066"} 8
+scaph_process_power_consumption_microwatts{pid="3063",cmdline="/usr/libexec/gsd-color",exe="gsd-color"} 116
+scaph_process_power_consumption_microwatts{pid="3059",cmdline="/usr/libexec/gsd-a11y-settings",exe="gsd-a11y-settin"} 4
+scaph_process_power_consumption_microwatts{exe="ibus-daemon",pid="3058",cmdline="/usr/bin/ibus-daemon--paneldisable--xim"} 8130
+scaph_process_power_consumption_microwatts{pid="3043",cmdline="/usr/libexec/at-spi2-registryd--use-gnome-session",exe="at-spi2-registr"} 453
+scaph_process_power_consumption_microwatts{cmdline="fusermount3-orw,nosuid,nodev,fsname=portal,auto_unmount,subtype=portal--/run/user/1000/doc",pid="3036",exe="fusermount3"} 0
+scaph_process_power_consumption_microwatts{pid="3030",exe="xdg-document-po",cmdline="/usr/libexec/xdg-document-portal"} 69
+scaph_process_power_consumption_microwatts{pid="3024",exe="xdg-desktop-por",cmdline="/usr/libexec/xdg-desktop-portal"} 185
+scaph_process_power_consumption_microwatts{pid="3006",exe="gjs",cmdline="/usr/bin/gjs/usr/share/gnome-shell/org.gnome.Shell.Notifications"} 0
+scaph_process_power_consumption_microwatts{exe="evolution-addre",cmdline="/usr/libexec/evolution-addressbook-factory",pid="2980"} 30
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gvfs-afc-volume-monitor",pid="2977",exe="gvfs-afc-volume"} 82
+scaph_process_power_consumption_microwatts{exe="gvfs-goa-volume",cmdline="/usr/libexec/gvfs-goa-volume-monitor",pid="2961"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gvfs-gphoto2-volume-monitor",exe="gvfs-gphoto2-vo",pid="2954"} 4
+scaph_process_power_consumption_microwatts{pid="2946",cmdline="/usr/libexec/gvfs-mtp-volume-monitor",exe="gvfs-mtp-volume"} 8
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/evolution-calendar-factory",pid="2940",exe="evolution-calen"} 159
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/goa-identity-service",pid="2928",exe="goa-identity-se"} 250
+scaph_process_power_consumption_microwatts{exe="gvfsd-metadata",cmdline="/usr/libexec/gvfsd-metadata",pid="2914"} 168
+scaph_process_power_consumption_microwatts{exe="gvfs-udisks2-vo",pid="2909",cmdline="/usr/libexec/gvfs-udisks2-volume-monitor"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/goa-daemon",exe="goa-daemon",pid="2903"} 246
+scaph_process_power_consumption_microwatts{pid="2890",cmdline="/usr/libexec/dconf-service",exe="dconf-service"} 8
+scaph_process_power_consumption_microwatts{pid="2864",exe="pipewire-pulse",cmdline="/usr/bin/pipewire-pulse"} 21886
+scaph_process_power_consumption_microwatts{exe="evolution-sourc",cmdline="/usr/libexec/evolution-source-registry",pid="2853"} 56
+scaph_process_power_consumption_microwatts{pid="2844",exe="gnome-shell-cal",cmdline="/usr/libexec/gnome-shell-calendar-server"} 56
+scaph_process_power_consumption_microwatts{exe="xdg-permission-",pid="2826",cmdline="/usr/libexec/xdg-permission-store"} 0
+scaph_process_power_consumption_microwatts{pid="2796",exe="mutter-x11-fram",cmdline="/usr/libexec/mutter-x11-frames"} 12325
+scaph_process_power_consumption_microwatts{pid="2769",cmdline="/usr/bin/gnome-shell",exe="gnome-shell"} 147536
+scaph_process_power_consumption_microwatts{exe="wireplumber",pid="2733",cmdline="/usr/bin/wireplumber"} 349
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/pipewire",exe="pipewire",pid="2732"} 15120
+scaph_process_power_consumption_microwatts{pid="2717",exe="gvfsd-fuse",cmdline="/usr/libexec/gvfsd-fuse/run/user/1000/gvfs-f"} 0
+scaph_process_power_consumption_microwatts{pid="2711",cmdline="/usr/libexec/gvfsd",exe="gvfsd"} 12
+scaph_process_power_consumption_microwatts{exe="gnome-session-b",cmdline="/usr/libexec/gnome-session-binary--systemd-service--session=gnome",pid="2707"} 43
+scaph_process_power_consumption_microwatts{exe="uresourced",cmdline="/usr/libexec/uresourced--user",pid="2705"} 95
+scaph_process_power_consumption_microwatts{pid="2704",exe="gnome-session-c",cmdline="/usr/libexec/gnome-session-ctl--monitor"} 0
+scaph_process_power_consumption_microwatts{exe="dbus-broker",cmdline="dbus-broker--log4--controller9--machine-idf9e5128452b449d097a9ab08f7caf9c0--max-bytes100000000000000--max-fds6400000--max-matches5000000000",pid="2689"} 60
+scaph_process_power_consumption_microwatts{exe="dbus-broker-lau",cmdline="/usr/bin/dbus-broker-launch--config-file=/usr/share/defaults/at-spi2/accessibility.conf--scopeuser",pid="2688"} 0
+scaph_process_power_consumption_microwatts{pid="2682",cmdline="/usr/libexec/at-spi-bus-launcher",exe="at-spi-bus-laun"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/ssh-agent/bin/sh-cexec -l /bin/bash -c \_/usr/bin/gnome-session\_",pid="2620",exe="ssh-agent"} 8
+scaph_process_power_consumption_microwatts{exe="gnome-session-b",pid="2561",cmdline="/usr/libexec/gnome-session-binary"} 0
+scaph_process_power_consumption_microwatts{cmdline="dbus-broker--log4--controller10--machine-idf9e5128452b449d097a9ab08f7caf9c0--max-bytes100000000000000--max-fds25000000000000--max-matches5000000000",pid="2559",exe="dbus-broker"} 324
+scaph_process_power_consumption_microwatts{pid="2555",cmdline="/usr/bin/dbus-broker-launch--scopeuser",exe="dbus-broker-lau"} 8
+scaph_process_power_consumption_microwatts{pid="2468",exe="Xorg",cmdline="/usr/libexec/Xorgvt2-displayfd3-auth/run/user/1000/gdm/Xauthority-nolistentcp-backgroundnone-noreset-keeptty-novtswitch-verbose3"} 48939
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/gdm-x-session--run-script/usr/bin/gnome-session",pid="2463",exe="gdm-x-session"} 0
+scaph_process_power_consumption_microwatts{exe="gnome-keyring-d",pid="2443",cmdline="/usr/bin/gnome-keyring-daemon--daemonize--login"} 133
+scaph_process_power_consumption_microwatts{exe="appimagelaunche",cmdline="/usr/bin/appimagelauncherd",pid="2437"} 2907
+scaph_process_power_consumption_microwatts{exe="(sd-pam)",pid="2415",cmdline="(sd-pam)"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/lib/systemd/systemd--user",pid="2406",exe="systemd"} 660
+scaph_process_power_consumption_microwatts{cmdline="gdm-session-worker [pam/gdm-password]",pid="2369",exe="gdm-session-wor"} 12
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/mbim-proxy",pid="2100",exe="mbim-proxy"} 17
+scaph_process_power_consumption_microwatts{cmdline="containerd--config/run/snap.docker/containerd/containerd.toml--log-levelerror",pid="1879",exe="containerd"} 30963
+scaph_process_power_consumption_microwatts{pid="1832",exe="krfcommd",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/sbin/pcscd--foreground--auto-exit",pid="1831",exe="pcscd"} 228
+scaph_process_power_consumption_microwatts{exe="geoclue",pid="1629",cmdline="/usr/libexec/geoclue"} 997
+scaph_process_power_consumption_microwatts{pid="1507",cmdline="/usr/sbin/wpa_supplicant-c/etc/wpa_supplicant/wpa_supplicant.conf-u-s",exe="wpa_supplicant"} 228
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/uresourced",pid="1383",exe="uresourced"} 0
+scaph_process_power_consumption_microwatts{pid="1330",cmdline="/usr/sbin/gdm",exe="gdm"} 4
+scaph_process_power_consumption_microwatts{pid="1329",cmdline="/usr/libexec/colord",exe="colord"} 4
+scaph_process_power_consumption_microwatts{cmdline="/usr/sbin/atd-f",pid="1328",exe="atd"} 0
+scaph_process_power_consumption_microwatts{exe="gssproxy",cmdline="/usr/sbin/gssproxy-D",pid="1205"} 4
+scaph_process_power_consumption_microwatts{pid="1200",exe="dockerd",cmdline="dockerd--groupdocker--exec-root=/run/snap.docker--data-root=/var/snap/docker/common/var-lib-docker--pidfile=/run/snap.docker/docker.pid--config-file=/var/snap/docker/1779/config/daemon.json"} 5875
+scaph_process_power_consumption_microwatts{exe="cupsd",pid="1195",cmdline="/usr/sbin/cupsd-l"} 4
+scaph_process_power_consumption_microwatts{cmdline="/usr/sbin/NetworkManager--no-daemon",pid="1178",exe="NetworkManager"} 1127
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/python3-sP/usr/sbin/firewalld--nofork--nopid",pid="1158",exe="firewalld"} 38
+scaph_process_power_consumption_microwatts{exe="boltd",cmdline="/usr/libexec/boltd",pid="1157"} 12
+scaph_process_power_consumption_microwatts{cmdline="/usr/sbin/alsactl-s-n19-c-EALSA_CONFIG_PATH=/etc/alsa/alsactl.conf--initfile=/lib/alsa/init/00mainrdaemon",pid="1156",exe="alsactl"} 4
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/abrt-dump-journal-xorg-fxtD",pid="1155",exe="abrt-dump-journ"} 388
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/abrt-dump-journal-oops-fxtD",pid="1152",exe="abrt-dump-journ"} 384
+scaph_process_power_consumption_microwatts{cmdline="/usr/bin/abrt-dump-journal-core-D-T-f-e",pid="1151",exe="abrt-dump-journ"} 324
+scaph_process_power_consumption_microwatts{cmdline="/usr/sbin/ModemManager",exe="ModemManager",pid="1149"} 82
+scaph_process_power_consumption_microwatts{exe="abrtd",cmdline="/usr/sbin/abrtd-d-s",pid="1134"} 8
+scaph_process_power_consumption_microwatts{pid="1087",exe="avahi-daemon",cmdline="avahi-daemon: chroot helper"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="1084",exe="psimon"} 64
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/upowerd",pid="1071",exe="upowerd"} 414
+scaph_process_power_consumption_microwatts{pid="1065",cmdline="/usr/libexec/udisks2/udisksd",exe="udisksd"} 4
+scaph_process_power_consumption_microwatts{exe="systemd-machine",pid="1061",cmdline="/usr/lib/systemd/systemd-machined"} 12
+scaph_process_power_consumption_microwatts{exe="systemd-logind",cmdline="/usr/lib/systemd/systemd-logind",pid="1058"} 90
+scaph_process_power_consumption_microwatts{cmdline="/usr/lib/systemd/systemd-homed",pid="1057",exe="systemd-homed"} 12
+scaph_process_power_consumption_microwatts{exe="switcheroo-cont",cmdline="/usr/libexec/switcheroo-control",pid="1056"} 0
+scaph_process_power_consumption_microwatts{exe="accounts-daemon",cmdline="/usr/libexec/accounts-daemon",pid="1055"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/rtkit-daemon",pid="1047",exe="rtkit-daemon"} 30
+scaph_process_power_consumption_microwatts{exe="power-profiles-",pid="1041",cmdline="/usr/libexec/power-profiles-daemon"} 4
+scaph_process_power_consumption_microwatts{exe="mcelog",cmdline="/usr/sbin/mcelog--daemon--foreground",pid="1032"} 0
+scaph_process_power_consumption_microwatts{cmdline="/usr/libexec/low-memory-monitor",pid="1026",exe="low-memory-moni"} 17
+scaph_process_power_consumption_microwatts{pid="1019",exe="bluetoothd",cmdline="/usr/libexec/bluetooth/bluetoothd"} 0
+scaph_process_power_consumption_microwatts{cmdline="avahi-daemon: running [fedora.local]",exe="avahi-daemon",pid="1018"} 3659
+scaph_process_power_consumption_microwatts{cmdline="dbus-broker--log4--controller9--machine-idf9e5128452b449d097a9ab08f7caf9c0--max-bytes536870912--max-fds4096--max-matches131072--audit",exe="dbus-broker",pid="1017"} 311
+scaph_process_power_consumption_microwatts{exe="dbus-broker-lau",pid="1016",cmdline="/usr/bin/dbus-broker-launch--scopesystem--audit"} 4
+scaph_process_power_consumption_microwatts{cmdline="",pid="985",exe="xprtiod"} 0
+scaph_process_power_consumption_microwatts{exe="rpciod",cmdline="",pid="984"} 0
+scaph_process_power_consumption_microwatts{exe="auditd",pid="975",cmdline="/sbin/auditd"} 8
+scaph_process_power_consumption_microwatts{cmdline="/usr/lib/systemd/systemd-userdbd",pid="973",exe="systemd-userdbd"} 21
+scaph_process_power_consumption_microwatts{exe="systemd-resolve",pid="972",cmdline="/usr/lib/systemd/systemd-resolved"} 557
+scaph_process_power_consumption_microwatts{pid="971",exe="systemd-oomd",cmdline="/usr/lib/systemd/systemd-oomd"} 7854
+scaph_process_power_consumption_microwatts{cmdline="",exe="irq/189-AudioDSP",pid="934"} 47
+scaph_process_power_consumption_microwatts{pid="926",exe="ext4-rsv-conver",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="jbd2/nvme0n1p2-8",cmdline="",pid="925"} 0
+scaph_process_power_consumption_microwatts{exe="irq/172-iwlwifi:exception",cmdline="",pid="838"} 0
+scaph_process_power_consumption_microwatts{exe="irq/171-iwlwifi:queue_8",cmdline="",pid="837"} 311
+scaph_process_power_consumption_microwatts{exe="irq/170-iwlwifi:queue_7",pid="836",cmdline=""} 116
+scaph_process_power_consumption_microwatts{exe="irq/169-iwlwifi:queue_6",cmdline="",pid="835"} 25
+scaph_process_power_consumption_microwatts{exe="irq/168-iwlwifi:queue_5",cmdline="",pid="834"} 120
+scaph_process_power_consumption_microwatts{pid="833",exe="irq/167-iwlwifi:queue_4",cmdline=""} 25
+scaph_process_power_consumption_microwatts{cmdline="",pid="832",exe="irq/166-iwlwifi:queue_3"} 34
+scaph_process_power_consumption_microwatts{pid="831",exe="irq/165-iwlwifi:queue_2",cmdline=""} 86
+scaph_process_power_consumption_microwatts{cmdline="",exe="irq/164-iwlwifi:queue_1",pid="830"} 207
+scaph_process_power_consumption_microwatts{cmdline="",pid="829",exe="irq/163-iwlwifi:default_queue"} 565
+scaph_process_power_consumption_microwatts{pid="815",exe="cfg80211",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="810",exe="irq/158-bhi"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="irq/157-nxp-nci_i2c",pid="808"} 0
+scaph_process_power_consumption_microwatts{pid="806",exe="nfc0_nci_tx_wq",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="nfc0_nci_rx_wq",cmdline="",pid="805"} 0
+scaph_process_power_consumption_microwatts{pid="804",exe="nfc0_nci_cmd_wq",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="740",exe="ktpacpid",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="systemd-udevd",cmdline="/usr/lib/systemd/systemd-udevd",pid="615"} 73
+scaph_process_power_consumption_microwatts{exe="systemd-journal",cmdline="/usr/lib/systemd/systemd-journald",pid="591"} 298
+scaph_process_power_consumption_microwatts{pid="500",exe="btrfs-transaction",cmdline=""} 4488
+scaph_process_power_consumption_microwatts{pid="499",exe="btrfs-cleaner",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-qgroup-re",cmdline="",pid="498"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="497",exe="btrfs-delayed-m"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="496",exe="btrfs-freespace"} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-compresse",cmdline="",pid="495"} 0
+scaph_process_power_consumption_microwatts{pid="494",exe="btrfs-endio-wri",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="493",exe="btrfs-rmw",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="btrfs-endio-met",pid="492"} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-endio",cmdline="",pid="491"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="btrfs-fixup",pid="490"} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-cache",pid="489",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-flush_del",cmdline="",pid="488"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="487",exe="btrfs-delalloc"} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-worker-hi",cmdline="",pid="486"} 0
+scaph_process_power_consumption_microwatts{exe="btrfs-worker",pid="485",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="USBC000:00-con2",pid="477",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="card1-crtc3",cmdline="",pid="476"} 0
+scaph_process_power_consumption_microwatts{pid="475",exe="card1-crtc2",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="474",exe="card1-crtc1"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="473",exe="card1-crtc0"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="472",exe="ttm"} 0
+scaph_process_power_consumption_microwatts{pid="471",exe="USBC000:00-con1",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="nvme-auth-wq",cmdline="",pid="469"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="468",exe="nvme-delete-wq"} 0
+scaph_process_power_consumption_microwatts{exe="nvme-reset-wq",cmdline="",pid="467"} 0
+scaph_process_power_consumption_microwatts{pid="466",exe="nvme-wq",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="irq/118-SYNA8009:00",pid="438",cmdline=""} 2829
+scaph_process_power_consumption_microwatts{cmdline="",pid="292",exe="kworker/4:1H-events_highpri"} 332
+scaph_process_power_consumption_microwatts{exe="kmpath_rdacd",cmdline="",pid="286"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="285",exe="kaluad"} 0
+scaph_process_power_consumption_microwatts{pid="284",exe="kworker/3:1H-events_highpri",cmdline=""} 216
+scaph_process_power_consumption_microwatts{pid="283",exe="kmpath_handlerd",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="kmpathd",pid="282"} 0
+scaph_process_power_consumption_microwatts{exe="kworker/7:1H-kblockd",pid="269",cmdline=""} 224
+scaph_process_power_consumption_microwatts{cmdline="",pid="117",exe="kstrp"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="ipv6_addrconf",pid="111"} 0
+scaph_process_power_consumption_microwatts{exe="mld",pid="109",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="108",exe="dm_bufio_cache",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="105",cmdline="",exe="hwrng"} 86
+scaph_process_power_consumption_microwatts{exe="acpi_thermal_pm",pid="104",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="irq/126-pciehp",pid="100",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="irq/125-pciehp",pid="99"} 0
+scaph_process_power_consumption_microwatts{pid="93",cmdline="",exe="kthrotld"} 0
+scaph_process_power_consumption_microwatts{pid="85",exe="kswapd0",cmdline=""} 37923
+scaph_process_power_consumption_microwatts{cmdline="",pid="82",exe="watchdogd"} 0
+scaph_process_power_consumption_microwatts{pid="81",exe="edac-poller",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="80",cmdline="",exe="md"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="79",exe="ata_sff"} 0
+scaph_process_power_consumption_microwatts{exe="tpm_dev_wq",pid="77",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="blkcg_punt_bio",cmdline="",pid="76"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="75",exe="kblockd"} 0
+scaph_process_power_consumption_microwatts{exe="kintegrityd",cmdline="",pid="74"} 0
+scaph_process_power_consumption_microwatts{exe="cryptd",cmdline="",pid="73"} 0
+scaph_process_power_consumption_microwatts{pid="72",cmdline="",exe="khugepaged"} 17
+scaph_process_power_consumption_microwatts{exe="ksmd",pid="70",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="69",exe="kcompactd0"} 12075
+scaph_process_power_consumption_microwatts{pid="68",exe="writeback",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="oom_reaper",pid="67",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="kauditd",cmdline="",pid="65"} 0
+scaph_process_power_consumption_microwatts{exe="inet_frag_wq",pid="64",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="kdevtmpfs",pid="63"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="kworker/7:0H-events_highpri",pid="62"} 0
+scaph_process_power_consumption_microwatts{exe="ksoftirqd/7",pid="60",cmdline=""} 21
+scaph_process_power_consumption_microwatts{pid="59",exe="migration/7",cmdline=""} 4
+scaph_process_power_consumption_microwatts{exe="idle_inject/7",cmdline="",pid="58"} 0
+scaph_process_power_consumption_microwatts{pid="57",exe="cpuhp/7",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="56",exe="kworker/6:0H-events_highpri"} 0
+scaph_process_power_consumption_microwatts{pid="54",exe="ksoftirqd/6",cmdline=""} 21
+scaph_process_power_consumption_microwatts{pid="53",exe="migration/6",cmdline=""} 4
+scaph_process_power_consumption_microwatts{pid="52",exe="idle_inject/6",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="51",exe="cpuhp/6"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="kworker/5:0H-events_highpri",pid="50"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="ksoftirqd/5",pid="48"} 21
+scaph_process_power_consumption_microwatts{cmdline="",exe="migration/5",pid="47"} 4
+scaph_process_power_consumption_microwatts{exe="idle_inject/5",cmdline="",pid="46"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="cpuhp/5",pid="45"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="kworker/4:0H-events_highpri",pid="44"} 0
+scaph_process_power_consumption_microwatts{pid="42",exe="ksoftirqd/4",cmdline=""} 30
+scaph_process_power_consumption_microwatts{pid="41",exe="migration/4",cmdline=""} 4
+scaph_process_power_consumption_microwatts{cmdline="",exe="idle_inject/4",pid="40"} 0
+scaph_process_power_consumption_microwatts{exe="cpuhp/4",cmdline="",pid="39"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="38",exe="kworker/3:0H-events_highpri"} 0
+scaph_process_power_consumption_microwatts{pid="36",exe="ksoftirqd/3",cmdline=""} 362
+scaph_process_power_consumption_microwatts{pid="35",exe="migration/3",cmdline=""} 4
+scaph_process_power_consumption_microwatts{exe="idle_inject/3",pid="34",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="cpuhp/3",pid="33"} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="32",exe="kworker/2:0H-events_highpri"} 0
+scaph_process_power_consumption_microwatts{exe="ksoftirqd/2",pid="30",cmdline=""} 25
+scaph_process_power_consumption_microwatts{pid="29",exe="migration/2",cmdline=""} 4
+scaph_process_power_consumption_microwatts{pid="28",exe="idle_inject/2",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="cpuhp/2",pid="27"} 0
+scaph_process_power_consumption_microwatts{exe="kworker/1:0H-events_highpri",pid="26",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="ksoftirqd/1",pid="24",cmdline=""} 47
+scaph_process_power_consumption_microwatts{cmdline="",exe="migration/1",pid="23"} 34
+scaph_process_power_consumption_microwatts{cmdline="",exe="idle_inject/1",pid="22"} 0
+scaph_process_power_consumption_microwatts{pid="21",cmdline="",exe="cpuhp/1"} 0
+scaph_process_power_consumption_microwatts{exe="cpuhp/0",cmdline="",pid="20"} 0
+scaph_process_power_consumption_microwatts{pid="19",exe="idle_inject/0",cmdline=""} 0
+scaph_process_power_consumption_microwatts{exe="migration/0",pid="18",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="17",exe="rcu_preempt",cmdline=""} 1710
+scaph_process_power_consumption_microwatts{exe="ksoftirqd/0",cmdline="",pid="16"} 64
+scaph_process_power_consumption_microwatts{pid="15",exe="rcu_tasks_trace_kthread",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="14",cmdline="",exe="rcu_tasks_rude_kthread"} 0
+scaph_process_power_consumption_microwatts{exe="rcu_tasks_kthread",cmdline="",pid="13"} 0
+scaph_process_power_consumption_microwatts{pid="11",exe="mm_percpu_wq",cmdline=""} 0
+scaph_process_power_consumption_microwatts{pid="6",exe="netns",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="5",exe="slub_flushwq"} 0
+scaph_process_power_consumption_microwatts{exe="rcu_par_gp",pid="4",cmdline=""} 0
+scaph_process_power_consumption_microwatts{cmdline="",pid="3",exe="rcu_gp"} 0
+scaph_process_power_consumption_microwatts{cmdline="",exe="kthreadd",pid="2"} 8
+scaph_process_power_consumption_microwatts{pid="1",exe="systemd",cmdline="/usr/lib/systemd/systemd--switched-root--system--deserialize=35rhgb"} 155
+# HELP scaph_context_switches_total Number of context switches since boot.
+# TYPE scaph_context_switches_total counter
+scaph_context_switches_total 487735051
+# HELP scaph_processes_blocked_current Number of processes currently blocked waiting for I/O.
+# TYPE scaph_processes_blocked_current gauge
+scaph_processes_blocked_current 0
+# HELP scaph_processes_running_current Number of processes currently running.
+# TYPE scaph_processes_running_current gauge
+scaph_processes_running_current 1
+# HELP scaph_forks_since_boot_total Number of forks that have occured since boot (number of processes to have existed so far).
+# TYPE scaph_forks_since_boot_total counter
+scaph_forks_since_boot_total 366300
+# HELP scaph_domain_power_microwatts Power measurement relative to a RAPL Domain, in microwatts
+# TYPE scaph_domain_power_microwatts gauge
+scaph_domain_power_microwatts{socket_id="0",domain_name="uncore",domain_id="1"} 89070
+# HELP scaph_domain_energy_microjoules Domain related energy measurement in microjoules.
+# TYPE scaph_domain_energy_microjoules counter
+scaph_domain_energy_microjoules{socket_id="0",domain_name="uncore",domain_id="1"} 12541430540
+
+scaph_domain_power_microwatts{domain_name="core",domain_id="0",socket_id="0"} 1371746
+scaph_domain_energy_microjoules{domain_name="core",domain_id="0",socket_id="0"} 168091289045
+
+# HELP scaph_socket_power_microwatts Power measurement relative to a CPU socket, in microwatts
+# TYPE scaph_socket_power_microwatts gauge
+scaph_socket_power_microwatts{socket_id="0"} 2669267
+# HELP scaph_socket_energy_microjoules Socket related energy measurement in microjoules.
+# TYPE scaph_socket_energy_microjoules counter
+scaph_socket_energy_microjoules{socket_id="0"} 135761166244
+
+# HELP scaph_host_power_microwatts Power measurement on the whole host, in microwatts
+# TYPE scaph_host_power_microwatts gauge
+scaph_host_power_microwatts 2669267
+# HELP scaph_host_energy_microjoules Energy measurement for the whole host, as extracted from the sensor, in microjoules.
+# TYPE scaph_host_energy_microjoules counter
+scaph_host_energy_microjoules 135761166244
+# HELP scaph_self_domain_records_nb Number of energy consumption Records stored for a Domain
+# TYPE scaph_self_domain_records_nb gauge
+scaph_self_domain_records_nb{socket_id="0",rapl_domain_name="uncore"} 20
+scaph_self_domain_records_nb{socket_id="0",rapl_domain_name="core"} 20
+# HELP scaph_self_socket_records_nb Number of energy consumption Records stored for each socket
+# TYPE scaph_self_socket_records_nb gauge
+scaph_self_socket_records_nb{socket_id="0"} 20
+# HELP scaph_self_socket_stats_nb Number of CPUStat traces stored for each socket
+# TYPE scaph_self_socket_stats_nb gauge
+scaph_self_socket_stats_nb{socket_id="0"} 10
+# HELP scaph_self_topo_procs_nb Number of processes monitored for the host.
+# TYPE scaph_self_topo_procs_nb gauge
+scaph_self_topo_procs_nb 431
+# HELP scaph_self_topo_records_nb Number of energy consumption Records stored for the host.
+# TYPE scaph_self_topo_records_nb gauge
+scaph_self_topo_records_nb 20
+# HELP scaph_self_topo_stats_nb Number of CPUStat traces stored for the host.
+# TYPE scaph_self_topo_stats_nb gauge
+scaph_self_topo_stats_nb 9
+# HELP scaph_self_mem_shared_resident_size Number of resident shared bytes (i.e., backed by a file).
+# TYPE scaph_self_mem_shared_resident_size gauge
+scaph_self_mem_shared_resident_size 2752512
+# HELP scaph_self_mem_resident_set_size Resident set size, measured in bytes.
+# TYPE scaph_self_mem_resident_set_size gauge
+scaph_self_mem_resident_set_size 9465856
+# HELP scaph_self_mem_total_program_size Total program size, measured in bytes.
+# TYPE scaph_self_mem_total_program_size gauge
+scaph_self_mem_total_program_size 572014592
+# HELP scaph_self_cpu_usage_percent CPU % consumed by scaphandre.
+# TYPE scaph_self_cpu_usage_percent gauge
+scaph_self_cpu_usage_percent 0.000006474042327288736
+# HELP scaph_self_version Version number of scaphandre represented as a float.
+# TYPE scaph_self_version gauge
+scaph_self_version 0.50

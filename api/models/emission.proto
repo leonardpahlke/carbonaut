@@ -1,0 +1,66 @@
+/*
+Copyright 2023 CARBONAUT AUTHORS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+package carbonaut.models.emission.v1alpha1;
+option go_package = "carbonaut.cloud/pkg/api/models";
+
+import "models/util.proto";
+import "models/electricity.proto";
+
+message Emission {
+    // Value of the emission (e.g. '2')
+    float value = 1;
+    // Unit of the emission (e.g. 'g', 'kg', ...)
+    carbonaut.models.util.v1alpha1.METRIC_UNIT unit = 2;
+    // Model of the emission (e.g. 'GHGP', ...)
+    string model = 3;
+    // Scope of the emission (e.g. 'Scope 1', 'Scope 2', 'Scope 3')
+    EMISSION_SCOPE scope = 4;
+    // Offset of the emission (e.g. '6%')
+    float estimation_offset = 5;
+    // Kind of the emission (e.g. 'CO2', 'CH4', ...)
+    EMISSION_KIND kind = 6;
+    optional carbonaut.models.electricity.v1alpha1.Electricity electricity = 7;
+}
+
+enum EMISSION_SCOPE {
+    // Scope 1 emissions are direct greenhouse gas emissions from sources that are owned or controlled by an organization.
+    SCOPE_1 = 0;
+    // Scope 2 emissions are indirect emissions from the generation of purchased electricity consumed by the organization.
+    SCOPE_2 = 1;
+    // Scope 3 emissions are all other indirect emissions from sources that are not owned or controlled by the organization, including supply chain emissions.
+    SCOPE_3 = 2;
+}
+
+enum EMISSION_KIND {
+    // Emission of carbon dioxide
+    CO2 = 0;
+    // Emission of methane
+    CH4 = 1;
+    // Emission of nitrous oxide
+    N2O = 2;
+    // Emission of hydrofluorocarbons
+    HFC = 3;
+    // Emission of perfluorocarbons
+    PFC = 4;
+    // Emission of sulfur hexafluoride
+    SF6 = 5;
+    // Emission of nitrogen trifluoride
+    NF3 = 6;
+    // Emission of carbon monoxide
+    CO = 7;
+}

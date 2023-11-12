@@ -1,0 +1,67 @@
+/*
+Copyright 2023 CARBONAUT AUTHORS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+package carbonaut.models.electricity.v1alpha1;
+option go_package = "carbonaut.cloud/pkg/api/models";
+
+// Electricity consumption of a host
+message Electricity {
+    // Value of the electricity
+    double value = 1;
+    // Unit of the electricity
+    ELECTRICITY_UNIT unit = 2;
+    // Producer of the electricity
+    ELECTRICITY_PRODUCER producer = 3;
+}
+
+// ElectricityProducer represents the producer of the electricity
+enum ELECTRICITY_PRODUCER {
+    // Electricity source provider is unknown
+    UNKNOWN = 0;
+    // Electricity is produced by a wind turbine
+    WIND = 1;
+    // Electricity is produced by a solar panel
+    SOLAR = 2;
+    // Electricity is produced by a hydroelectric power plant
+    HYDRO = 3;
+    // Electricity is produced by a nuclear power plant
+    NUCLEAR = 4;
+    // Electricity is produced by a coal power plant
+    COAL = 5;
+    // Electricity is produced by a gas power plant
+    GAS = 6;
+    // Electricity is produced by a biomass power plant
+    BIOMASS = 7;
+    // Electricity is produced by a geothermal power plant
+    GEOTHERMAL = 8;
+    // Electricity is produced by a hydroelectric power plant
+    HYDROELECTRIC = 9;
+    // Electricity is produced by a tidal power plant
+    TIDAL = 10;
+    // Electricity is produced by a wave power plant
+    WAVE = 11;
+}
+
+enum ELECTRICITY_UNIT {
+    ZEPTOJOULE = 0;
+    NANOJOULE = 1;
+    MICROJOULE = 2;
+    KILOJOULE = 3;
+    MEGAOULE = 4;
+    GIGAJOULE = 5;
+    TERAJOULE = 6;
+}

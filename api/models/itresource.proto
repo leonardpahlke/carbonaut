@@ -1,0 +1,73 @@
+/*
+Copyright 2023 CARBONAUT AUTHORS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+package carbonaut.models.itresource.v1alpha1;
+option go_package = "carbonaut.cloud/pkg/api/models";
+
+import "google/protobuf/timestamp.proto";
+
+message ITResource {
+    // Name of the IT resource (e.g. 'ServiceA', 'CustomerPlatform', ...)
+    string name = 1;
+    // Kind of the IT resource (e.g. 'Pod', 'Node', 'EC2 Instance', ...)
+    string kind = 2;
+    // Provider of the IT resource (e.g. 'AWS', 'Kubernetes', 'GCP', 'Azure', ...)
+    string provider = 3;
+    // Account of the IT resource (e.g. 'AWS Account ID', 'Kubernetes Namespace', ...)
+    string account = 4;
+    // Project of the IT resource (e.g. 'GCP Project ID', ...)
+    string project = 5;
+    // Hardware components of the IT resource (e.g. 'CPU', 'RAM', 'HardDisk', ...)
+    repeated ITResourceComponent hardware_components = 6;
+    // Time when the IT resource was created (e.g. '2021-01-01T00:00:00Z')
+    google.protobuf.Timestamp running_since = 7;
+}
+
+message ITResourceComponent {
+    // Name of the hardware component like ('HardDisk' or 'CPU')
+    IT_RESOURCE_COMPONENT component = 1;
+    // Kind of the hardware component (e.g. 'Intel Xeon Platinum 8458P Prozessor', ...)
+    string kind = 2;
+    // Number of components used (e.g. 3 CPUs)
+    float count_of_the_component_used = 3;
+}
+
+// IT_RESOURCE_COMPONENT is a list of all possible hardware components
+enum IT_RESOURCE_COMPONENT {
+    // Central Procession unit or Processor of a server
+    CPU = 0;
+    // Random Access Memory or RAM (Memory)
+    RAM = 1;
+    // Drive is the storage capacity of your server/computer (e.g. SATA, SSD, NVMe, ...)
+    DRIVE = 2;
+    // Component used to connect server components to each other
+    MOTHERBOARD = 3;
+    // Power connectivity or electric supply cable
+    POWER_SUPPLY = 4;
+    // Fan is a component used to cool down the server
+    FAN = 5;
+    // Network Card is a component used to connect the server to the network
+    NETWORK_CARD = 6;
+    // Graphics Processing Unit or GPU is a component used to render graphics
+    GPU = 7;
+    // Chassis is the housing of the server
+    CHASSIS = 8;
+    // RAID Card is a component used to connect multiple hard disks to the server
+    RAID_CARD = 9;
+    // Video Card is a component used to render video
+    VIDEO_CARD = 10;
+}

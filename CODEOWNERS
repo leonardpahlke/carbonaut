@@ -1,0 +1,38 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @carbonaut-cloud/maintainers
+# will be requested for review when someone opens a pull request.
+*       @carbonaut-cloud/maintainers  
+
+# General catching
+*.go @carbonaut-cloud/dev
+*.md @carbonaut-cloud/maintainers
+*.bash @carbonaut-cloud/dev
+*.yaml @carbonaut-cloud/platform
+*.proto @carbonaut-cloud/dev
+
+# Dev
+go.mod @carbonaut-cloud/dev
+go.sum @carbonaut-cloud/dev
+.golangci.yaml @carbonaut-cloud/dev
+/pkg @carbonaut-cloud/dev
+/cmd @carbonaut-cloud/dev
+
+# Build tools
+/hack @carbonaut-cloud/dev
+Makefile @carbonaut-cloud/dev
+
+# Platform files & folders
+/build @carbonaut-cloud/platform
+/deployment @carbonaut-cloud/platform
+
+# Maintainer files & folders
+/.circleci @carbonaut-cloud/maintainers
+/.github @carbonaut-cloud/maintainers
+/assets @carbonaut-cloud/maintainers
+.gitignore @carbonaut-cloud/maintainers
+CODEOWNERS @carbonaut-cloud/maintainers
+LICENSE @carbonaut-cloud/maintainers
+
+# Examples
+/examples/config.yaml @carbonaut-cloud/dev
