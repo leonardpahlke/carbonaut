@@ -1,0 +1,48 @@
+import { Callout, Steps } from 'nextra-theme-docs'
+import Link from 'next/link'
+
+# Getting started with Carbonaut
+
+<Callout type="warning">
+  Docs for this page are under construction and planned for version v0.1 and detailed documentation will be added soon. <Link href="/docs/roadmap">Roadmap <span>→</span></Link>
+</Callout>
+
+Welcome to Carbonaut! Carbonaut is cloud-native monitoring software for collecting environmental sustainability metrics from your IT infrastructure. This guide will show you how to install, configure, and monitor our first resource using Carbonaut. You will download, install, and run Carbonaut. You will also download and install an official Carbonaut plugin to collect energy metrics from your local machine.
+
+<Steps>
+### Download Carbonaut
+
+[Download the latest release](https://github.com/carbonaut-cloud/carbonaut/releases) of Carbonaut for your platform, then extract it.
+
+```bash
+tar xvfz carbonaut-*.tar.gz
+cd carbonaut-*
+```
+
+The Carbonaut Connector is a single binary called carbonaut. We can run the binary and see help on its options by passing the `--help` flag.
+
+```bash
+./carbonaut --help
+usage: carbonaut [<flags>]
+```
+
+Before starting Carbonaut, let's configure it.
+
+### Configure Carbonaut
+
+An example configuration file is available in the examples folder [`example/carbonaut.yaml`](https://github.com/carbonaut-cloud/carbonaut/tree/main/examples). Copy this file to a location of your choice, and edit it to suit your needs. Without edits this file will work fine for a local test and measure your machine's energy consumption.
+
+### Run Carbonaut as Container locally
+
+With Carbonaut downloaded and configured, we can start it up. We'll run it in the foreground so we can see its logs.
+
+```bash
+carbonaut -c=carbonaut.yaml --debug
+```
+
+*more info tbd*
+
+Caronaut is running and measures energy consumption through the <Link href="/docs/plugins/scaphandre">Scaphandre plugin</Link> 🎉.
+</Steps>
+
+Carbonaut excels on a larger scale by integrating different types of plugins, automatically blending data from multiple sources, and integrating all of this into a common data format while extending the existing monitoring stack.

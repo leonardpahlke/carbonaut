@@ -1,0 +1,21 @@
+{
+  "index": "Introduction",
+  "guide": "Guide",
+  "concepts": "Concepts",
+  "plugins": "Plugins",
+  "roadmap": "Roadmap",
+  "-- More": {
+    "type": "separator",
+    "title": "More"
+  },
+  "vision": "Vision",
+  "about-link": {
+    "title": "About Carbonaut",
+    "href": "/about"
+  },
+  "next.js-link": {
+    "title": "Carbonaut Slack ↗",
+    "href": "https://join.slack.com/t/carbonautgroup/shared_invite/zt-1rmr9yviv-aBXEaDp4JxTAgqOVD22TGg",
+    "newWindow": true
+  }
+}

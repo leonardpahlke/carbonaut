@@ -4,7 +4,7 @@
 
 We strongly encourage you to report security vulnerabilities to
 one of our maintainers via a slack message - first, before
-disclosing them in any public forums see [Carbonaut slack workspace](https://join.slack.com/t/carbonautgroup/shared_invite/zt-1rmr9yviv-aBXEaDp4JxTAgqOVD22TGg).
+disclosing them in any public forums see *TBD*.
 Thank you!
 
 ## When Should I Report a Vulnerability?

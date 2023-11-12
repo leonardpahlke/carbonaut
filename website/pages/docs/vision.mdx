@@ -1,0 +1,47 @@
+import { Callout } from 'nextra-theme-docs'
+import Link from 'next/link'
+
+# Carbonauts Sustainability Vision
+
+<Callout type="warning">
+  Docs for this page are under construction!
+</Callout>
+
+Data centers around the world consume a lot of energy, and research reports indicate that this trend will continue.
+This is a problem because most of the world's energy production is still based on fossil fuels, and if we switch to green energy, this will quickly become scarce.
+In order to take further action to reduce carbon and energy consumption, there is a lack of data level and observational capabilities.
+Due to the heterogeneous aspect of distributed systems, many different systems need to be integrated to build this data layer.
+This is where Carbonaut comes in. 
+
+While many modern systems and architectures assume that software can be shifted and scheduled without issues, major enterprises and small and medium businesses (SMBs) still need to fulfill this trend. Hence most used services in cloud service providers (CSP) are still classic virtual machines due to a lack of knowledge, governance, and the overall missing competency of managing cloud infrastructure [1].
+Yet a trend to container and Kubernetes is noticeable, not only in the clouds but on the ground at private DCs, too, as the vast majority of computation workloads are running on-premises. 
+
+Gathering information and making data-driven decisions is highly complex today.
+The CSP provided insight into power consumption and caused carbon emissions that could be more precise and often delayed by 3-5 months.
+On prem, you may have some insights about your contracted energy supply, by you need to be made aware of the energy mix and its caused CO2 output and a detailed mapping between power consumption per node to the services running on it.
+In short, the link between all relevant data is missing to drive and decide as an organization to change your ICT for Green KPIs.
+
+## Vision
+
+Open source can be a crucial driver for creating an environmentally friendly ICT.
+Throughout its multiplicity, open source can positively impact emission output.
+Leading by example, we will implement a tool that can be adapted by anyone to start their environmental change. 
+We are thinking of a control center where all the IT-related environmental sustainability data lives, gets analyzed and acted on.
+Through public and editable rule sets, we will recommend changes and other tools for optimization and deliver pre-defined policies to implement them immediately.
+
+## The Carbonaut Project
+
+Carbonaut is a portmanteau of carbon and astronaut - because it discovers the void, the missing data space we have in software sustainability.
+
+Carbonaut integrates with other tools that provide insight into Kubernetes resources, the electric grid, etc. Carbonaut then uses this data to expose metrics like: 
+
+* Cumulated emissions over time
+* Cumulated energy usage over time
+* List of IT-Resources in use (VMs, Pods, etc.)
+* List of regions (data centers) in use
+* (Vision) Cumulated natural resources usage over time
+
+We vision to enrich the visualizations with recommendations. 
+You can doscover <Link href="/docs/concepts/schema">the Carbonaut data scheme here <span>→</span></Link>.
+
+To get started follow the <Link href="/docs/guide/start">installation guide <span>→</span></Link>.

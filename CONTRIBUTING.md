@@ -1,21 +1,18 @@
 # Contributing to Carbonaut
-This file describes how you can contribute to the project. We follow a common git workflow to make changes that drives with opening pull requests from forked repositories.
 
-> :warning: This project is in the phase of the initial planning.
+This file describes how you can contribute to the project. We follow a common git workflow to make changes that drives with opening pull requests from forked repositories.
 
 ## Communication Channels
 
-A Slack workspace is already excisting, an auto-invite will come soon. Until then please open a issue with your email and we will invite you.
+*tbd*
 
 ## Meetings
 
-Regular meetings will be established soon.
+*tbd*
 
 ## Project Governance
 
-Project governance is documented [here](https://github.com/Carbonaut/community).
-We plan to have open and vendor neutral governance in the project once it is fully established.
-
+Project governance is documented [here](./GOVERNANCE.md).
 
 ## GitHub Workflow
 

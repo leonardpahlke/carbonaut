@@ -1,0 +1,12 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @carbonaut-cloud/documentation
+# will be requested for review when someone opens a pull request.
+*       @carbonaut-cloud/documentation
+
+# Maintainer files & folders
+/.github @carbonaut-cloud/maintainers
+LICENSE @carbonaut-cloud/maintainers
+CODEOWNERS @carbonaut-cloud/maintainers
+CONTRIBUTING.md @carbonaut-cloud/maintainers
+README.md @carbonaut-cloud/maintainers

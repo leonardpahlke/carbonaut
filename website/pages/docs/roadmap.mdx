@@ -1,0 +1,72 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Carbonaut Roadmap Overview
+
+The Carbonaut Road Map is a living document that outlines the major features and improvements that we are working on. It is a work in progress and will be updated as we make progress.
+The [Carbonaut GitHub Roadmap Project board](https://github.com/orgs/carbonaut-cloud/projects/1) is the best place to see the current status of the project.
+
+## Upcoming Releases
+
+### Carbonaut v0.1
+
+<Callout type="info">
+  v0.1 is `in-progress`, expected release date: late Q2 2023
+</Callout>
+
+The first version focuses on the core features of the Carbonaut platform. It is a minimal viable product that will allow us to start collecting feedback from the community.
+
+#### Main Features - Milestone 1
+
+We integrate first with [Kubernetes](https://kubernetes.io/) and available tools ([Scaphandre](https://github.com/hubblo-org/scaphandre), [Kepler](https://github.com/sustainable-computing-io/kepler)) since these technologies are also open source software which eases the integration and alignment.
+Building a first version of the Carbonaut data scheme and the metrics server.
+
+* [x] **Single Deployment Plugin Mechanism** - enable loading and starting of plugins as a subprocess of the main Carbonaut connector process.
+* [x] **Metrics Server** - Exposing metrics in open telemtry format ready to be consumed by prometheus. Following this [guide](https://github.com/open-telemetry/opentelemetry-go/tree/main/example/prometheus).
+* [x] **Carbonaut Data Schema - Energy Metrics** - The carbonaut data schema includes energy metrics.
+* [x] **Carbonaut Data Schema - IT Resource Metrics** - The carbonaut data Schema includes metrics about the it resources configured.
+* [ ] **Scaphandre Plugin** - Plugin for the [Scaphandre Project](https://github.com/hubblo-org/scaphandre).
+* [x] **Documentation Website + Concepts** - Documentation of the Carbonaut project with a clear vision, mission and architecture plan discussing core concepts and the way forward for the project.
+
+#### Main Features - Milestone 2
+
+The second version builds more core functionality into the Carbonaut connector, in particular the data mixer, and adds the ability for capturing carbon emission metrics.
+It will also include a new plugin for collecting energy data and calculating emissions based on your energy consumption (*plugin tbd*).
+
+* [ ] **Data Mixer** - Merge different metrics from plugins into a single stream to create higher quality metrics.
+* [x] Extend carbonaut data scheme to include emission metrics - exposing emission metrics in open telemtry format.
+* [ ] **[Entsoe-e](https://www.entsoe.eu/) energy metrics plugin**
+* [ ] **Emission Metrics Plugin** - *tbd*
+* [ ] **Kepler Plugin** - Plugin for the [Kepler Project](https://github.com/sustainable-computing-io/kepler).
+* [ ] **Kubernetes Deployment Guide (single deployment)** - Set by step deployment of Carbonaut to Kubernetes.
+* [ ] **gRPC Multiplexing** - Multiplexing of gRPC connections to improve connection to multiple plugins.
+
+### Carbonaut v0.2
+
+<Callout type="info">
+  v0.2 is `in-conception`, expected release date: early Q3 2023
+</Callout>
+
+The third version will focus on the user experience, maturity of the core concepts, and the integration with other tools.
+
+#### Main Features
+
+* [ ] **Multi Deployment Setup** - carbonaut can be deployed in a multi instance setup with independent processes.
+* [ ] *Kubernetes Deployment Guide (multi deployment)* - Set by step deployment of Carbonaut to Kubernetes.
+* [ ] **gRPC mTLS** - gRPC connections between Carbonaut and the Plugins are secured with mTLS.
+* [ ] **Authenticate gRPC** - gRPC connections between Carbonaut and the Plugins are authenticated (see [gRPC doc](https://grpc.io/docs/guides/auth/)).
+
+### Carbonaut v0.3
+
+<Callout type="info">
+  v0.3 is `in-conception`, expected release date: early Q4 2023
+</Callout>
+
+The fourth version will focus on integration with other cloud providers, especially GCP (possibly others too *tbd*).
+
+#### Main Features
+
+* [ ] **GCP Plugin** - Plugin for the GCP cloud provider.
+* [ ] *External Secrets* - Secrets are managed by external tools (e.g. K8s, cloud providers).
+* [ ] *tbd*
+
+## Past Releases

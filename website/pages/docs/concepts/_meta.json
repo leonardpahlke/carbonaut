@@ -1,0 +1,6 @@
+{
+  "architecture": "Architecture",
+  "plugins": "Connector Plugins",
+  "schema": "Carbonaut Data Schema",
+  "datamixer": "Data Mixer"
+}
