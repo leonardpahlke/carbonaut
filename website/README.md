@@ -1,12 +1,23 @@
-# Carbonaut Website
+# Nextra Docs Template 
 
-This repository defines the Carbonaut website https://carbonaut.dev/.
+This is a template for creating documentation with [Nextra](https://nextra.site).
 
-## How to work on this project
+[**Live Demo →**](https://nextra-docs-template.vercel.app)
 
-1. Install dependencies: `pnpm i`
-2. Run local website: `pnpm dev`
+[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
 
-The website updates whenever changes are push on the main branch.
+## Quick Start
 
-See [CONTRIBUTING](../CONTRIBUTING.md) for information how to contribute to the website.
+Click the button to clone this repository and deploy it on Vercel:
+
+[![](https://vercel.com/button)](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fshuding%2Fnextra-docs-template&showOptionalTeamCreation=false)
+
+## Local Development
+
+First, run `pnpm i` to install the dependencies.
+
+Then, run `pnpm dev` to start the development server and visit localhost:3000.
+
+## License
+
+This project is licensed under the MIT License.

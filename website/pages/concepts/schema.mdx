@@ -1,4 +1,3 @@
-import { Callout } from 'nextra-theme-docs'
 import Link from "next/link";
 
 # Carbonaut Data Schema
@@ -9,7 +8,7 @@ The protobuf files are located in the [`api`](https://github.com/carbonaut-cloud
 
 To integrate various vendor specific data sources, Carbonaut uses plugins to translate it into Carbonaut Data Transfer objects (DTOs).
 These DTOs are then used to generate the Carbonaut Metrics Schema which in turn are exposed a metrics.
-The data flow is described in the <Link href="/docs/concepts/architecture#data-flow">Carbonaut architecture data flow section</Link>.
+The data flow is described in the <Link href="/concepts/architecture#data-flow">Carbonaut architecture data flow section</Link>.
 
 The following diagram illustrates how the Carbonaut data schema is structured.
 
@@ -38,6 +37,6 @@ The Carbonaut Metrics Schema is the final representation of the data that is exp
 * **Electricity Metrics**: The electricity metrics format expose metrics about electricity consumption.
 * **IT Resource Metrics**: The IT resource metrics format expose metrics about IT resource consumption.
 * **Emission Metrics**: The emission metrics format expose metrics about emissions.
-* **Mixed Metrics**: The mixed metrics combine electricity, it-resource and emission metrics by configuration into one schema. It's used to map for example energy consumption to a specific it infrastructure stack. For more detail, see the <Link href="/docs/concepts/datamixer">data mixer</Link> documentation.
+* **Mixed Metrics**: The mixed metrics combine electricity, it-resource and emission metrics by configuration into one schema. It's used to map for example energy consumption to a specific it infrastructure stack. For more detail, see the <Link href="/concepts/datamixer">data mixer</Link> documentation.
 
 In the future more metrics with additional analytics might be added to the Carbonaut Metrics Schema (like forcasts, etc.).

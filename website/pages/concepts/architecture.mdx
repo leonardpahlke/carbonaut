@@ -3,7 +3,7 @@ import Link from "next/link";
 # Architecture Overview
 
 This page describes the architecture of the Carbonaut project.
-This document is intended to convey the essence of the architecture, with further details available on separate <Link href="/docs/concepts">concept sub-pages</Link>.
+This document is intended to convey the essence of the architecture, with further details available on separate <Link href="/concepts">concept sub-pages</Link>.
 The diagram below shows the general overview of the Carbonaut project, by describing each individual components in the following sections.
 
 ![Carbonaut Overview](/arch/carbonaut-overview.drawio.png)
@@ -80,7 +80,7 @@ The following diagram shows the data flow with four plugins connected as an exam
 
 ![Carbonaut Data Flow](/arch/carbonaut-building-blocks-data-stream.drawio.png)
 
-The page <Link href="/docs/concepts/schema">Carbonaut Data Schema</Link> describes the data schemas in more detail and the page <Link href="/docs/concepts/datamixer">Carbonaut Data Mixer</Link> describes how the data mixer enriches different data sources.
+The page <Link href="/concepts/schema">Carbonaut Data Schema</Link> describes the data schemas in more detail and the page <Link href="/concepts/datamixer">Carbonaut Data Mixer</Link> describes how the data mixer enriches different data sources.
 
 ## Deployment
 
@@ -88,10 +88,10 @@ Carbonaut can be deployed in two flavours, single deployment mode (e.g. one cont
 The fist diagram shows the single container mode where plugings are started as subprocesses and integrated via gRPC.
 The second diagram shows the multi container mode where plugins are run as seperate instances (for example as containers) which are also integrated via gRPC.
 
-**Single Deployment Mode** <Link href="/docs/guide/single-deployment">ref deployment guide <span>→</span></Link>
+**Single Deployment Mode** <Link href="/guide/single-deployment">ref deployment guide <span>→</span></Link>
 ![Carbonaut Single Distribution View](/arch/carbonaut-deployment-single.drawio.png)
 
-**Multi Deployment Mode** <Link href="/docs/guide/multi-deployment">ref deployment guide <span>→</span></Link>
+**Multi Deployment Mode** <Link href="/guide/multi-deployment">ref deployment guide <span>→</span></Link>
 ![Carbonaut Multi Distribution View](/arch/carbonaut-deployment-multi.drawio.png)
 
 For some big systems a single Carbonaut depolyment will be the bottleneck. In this case it is possible to run multiple Carbonaut instances in parallel with a distinct plugin configuration.
