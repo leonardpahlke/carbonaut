@@ -89,24 +89,24 @@ func (e Energy) ConvertToMilliwatt() float64 {
 	conversionFactor := 1.0
 	switch e.Unit {
 	case NANOWATT:
-		conversionFactor = 1.0 / 1000
+		conversionFactor = 1.0 / 1000000
 	case MICROWATT:
-		return e.Amount
+		conversionFactor = 1.0 / 1000
 	case MILLIWATT:
-		conversionFactor = 1000
+		conversionFactor = 1.0
 	case KILOWATT:
-		conversionFactor = 1000000000
+		conversionFactor = 1000
 	case MEGAWATT:
-		conversionFactor = 1000000000000
+		conversionFactor = 1000000
 	case GIGAWATT:
-		conversionFactor = 1000000000000000
+		conversionFactor = 1000000000
 	case TERAWATT:
-		conversionFactor = 1000000000000000000
+		conversionFactor = 1000000000000
 	default:
 		return 0.0
 	}
 
-	// Convert the energy to kilowatts
+	// Convert the energy to milliwatts
 	return e.Amount * conversionFactor
 }
 

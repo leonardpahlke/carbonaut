@@ -1,0 +1,4 @@
+baseURL = 'https://carbonaut.dev'
+languageCode = 'en-us'
+title = 'Carbonaut Documentation'
+theme = "hugo-book"

@@ -2,23 +2,11 @@
 
 This file describes how you can contribute to the project. We follow a common git workflow to make changes that drives with opening pull requests from forked repositories.
 
-## Communication Channels
-
-*tbd*
-
-## Meetings
-
-*tbd*
-
-## Project Governance
-
-Project governance is documented [here](./GOVERNANCE.md).
-
 ## GitHub Workflow
 
 The recommended workflow is to fork this repository and open pull requests from your fork.
 
-![contribution-workflow](/img/carbonaut-contributing-workflow-v3.png)
+![contribution-workflow](/assets/carbonaut-contributing-workflow-v3.png)
 
 ### 1. Fork, clone & configure Carbonaut upstream
 
@@ -122,15 +110,3 @@ Guidelines:
 
 
 [^1]: See [https://www.conventionalcommits.org](https://www.conventionalcommits.org)
-
-## Docs
-
-### Use relative links to markdown files
-
-Link to markdown files (`[link](../foo.md)`) instead of relative URLs
-(`[link](/foo)`).
-
-The docs compiler will replace file links with relative URLs automatically.
-
-This is to avoid broken links. If a file gets renamed, the compiler will
-catch broken links and throw an error. Relative URLs get broken unnoticed.

@@ -54,3 +54,10 @@ tasks:
     desc: Check if git is staged
     cmds:
       - git diff --exit-code
+
+  test-coverage:
+    desc: Check the test coverage and export it as report to html
+    cmds:
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -html=coverage.out -o coverage.html
+      - open coverage.html

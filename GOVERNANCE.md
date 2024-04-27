@@ -1,3 +1,0 @@
-# Carbonaut Governance
-
-*tbd*
