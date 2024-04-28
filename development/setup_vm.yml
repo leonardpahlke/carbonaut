@@ -1,0 +1,88 @@
+---
+- hosts: all
+  become: yes  # Use sudo for all tasks
+  tasks:
+    - name: Update all packages
+      apt:
+        update_cache: yes
+        cache_valid_time: 86400  # Cache valid for a day to avoid unnecessary updates
+
+    - name: Remove any existing old Docker packages
+      apt:
+        name: docker
+        state: absent
+        purge: yes
+      ignore_errors: yes  # In case the package is not found
+
+    - name: Install required packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+
+    - name: Ensure the directory for the apt keyring is present
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Add Docker's official GPG key
+      get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: 'a+r'
+
+    - name: Add the Docker repository
+      apt_repository:
+        repo: "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+        filename: 'docker.list'
+        update_cache: yes
+
+    - name: Update all packages
+      apt:
+        update_cache: yes
+        cache_valid_time: 86400  # Cache valid for a day to avoid unnecessary updates
+
+    - name: Install Docker Engine and associated tools
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+
+    - name: Verify Docker installation by running hello-world
+      command: docker run hello-world
+      register: hello_world_output
+
+    - name: Output the result from hello-world Docker image
+      debug:
+        var: hello_world_output.stdout_lines
+
+    - name: Add user to the Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Ensure Docker service is enabled and running
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Load intel_rapl_common module
+      modprobe:
+        name: intel_rapl_common
+        state: present
+
+    - name: Install stress testing tools
+      apt:
+        name:
+          - stress
+          - sysbench
+        state: latest

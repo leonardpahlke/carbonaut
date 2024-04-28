@@ -1,0 +1,23 @@
+# This file is maintained automatically by "tofu init".
+# Manual edits may be lost in future updates.
+
+provider "registry.opentofu.org/equinix/equinix" {
+  version = "1.36.0"
+  hashes = [
+    "h1:Y8cG2+1wqa74ORGW2gH1zExhBAVgJUmrroOfLwbeEn8=",
+    "zh:07dc8e18565a00756e3b8cda848e47f5c6bb7bc94a3dad7304800a5c544b5aa1",
+    "zh:14d77caddfa46f8731b525e211221d2ce46d99d0608a1d70a43e9639ee0b6f58",
+    "zh:2d6246b81fc74972597e4489d94ac6ff4b55fb3715933d50542442e35ed241de",
+    "zh:524240eaefdf1100370731bd992804c670f64fd50c2e8241930d06e430d10a5e",
+    "zh:570e9861bb6b7c7e32a850c2cccb8e8a6a996813fa862efcca140ba3e0ccc90d",
+    "zh:59fdd959b412a655eee0b5ec85d36098a7f7bc7e14d89b3cb476ed67cf585b54",
+    "zh:a1e2c57e73e58b1329af8cfcc0f39dc5c9e2417652a42720c27c511bfe8ca271",
+    "zh:a5c487dc573b9e9214c6f1aa29b0cc233868e8d0fbabb2bf8ab7a3d457a47f44",
+    "zh:b228e3a5dad8f55ea33456369e4a106700895c0eff71369f3f2a628f198c58fe",
+    "zh:bf73dbf091145d2584689b042f696caa6994f876763524c3dfda8e22440f7653",
+    "zh:bfb7e987a1f2b23dfded85907e15c081c314e060b152eba4064e3110104b241d",
+    "zh:c9744b95c99ea952b96439b5431e16ac77b4e430a8e100217a365e04110ad47a",
+    "zh:d0e865631b81ae14fd030223d65b0b28b783b865332b62e809efc9b7a30b5cf0",
+    "zh:fa56fb078ec3d20c654fdff15994250029c2dc2f792702af170eaa34187218b3",
+  ]
+}
