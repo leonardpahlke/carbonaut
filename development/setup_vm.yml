@@ -1,11 +1,36 @@
 ---
 - hosts: all
-  become: yes  # Use sudo for all tasks
+  become: yes
+  vars:
+    non_root_user: dev
+
   tasks:
     - name: Update all packages
       apt:
         update_cache: yes
         cache_valid_time: 86400  # Cache valid for a day to avoid unnecessary updates
+
+    - name: Create a non-root user with sudo access
+      user:
+        name: "{{ non_root_user }}"
+        state: present
+        createhome: yes
+        shell: /bin/bash
+
+    - name: Add non-root user to sudoers
+      lineinfile:
+        path: /etc/sudoers
+        line: "{{ non_root_user }} ALL=(ALL) NOPASSWD:ALL"
+        validate: 'visudo -cf %s'
+
+    - name: Ensure Ansible temp directory exists with correct permissions
+      file:
+        path: "/home/{{ non_root_user }}/.ansible/tmp"
+        state: directory
+        owner: "{{ non_root_user }}"
+        group: "{{ non_root_user }}"
+        mode: '0775'
+      become: yes
 
     - name: Remove any existing old Docker packages
       apt:
@@ -34,16 +59,19 @@
         dest: /etc/apt/keyrings/docker.asc
         mode: 'a+r'
 
-    - name: Add the Docker repository
-      apt_repository:
-        repo: "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
-        filename: 'docker.list'
-        update_cache: yes
+    - name: Echo Docker repository into sources list
+      become: yes  # This will execute the task with sudo
+      ansible.builtin.shell:
+        cmd: |
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      args:
+        executable: /bin/bash
 
-    - name: Update all packages
-      apt:
+    - name: Force update of apt cache
+      become: yes
+      ansible.builtin.apt:
         update_cache: yes
-        cache_valid_time: 86400  # Cache valid for a day to avoid unnecessary updates
+        cache_valid_time: 0
 
     - name: Install Docker Engine and associated tools
       apt:
@@ -55,17 +83,9 @@
           - docker-compose-plugin
         state: latest
 
-    - name: Verify Docker installation by running hello-world
-      command: docker run hello-world
-      register: hello_world_output
-
-    - name: Output the result from hello-world Docker image
-      debug:
-        var: hello_world_output.stdout_lines
-
     - name: Add user to the Docker group
       user:
-        name: "{{ ansible_user }}"
+        name: "{{ non_root_user }}"
         groups: docker
         append: yes
 
@@ -74,6 +94,15 @@
         name: docker
         enabled: yes
         state: started
+
+    - name: Verify Docker installation by running hello-world
+      become_user: "{{ non_root_user }}"
+      command: docker run hello-world
+      register: hello_world_output
+
+    - name: Output the result from hello-world Docker image
+      debug:
+        var: hello_world_output.stdout_lines
 
     - name: Load intel_rapl_common module
       modprobe:
@@ -86,3 +115,36 @@
           - stress
           - sysbench
         state: latest
+
+    - name: Copy benchmarking stress.sh script to the remote server
+      copy:
+        src: "{{ playbook_dir }}/stress.sh"
+        dest: /usr/local/bin/stress
+        owner: "{{ non_root_user }}"
+        group: "{{ non_root_user }}"
+        mode: '0755'
+
+    - name: Test the stress command
+      become_user: "{{ non_root_user }}"
+      command: stress --version
+      register: stress_test
+      ignore_errors: true
+
+    - name: Output the result from the stress command
+      debug:
+        var: stress_test.stdout_lines
+
+    - name: Run Scaphandre for power consumption monitoring
+      community.docker.docker_container:
+        name: scaphandre
+        image: hubblo/scaphandre
+        state: started
+        restart_policy: unless-stopped
+        detach: yes
+        volumes:
+          - /sys/class/powercap:/sys/class/powercap
+          - /proc:/proc
+        ports:
+          - "8080:8080"
+        command: prometheus
+      become: yes

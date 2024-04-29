@@ -1,10 +1,26 @@
 #!/bin/bash
 
 # Configuration variables
+VERSION="1.0"
 DURATION=300        # Duration to run the tests (in seconds)
 CPU_LOAD_CORES=2    # Number of cores to stress
 MEMORY_LOAD=256M    # Amount of memory to stress
 FILE_SIZE=1G        # File size for I/O tests
+
+# Function to display version
+display_version() {
+    echo "Stress Custom Carbonaut Script Version $VERSION"
+    exit 0
+}
+
+# Check for --version argument and exit
+for arg in "$@"; do
+    case $arg in
+        --version)
+            display_version
+            ;;
+    esac
+done
 
 # Create a temporary directory for sysbench
 TEST_DIR=$(mktemp -d)

@@ -123,4 +123,5 @@ help:
 	@echo "  tf-destroy             - Destroy the created OpenTofu infrastrucutre"
 	@echo "  tf-connect             - Connect to the created server"
 	@echo "  SSH_KEY_PATH           - Current SSH key path: $(SSH_KEY_PATH)"
+	@echo "  ansible-setup          - Setup the machine with required packages etc."
 	@echo "  PRIVATE_KEY_PATH       - Current private SSH key path: $(PRIVATE_KEY_PATH)"
