@@ -34,7 +34,7 @@ type Provider struct{}
 
 // The Geolocation look up by ip uses the API from https://ip-api.com/docs which throttles the requests to 45 per minute
 // requires a valid IPv4 address
-func (Provider) GetGeolocation(ip string) (*schema.Geolocation, error) {
+func (Provider) CollectGeolocation(ip string) (*schema.Geolocation, error) {
 	var r Geolocation
 	resp, err := http.Get("http://ip-api.com/json/" + ip)
 	if err != nil {

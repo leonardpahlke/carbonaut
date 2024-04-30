@@ -39,7 +39,7 @@ type GeoProviderConfig struct {
 }
 
 type GeoProvider interface {
-	GetGeolocation(ip string) (*schema.Geolocation, error)
+	CollectGeolocation(ip string) (*schema.Geolocation, error)
 }
 
 var implementedGeoProviders = map[string]GeoProvider{
@@ -139,7 +139,7 @@ func (p GeoP) requestGeolocation(cfg GeoProviderConfig) ([]*schema.Geolocation, 
 	var multiError error
 	var geolocations []*schema.Geolocation
 	for i := range cfg.IPAddresses {
-		geolocation, err := provider.GetGeolocation(cfg.IPAddresses[i])
+		geolocation, err := provider.CollectGeolocation(cfg.IPAddresses[i])
 		if err != nil {
 			multiError = multierror.Append(multiError, err)
 		}

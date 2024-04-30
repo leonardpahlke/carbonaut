@@ -18,7 +18,7 @@ func getAuthKey() string {
 	return os.Getenv("ELECTRICITY_MAP_KEY")
 }
 
-func (Provider) GetEmission(zoneIdentifier string) (*schema.CarbonBreakdown, error) {
+func (Provider) CollectEmission(zoneIdentifier string) (*schema.CarbonBreakdown, error) {
 	authKey := getAuthKey()
 	if authKey == "" {
 		return nil, fmt.Errorf("no auth key found")

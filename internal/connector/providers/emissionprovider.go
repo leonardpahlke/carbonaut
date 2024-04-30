@@ -38,7 +38,7 @@ type EmissionProviderConfig struct {
 }
 
 type EmissionProvider interface {
-	GetEmission(zoneIdentifier string) (*schema.CarbonBreakdown, error)
+	CollectEmission(zoneIdentifier string) (*schema.CarbonBreakdown, error)
 }
 
 var implementedEmissionProviders = map[string]EmissionProvider{
@@ -144,7 +144,7 @@ func (p EmissionP) Collect(ch chan<- prometheus.Metric) {
 func (p EmissionP) requestEmission(cfg EmissionProviderConfig) ([]*schema.Emission, error) {
 	slog.Info("get emission", "provider", p.kind)
 	provider := implementedEmissionProviders[p.kind]
-	carbonBreakdown, err := provider.GetEmission(cfg.Geolocation.Region)
+	carbonBreakdown, err := provider.CollectEmission(cfg.Geolocation.Region)
 	if err != nil {
 		return nil, fmt.Errorf("error while getting emission: %w", err)
 	}

@@ -39,7 +39,7 @@ type EnergyProviderConfig struct {
 }
 
 type EnergyProvider interface {
-	GetEnergy(endpoint string) ([]*schema.Energy, error)
+	CollectEnergy(endpoint string) ([]*schema.Energy, error)
 }
 
 type EnergyP struct {
@@ -156,7 +156,7 @@ func (p EnergyP) requestEnergy(cfg EnergyProviderConfig) ([]*schema.Energy, erro
 	var multiError error
 	var energyRecords []*schema.Energy
 	for i := range cfg.Endpoints {
-		e, err := implementedProviders[p.kind].GetEnergy(cfg.Endpoints[i])
+		e, err := implementedProviders[p.kind].CollectEnergy(cfg.Endpoints[i])
 		if err != nil {
 			multiError = multierror.Append(multiError, err)
 		}
