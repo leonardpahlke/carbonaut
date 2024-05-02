@@ -21,7 +21,7 @@ import (
 	"strconv"
 	"testing"
 
-	"carbonaut.cloud/pkg/util/freeport"
+	"carbonaut.dev/pkg/util/freeport"
 )
 
 func TestGetFreePort(t *testing.T) {

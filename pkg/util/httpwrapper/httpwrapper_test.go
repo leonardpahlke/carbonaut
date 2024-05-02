@@ -19,7 +19,7 @@ package httpwrapper_test
 import (
 	"net/http"
 
-	"carbonaut.cloud/pkg/util/httpwrapper"
+	"carbonaut.dev/pkg/util/httpwrapper"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"

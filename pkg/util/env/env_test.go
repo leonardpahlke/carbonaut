@@ -19,7 +19,7 @@ package env_test
 import (
 	"os"
 
-	"carbonaut.cloud/pkg/util/env"
+	"carbonaut.dev/pkg/util/env"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )

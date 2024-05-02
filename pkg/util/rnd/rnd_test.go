@@ -17,8 +17,8 @@ limitations under the License.
 package rnd_test
 
 import (
-	"carbonaut.cloud/pkg/util/compareutils"
-	"carbonaut.cloud/pkg/util/rnd"
+	"carbonaut.dev/pkg/util/compareutils"
+	"carbonaut.dev/pkg/util/rnd"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"

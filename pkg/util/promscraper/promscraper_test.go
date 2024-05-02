@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"carbonaut.cloud/pkg/util/freeport"
+	"carbonaut.dev/pkg/util/freeport"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/prometheus"
