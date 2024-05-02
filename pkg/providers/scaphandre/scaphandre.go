@@ -20,7 +20,7 @@ import (
 	"fmt"
 
 	"carbonaut.cloud/pkg/schema"
-	"carbonaut.cloud/pkg/util/prom_translator"
+	"carbonaut.cloud/pkg/util/promscraper"
 )
 
 // Scaphandre is an energy provider that scrapes prometheus metrics from a Scaphandre server
@@ -33,7 +33,7 @@ type Provider struct{}
 
 func (Provider) CollectEnergy(endpoint string) ([]*schema.Energy, error) {
 	e := []*schema.Energy{}
-	d, err := prom_translator.Collect(prom_translator.Prom2Json{
+	d, err := promscraper.Collect(promscraper.Prom2Json{
 		URL: endpoint,
 	})
 	if err != nil {

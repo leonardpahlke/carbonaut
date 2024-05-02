@@ -2,7 +2,7 @@
 // 	large parts of the logic copied from this project https://github.com/prometheus/prom2json
 // 	with minor edits to turn it into a library and bake it into carbonaut
 
-package prom_translator
+package promscraper
 
 import (
 	"fmt"
