@@ -42,7 +42,7 @@ type CarbonBreakdown struct {
 type Unit string
 
 const (
-	NANOWATT  Unit = "nanowatt"
+	// NANOWATT  Unit = "nanowatt"
 	MICROWATT Unit = "microwatt"
 	MILLIWATT Unit = "milliwatt"
 	KILOWATT  Unit = "kilowatt"
@@ -63,8 +63,6 @@ func (e Energy) ConvertToKilowatt() float64 {
 	// Get the conversion factor from the unit
 	conversionFactor := 1.0
 	switch e.Unit {
-	case NANOWATT:
-		conversionFactor = 1.0 / 1000000000000
 	case MICROWATT:
 		conversionFactor = 1.0 / 1000000000
 	case MILLIWATT:
@@ -88,8 +86,6 @@ func (e Energy) ConvertToKilowatt() float64 {
 func (e Energy) ConvertToMilliwatt() float64 {
 	conversionFactor := 1.0
 	switch e.Unit {
-	case NANOWATT:
-		conversionFactor = 1.0 / 1000000
 	case MICROWATT:
 		conversionFactor = 1.0 / 1000
 	case MILLIWATT:

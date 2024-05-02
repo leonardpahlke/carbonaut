@@ -60,13 +60,6 @@ func TestConvertToMilliwatt(t *testing.T) {
 		description string
 	}{
 		{
-			name:        "Test Nanowatt to Milliwatt Conversion",
-			amount:      1000,
-			unit:        schema.NANOWATT,
-			expected:    1e-3,
-			description: "Testing conversion from nanowatt to milliwatt",
-		},
-		{
 			name:        "Test Milliwatt to Milliwatt Conversion",
 			amount:      1000,
 			unit:        schema.MILLIWATT,

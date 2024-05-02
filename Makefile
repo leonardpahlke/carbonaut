@@ -80,28 +80,28 @@ ask-private-key:
 
 # OpenTofu initialization
 tf-init:
-	tofu -chdir=development init
+	tofu -chdir=dev init
 
 # OpenTofu planning
 tf-plan: ask-ssh-key
-	tofu -chdir=development plan -var "public_key=$$(cat $(SSH_KEY_PATH))"
+	tofu -chdir=dev plan -var "public_key=$$(cat $(SSH_KEY_PATH))"
 
 # OpenTofu apply
 tf-apply: ask-ssh-key
-	tofu -chdir=development apply -var "public_key=$$(cat $(SSH_KEY_PATH))"
+	tofu -chdir=dev apply -var "public_key=$$(cat $(SSH_KEY_PATH))"
 
 # OpenTofu Destroy
 tf-destroy: ask-ssh-key
-	tofu -chdir=development destroy -var "public_key=$$(cat $(SSH_KEY_PATH))"
+	tofu -chdir=dev destroy -var "public_key=$$(cat $(SSH_KEY_PATH))"
 
 # Fetch the IP address from OpenTofu and connect
 tf-connect: ask-private-key
-	$(eval SERVER_IP := $(shell tofu -chdir=development output -raw device_public_ip))
+	$(eval SERVER_IP := $(shell tofu -chdir=dev output -raw device_public_ip))
 	ssh -i $(PRIVATE_KEY_PATH) root@$(SERVER_IP)
 
 ansible-setup: ask-private-key
-	$(eval SERVER_IP := $(shell tofu -chdir=development output -raw device_public_ip))
-	ansible-playbook -i $(SERVER_IP), development/setup_vm.yml -u root --private-key=$(PRIVATE_KEY_PATH)
+	$(eval SERVER_IP := $(shell tofu -chdir=dev output -raw device_public_ip))
+	ansible-playbook -i $(SERVER_IP), dev/setup_vm.yml -u root --private-key=$(PRIVATE_KEY_PATH)
 
 ########################################
 ### GENERAL
