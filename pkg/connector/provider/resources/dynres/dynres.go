@@ -1,4 +1,4 @@
-package dynamic_env_collector
+package dynres
 
 import "carbonaut.dev/pkg/schema"
 
@@ -8,7 +8,11 @@ type Config struct {
 }
 
 type Collector interface {
-	Get(Config) (Data, error)
+	Get(cfg Config) (Data, error)
 }
 
-type Data struct{}
+// energy and utilization data
+type Data struct {
+	CPUFrequency        float32
+	EnergyHostMilliwatt int
+}

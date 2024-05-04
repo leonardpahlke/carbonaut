@@ -1,4 +1,4 @@
-package static_res_collector
+package staticres
 
 import "carbonaut.dev/pkg/schema"
 

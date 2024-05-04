@@ -3,9 +3,9 @@ package connector
 import (
 	"time"
 
-	"carbonaut.dev/pkg/connector/provider/environment/static_env_collector"
+	"carbonaut.dev/pkg/connector/provider/environment/staticenv"
 	"carbonaut.dev/pkg/connector/provider/resources"
-	"carbonaut.dev/pkg/connector/provider/resources/static_res_collector"
+	"carbonaut.dev/pkg/connector/provider/resources/staticres"
 	"carbonaut.dev/pkg/schema"
 )
 
@@ -14,7 +14,9 @@ type state struct {
 }
 
 func newState() *state {
-	return &state{}
+	return &state{
+		Accounts: map[resources.AccountIdentifier]Account{},
+	}
 }
 
 type Account struct {
@@ -24,8 +26,8 @@ type Account struct {
 }
 
 type ResourceState struct {
-	StaticResourceData    static_res_collector.Data
-	StaticEnvironmentData static_env_collector.Data
+	StaticResourceData    staticres.Data
+	StaticEnvironmentData staticenv.Data
 	Meta                  Meta
 }
 

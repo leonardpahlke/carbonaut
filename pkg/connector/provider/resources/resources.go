@@ -1,25 +1,27 @@
 package resources
 
 import (
-	"carbonaut.dev/pkg/connector/provider/resources/dynamic_res_collector"
-	"carbonaut.dev/pkg/connector/provider/resources/static_res_collector"
+	"carbonaut.dev/pkg/connector/provider/resources/dynres"
+	"carbonaut.dev/pkg/connector/provider/resources/staticres"
 )
 
-type AccountIdentifier string
-type ResourceIdentifier string
+type (
+	AccountIdentifier  string
+	ResourceIdentifier string
+)
 
 // DATA
 type Data map[AccountIdentifier][]AccountData
 
 type AccountData struct {
-	Static  static_res_collector.Data
-	Dynamic dynamic_res_collector.Data
+	Static  staticres.Data
+	Dynamic dynres.Data
 }
 
 // CONFIG
 type Config map[AccountIdentifier]ResourceConfig
 
 type ResourceConfig struct {
-	StaticResource  static_res_collector.Config  `json:"static_resource"`
-	DynamicResource dynamic_res_collector.Config `json:"dynamic_resource"`
+	StaticResource  staticres.Config `json:"static_resource"`
+	DynamicResource dynres.Config    `json:"dynamic_resource"`
 }

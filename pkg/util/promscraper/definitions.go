@@ -9,7 +9,6 @@ import (
 	"io"
 	"mime"
 	"net/http"
-	"strconv"
 
 	"github.com/matttproud/golang_protobuf_extensions/pbutil"
 	"github.com/prometheus/common/expfmt"
@@ -68,7 +67,7 @@ func newFamily(dtoMF *dto.MetricFamily) *Family {
 				Labels:      makeLabels(m),
 				TimestampMs: makeTimestamp(m),
 				Quantiles:   makeQuantiles(m),
-				Count:       strconv.FormatUint(m.GetSummary().GetSampleCount()),
+				Count:       fmt.Sprint(m.GetSummary().GetSampleCount()),
 				Sum:         fmt.Sprint(m.GetSummary().GetSampleSum()),
 			}
 		case dto.MetricType_HISTOGRAM:

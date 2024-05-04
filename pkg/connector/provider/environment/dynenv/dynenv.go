@@ -1,4 +1,4 @@
-package static_env_collector
+package dynenv
 
 import "carbonaut.dev/pkg/schema"
 
@@ -11,8 +11,4 @@ type Collector interface {
 	Get(Config) (Data, error)
 }
 
-// location data
-type Data struct {
-	Region  string
-	Country string
-}
+type Data struct{}

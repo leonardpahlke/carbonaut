@@ -159,9 +159,9 @@ func TestCompareLists(t *testing.T) {
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			same, missing, new := compareutils.CompareLists(tc.newList, tc.oldList)
-			if !reflect.DeepEqual(same, tc.same) || !reflect.DeepEqual(missing, tc.missing) || !reflect.DeepEqual(new, tc.new) {
-				t.Errorf("%s failed: expected (%v, %v, %v), got (%v, %v, %v)", tc.name, tc.same, tc.missing, tc.new, same, missing, new)
+			sameL, missingL, newL := compareutils.CompareLists(tc.newList, tc.oldList)
+			if !reflect.DeepEqual(sameL, tc.same) || !reflect.DeepEqual(missingL, tc.missing) || !reflect.DeepEqual(newL, tc.new) {
+				t.Errorf("%s failed: expected (%v, %v, %v), got (%v, %v, %v)", tc.name, tc.same, tc.missing, tc.new, sameL, missingL, newL)
 			}
 		})
 	}

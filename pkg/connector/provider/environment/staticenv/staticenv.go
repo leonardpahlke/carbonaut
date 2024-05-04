@@ -1,4 +1,4 @@
-package dynamic_res_collector
+package staticenv
 
 import "carbonaut.dev/pkg/schema"
 
@@ -8,11 +8,11 @@ type Config struct {
 }
 
 type Collector interface {
-	Get(cfg Config) (Data, error)
+	Get(Config) (Data, error)
 }
 
-// energy and utilization data
+// location data
 type Data struct {
-	CPUFrequency        float32
-	EnergyHostMilliwatt int
+	Region  string
+	Country string
 }

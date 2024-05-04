@@ -21,5 +21,5 @@ func TestGetFreePort(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer l.Close()
+	l.Close()
 }

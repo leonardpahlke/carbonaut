@@ -35,7 +35,7 @@ func SetPluginArgs(args PluginArgs) string {
 	if err := args.Validate(); err != nil {
 		panic(err)
 	}
-	return fmt.Sprintf(" -i \"%s\" -p %d", args.Identifier, args.Port)
+	return fmt.Sprintf(" -i %q -p %d", args.Identifier, args.Port)
 }
 
 // Validate checks if the plugin args are valid

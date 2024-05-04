@@ -5,9 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/http"
-
 	"log/slog"
+	"net/http"
 
 	"github.com/google/go-querystring/query"
 )

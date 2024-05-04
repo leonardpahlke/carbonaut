@@ -22,7 +22,7 @@ type Config struct {
 	TimeoutSeconds int `json:"timeout_seconds"`
 }
 
-func New(connectorConfig *Config, providerConfig *provider.Config) *C {
+func New(connectorConfig *Config, providerConfig *provider.Config) (*C, error) {
 	connector := C{
 		m:               sync.Mutex{},
 		connectorConfig: connectorConfig,
@@ -30,8 +30,10 @@ func New(connectorConfig *Config, providerConfig *provider.Config) *C {
 		state:           newState(),
 		updatedConfig:   false,
 	}
-	connector.LoadConfig(providerConfig)
-	return &connector
+	if err := connector.LoadConfig(providerConfig); err != nil {
+		return nil, err
+	}
+	return &connector, nil
 }
 
 func (c *C) LoadConfig(newConfig *provider.Config) error {
@@ -73,7 +75,6 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 			// this information will be added in the Run control loop
 			DynamicResourceCollectors: map[resources.ResourceIdentifier]ResourceState{},
 		}
-		delete(c.state.Accounts, toBeDeletedAccounts[i])
 	}
 
 	fmt.Println("configuration applied")
@@ -86,7 +87,6 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 func (c *C) Run() {
 	for {
 		c.m.Lock()
-		// c.cleanupRemovedAccounts()
 		c.bootstrapNewAccounts()
 		c.discoverResources()
 
@@ -94,13 +94,6 @@ func (c *C) Run() {
 		time.Sleep(time.Duration(c.connectorConfig.TimeoutSeconds) * time.Second)
 	}
 }
-
-// func (c *C) cleanupRemovedAccounts() {
-// 	// DELETE clean up
-// 	// 1. get all acounts with "to-delete" state
-// 	// 2. remove associated resource observers
-// 	// 3. set status to "deleted"
-// }
 
 func (c *C) bootstrapNewAccounts() {
 	// BOOTSTRAP ACCOUNT
