@@ -31,12 +31,12 @@ func TestCollect(t *testing.T) {
 		t.Fail()
 	}
 
-	startup_delay_seconds := 1
+	startupDelaySeconds := 1
 	t.Logf("Start prometheus test server on port %d", port)
-	go test_server_up(port)
+	go testServerUp(port)
 
-	t.Logf("Wait %d seconds for the prometheus server to start up", startup_delay_seconds)
-	time.Sleep(time.Duration(startup_delay_seconds) * time.Second)
+	t.Logf("Wait %d seconds for the prometheus server to start up", startupDelaySeconds)
+	time.Sleep(time.Duration(startupDelaySeconds) * time.Second)
 
 	prom2JsonConfig := Prom2Json{
 		URL: fmt.Sprintf("http://0.0.0.0:%d/metrics", port),
@@ -62,7 +62,7 @@ func TestCollect(t *testing.T) {
 	}
 }
 
-func test_server_up(port int) {
+func testServerUp(port int) {
 	meterName := fmt.Sprintf("carbonaut-test-prom2json-%d", time.Now().Nanosecond())
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	ctx := context.Background()

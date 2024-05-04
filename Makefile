@@ -6,12 +6,12 @@ all: build
 # Verify the project code (linting, testing, checking git state)
 verify:
 	@echo "Verifying the project code..."
-	@./hack/verify/check-git
+	@./hack/check-git
 	@go vet ./...
 	@go mod tidy
-	@./hack/verify/check-go-build.bash
-	@./hack/verify/check-go-lint.bash
-	@./hack/verify/check-go-test.bash
+	@./hack/check-go-build.bash
+	@./hack/check-go-lint.bash
+	@./hack/check-go-test.bash
 
 # Build project resources
 build: compile-grpc

@@ -1,19 +1,3 @@
-/*
-Copyright 2023 CARBONAUT AUTHORS
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
 package httpwrapper_test
 
 import (
@@ -34,7 +18,7 @@ var _ = Describe("httpwrapper", func() {
 				Method:  http.MethodPost,
 				BaseURL: "https://httpbin.org/post",
 			})
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			Expect(resp).To(Not(BeNil()))
 			Expect(resp.StatusCode).To(Equal(http.StatusOK))
 		})
@@ -43,7 +27,7 @@ var _ = Describe("httpwrapper", func() {
 				Method:  http.MethodGet,
 				BaseURL: "https://httpbin.org/get",
 			})
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			Expect(resp).To(Not(BeNil()))
 			Expect(resp.StatusCode).To(Equal(http.StatusOK))
 		})
@@ -55,14 +39,14 @@ var _ = Describe("httpwrapper", func() {
 				Method:  http.MethodPost,
 				BaseURL: doesNotExistPath,
 			})
-			Expect(err).To(Not(BeNil()))
+			Expect(err).To(HaveOccurred())
 		})
 		It("should return an error using get", func() {
 			_, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
 				Method:  http.MethodGet,
 				BaseURL: doesNotExistPath,
 			})
-			Expect(err).To(Not(BeNil()))
+			Expect(err).To(HaveOccurred())
 		})
 	})
 })

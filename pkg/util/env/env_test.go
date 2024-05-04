@@ -33,15 +33,15 @@ var _ = Describe("Env", func() {
 	Describe("an environment variable is set", func() {
 		BeforeEach(func() {
 			if err := os.Setenv(tmpEnvK1, tmpEnvV1); err != nil {
-				Expect(err).To(BeNil())
+				Expect(err).ToNot(HaveOccurred())
 			}
 		})
 		AfterEach(func() {
 			if err := os.Setenv(tmpEnvK2, ""); err != nil {
-				Expect(err).To(BeNil())
+				Expect(err).ToNot(HaveOccurred())
 			}
 			if err := os.Setenv(tmpEnvK1, ""); err != nil {
-				Expect(err).To(BeNil())
+				Expect(err).ToNot(HaveOccurred())
 			}
 		})
 		It("should detect an existing environment variable", func() {

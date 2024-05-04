@@ -5,7 +5,7 @@ import (
 
 	"carbonaut.dev/pkg/carbonautserver"
 	"carbonaut.dev/pkg/config"
-	"carbonaut.dev/pkg/infrastructureaccount"
+	"carbonaut.dev/pkg/connector/plugin/infrastructureaccount"
 )
 
 func main() {

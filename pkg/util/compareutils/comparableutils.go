@@ -43,6 +43,43 @@ func GetListDuplicates[E comparable](l []E) *[]E {
 	return &duplicates
 }
 
+// CompareLists takes two slices of any comparable type and returns three slices:
+// sameItems: items present in both newList and oldList
+// missingItems: items present in oldList but not in newList
+// newItems: items present in newList but not in oldList
+func CompareLists[T comparable](newList, oldList []T) (sameItems, missingItems, newItems []T) {
+	newSet := make(map[T]bool)
+	oldSet := make(map[T]bool)
+
+	sameItems = []T{}
+	missingItems = []T{}
+	newItems = []T{}
+
+	// Fill set for newList
+	for _, item := range newList {
+		newSet[item] = true
+	}
+
+	// Fill set for oldList and determine same and missing items
+	for _, item := range oldList {
+		oldSet[item] = true
+		if newSet[item] {
+			sameItems = append(sameItems, item)
+		} else {
+			missingItems = append(missingItems, item)
+		}
+	}
+
+	// Determine new items
+	for _, item := range newList {
+		if !oldSet[item] {
+			newItems = append(newItems, item)
+		}
+	}
+
+	return sameItems, missingItems, newItems
+}
+
 // CheckListContains checks if a list contains a specific element
 func CheckListContains[E comparable](l []E, e E) bool {
 	for i := range l {

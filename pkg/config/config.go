@@ -1,24 +1,20 @@
 package config
 
-import "fmt"
+import (
+	"fmt"
+
+	"carbonaut.dev/pkg/connector"
+	"carbonaut.dev/pkg/connector/provider"
+)
 
 type Config struct {
-	StaticResourceProviders    []StaticResourceConfig
-	StaticEnvironmentProvider  PluginConfig
-	DynamicEnvironmentProvider PluginConfig
+	Meta Meta             `json:"meta"`
+	Spec *provider.Config `json:"spec"`
 }
 
-type StaticResourceConfig struct {
-	StaticResourceConfig  PluginConfig
-	DynamicResourceConfig PluginConfig
+type Meta struct {
+	Connector *connector.Config `json:"connector"`
 }
-
-type PluginConfig struct {
-	PluginType PluginType
-	AccessKey  string
-}
-
-type PluginType string
 
 func ReadConfig(path string) (*Config, error) {
 	fmt.Printf("collect config from path: %s\n", path)

@@ -9,6 +9,7 @@ import (
 	"io"
 	"mime"
 	"net/http"
+	"strconv"
 
 	"github.com/matttproud/golang_protobuf_extensions/pbutil"
 	"github.com/prometheus/common/expfmt"
@@ -54,20 +55,20 @@ type Histogram struct {
 // newFamily consumes a MetricFamily and transforms it to the local Family type.
 func newFamily(dtoMF *dto.MetricFamily) *Family {
 	mf := &Family{
-		//Time:    time.Now(),
+		// Time:    time.Now(),
 		Name:    dtoMF.GetName(),
 		Help:    dtoMF.GetHelp(),
 		Type:    dtoMF.GetType().String(),
-		Metrics: make([]interface{}, len(dtoMF.Metric)),
+		Metrics: make([]interface{}, len(dtoMF.GetMetric())),
 	}
-	for i, m := range dtoMF.Metric {
+	for i, m := range dtoMF.GetMetric() {
 		switch dtoMF.GetType() {
 		case dto.MetricType_SUMMARY:
 			mf.Metrics[i] = Summary{
 				Labels:      makeLabels(m),
 				TimestampMs: makeTimestamp(m),
 				Quantiles:   makeQuantiles(m),
-				Count:       fmt.Sprint(m.GetSummary().GetSampleCount()),
+				Count:       strconv.FormatUint(m.GetSummary().GetSampleCount()),
 				Sum:         fmt.Sprint(m.GetSummary().GetSampleSum()),
 			}
 		case dto.MetricType_HISTOGRAM:
@@ -91,11 +92,11 @@ func newFamily(dtoMF *dto.MetricFamily) *Family {
 
 func getValue(m *dto.Metric) float64 {
 	switch {
-	case m.Gauge != nil:
+	case m.GetGauge() != nil:
 		return m.GetGauge().GetValue()
-	case m.Counter != nil:
+	case m.GetCounter() != nil:
 		return m.GetCounter().GetValue()
-	case m.Untyped != nil:
+	case m.GetUntyped() != nil:
 		return m.GetUntyped().GetValue()
 	default:
 		return 0.
@@ -104,7 +105,7 @@ func getValue(m *dto.Metric) float64 {
 
 func makeLabels(m *dto.Metric) map[string]string {
 	result := map[string]string{}
-	for _, lp := range m.Label {
+	for _, lp := range m.GetLabel() {
 		result[lp.GetName()] = lp.GetValue()
 	}
 	return result
@@ -119,7 +120,7 @@ func makeTimestamp(m *dto.Metric) string {
 
 func makeQuantiles(m *dto.Metric) map[string]string {
 	result := map[string]string{}
-	for _, q := range m.GetSummary().Quantile {
+	for _, q := range m.GetSummary().GetQuantile() {
 		result[fmt.Sprint(q.GetQuantile())] = fmt.Sprint(q.GetValue())
 	}
 	return result
@@ -127,7 +128,7 @@ func makeQuantiles(m *dto.Metric) map[string]string {
 
 func makeBuckets(m *dto.Metric) map[string]string {
 	result := map[string]string{}
-	for _, b := range m.GetHistogram().Bucket {
+	for _, b := range m.GetHistogram().GetBucket() {
 		result[fmt.Sprint(b.GetUpperBound())] = fmt.Sprint(b.GetCumulativeCount())
 	}
 	return result

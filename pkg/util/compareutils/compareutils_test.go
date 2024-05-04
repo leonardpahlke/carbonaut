@@ -17,6 +17,9 @@ limitations under the License.
 package compareutils_test
 
 import (
+	"reflect"
+	"testing"
+
 	"carbonaut.dev/pkg/util/compareutils"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -66,24 +69,24 @@ var _ = Describe("compareutils", func() {
 		map4 := S1{A: 1, B: 2, C: 3}
 		It("should return true", func() {
 			eql, err := compareutils.Equal(&map1, &map2)
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			Expect(eql).To(BeTrue())
 		})
 		It("should return false", func() {
 			eql, err := compareutils.Equal(&map1, &map3)
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			Expect(eql).To(BeFalse())
 		})
 		It("should return false", func() {
 			eql, err := compareutils.Equal(&map1, &map4)
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			Expect(eql).To(BeFalse())
 		})
 		It("should not manipulate the interfaces provided", func() {
 			m1Tmp := map1
 			m2Tmp := map2
 			eql, err := compareutils.Equal(&m1Tmp, &m2Tmp)
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			Expect(eql).To(BeTrue())
 			Expect(m1Tmp).To(Equal(map1))
 			Expect(m2Tmp).To(Equal(map2))
@@ -118,3 +121,48 @@ var _ = Describe("compareutils", func() {
 		})
 	})
 })
+
+func TestCompareLists(t *testing.T) {
+	cases := []struct {
+		name    string
+		newList []int
+		oldList []int
+		same    []int
+		missing []int
+		new     []int
+	}{
+		{
+			name:    "Test integers",
+			newList: []int{1, 2, 3, 4},
+			oldList: []int{2, 3, 5},
+			same:    []int{2, 3},
+			missing: []int{5},
+			new:     []int{1, 4},
+		},
+		{
+			name:    "Test empty lists",
+			newList: []int{},
+			oldList: []int{},
+			same:    []int{},
+			missing: []int{},
+			new:     []int{},
+		},
+		{
+			name:    "Test no overlap",
+			newList: []int{1, 2},
+			oldList: []int{3, 4},
+			same:    []int{},
+			missing: []int{3, 4},
+			new:     []int{1, 2},
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			same, missing, new := compareutils.CompareLists(tc.newList, tc.oldList)
+			if !reflect.DeepEqual(same, tc.same) || !reflect.DeepEqual(missing, tc.missing) || !reflect.DeepEqual(new, tc.new) {
+				t.Errorf("%s failed: expected (%v, %v, %v), got (%v, %v, %v)", tc.name, tc.same, tc.missing, tc.new, same, missing, new)
+			}
+		})
+	}
+}
