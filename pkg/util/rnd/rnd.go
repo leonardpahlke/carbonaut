@@ -2,6 +2,7 @@ package rnd
 
 import (
 	"crypto/rand"
+	"encoding/binary"
 	"math/big"
 )
 
@@ -39,4 +40,38 @@ func GetRandomListSubset[L any](l []L) []L {
 		availableIndexes = append(availableIndexes[:selectedElem], availableIndexes[selectedElem+1:]...)
 	}
 	return subset
+}
+
+// randFloat64 generates a float64 [0.0,1.0)
+func RandFloat64() float64 {
+	var b [8]byte
+	_, err := rand.Read(b[:])
+	if err != nil {
+		panic(err) // rng failure is fatal
+	}
+	// convert bytes to uint64
+	n := binary.LittleEndian.Uint64(b[:])
+	// convert uint64 to float64
+	return float64(n) / (1 << 64)
+}
+
+// randIntn generates a random int in [0, n)
+func RandIntn(n int) int {
+	if n <= 0 {
+		panic("invalid argument to randIntn")
+	}
+	max := int((^uint(0))>>1) - (int((^uint(0))>>1) % n)
+	var v int
+	for {
+		b := make([]byte, 4)
+		_, err := rand.Read(b)
+		if err != nil {
+			panic(err) // rng failure is fatal
+		}
+		v = int(binary.LittleEndian.Uint32(b)) & max
+		if v < n {
+			break
+		}
+	}
+	return v
 }

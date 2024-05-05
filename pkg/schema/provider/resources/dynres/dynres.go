@@ -1,10 +1,12 @@
 package dynres
 
-import "carbonaut.dev/pkg/schema"
+import (
+	"carbonaut.dev/pkg/schema/plugin"
+)
 
 type Config struct {
-	Plugin    schema.PluginName `json:"plugin"`
-	AccessKey string            `json:"access_key"`
+	Plugin    plugin.Kind `json:"plugin"`
+	AccessKey string      `json:"access_key"`
 }
 
 type Collector interface {
@@ -13,6 +15,10 @@ type Collector interface {
 
 // energy and utilization data
 type Data struct {
-	CPUFrequency        float32
-	EnergyHostMilliwatt int
+	// in MHz
+	CPUFrequency float64 `json:"cpu_frequency"`
+	// in milliwatts
+	EnergyHostMilliwatt int `json:"energy_host_milliwatt"`
+	// CPU load as a percentage
+	CPULoadPercentage float64 `json:"cpu_load_percentage"`
 }

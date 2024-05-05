@@ -1,8 +1,13 @@
 package provider
 
 import (
-	"carbonaut.dev/pkg/connector/provider/environment"
-	"carbonaut.dev/pkg/connector/provider/resources"
+	"carbonaut.dev/pkg/schema/plugin"
+	"carbonaut.dev/pkg/schema/provider/environment"
+	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
+	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
+	"carbonaut.dev/pkg/schema/provider/resources"
+	"carbonaut.dev/pkg/schema/provider/resources/dynres"
+	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 )
 
 type Config struct {
@@ -10,7 +15,12 @@ type Config struct {
 	Environment environment.Config `json:"environment"`
 }
 
-type Data struct {
-	Resources   resources.Data   `json:"resources"`
-	Environment environment.Data `json:"environment"`
+// DATA
+type Data map[plugin.AccountIdentifier][]AccountData
+
+type AccountData struct {
+	StaticResourceData     staticres.Data `json:"static_resource_data"`
+	DynamicResourceData    dynres.Data    `json:"dynamic_resource_data"`
+	StaticEnvironmentData  staticenv.Data `json:"static_environment_data"`
+	DynamicEnvironmentData dynenv.Data    `json:"dynamic_environment_data"`
 }

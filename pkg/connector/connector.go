@@ -1,21 +1,26 @@
 package connector
 
 import (
+	"fmt"
 	"log/slog"
 	"sync"
 	"time"
 
+	"carbonaut.dev/pkg/plugin/staticenvplugin"
+	"carbonaut.dev/pkg/plugin/staticresplugin"
+	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider"
-	"carbonaut.dev/pkg/schema/provider/resources"
+	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
+	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
+	"carbonaut.dev/pkg/schema/provider/resources/dynres"
 	"carbonaut.dev/pkg/util/compareutils"
 )
 
 type C struct {
-	m              sync.Mutex
-	cfg            *Config
-	providerConfig *provider.Config
-	state          *state
-	configUpdated  bool
+	mutex           sync.Mutex
+	connectorConfig *Config
+	providerConfig  *provider.Config
+	state           *state
 }
 
 type Config struct {
@@ -25,11 +30,10 @@ type Config struct {
 
 func New(connectorConfig *Config, providerConfig *provider.Config) (*C, error) {
 	connector := C{
-		m:              sync.Mutex{},
-		cfg:            connectorConfig,
-		providerConfig: &provider.Config{},
-		state:          newState(),
-		configUpdated:  false,
+		mutex:           sync.Mutex{},
+		connectorConfig: connectorConfig,
+		providerConfig:  &provider.Config{},
+		state:           newState(),
 	}
 	if err := connector.LoadConfig(providerConfig); err != nil {
 		return nil, err
@@ -38,8 +42,8 @@ func New(connectorConfig *Config, providerConfig *provider.Config) (*C, error) {
 }
 
 func (c *C) LoadConfig(newConfig *provider.Config) error {
-	newAccountSet := make([]resources.AccountIdentifier, 0, len(c.providerConfig.Resources))
-	currentAccountSet := make([]resources.AccountIdentifier, 0, len(newConfig.Resources))
+	newAccountSet := make([]plugin.AccountIdentifier, 0, len(c.providerConfig.Resources))
+	currentAccountSet := make([]plugin.AccountIdentifier, 0, len(newConfig.Resources))
 
 	for k := range newConfig.Resources {
 		newAccountSet = append(newAccountSet, k)
@@ -51,7 +55,7 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 
 	remainingAccounts, toBeDeletedAccounts, toBeCreatedAccounts := compareutils.CompareLists(newAccountSet, currentAccountSet)
 
-	c.cfg.Log.Debug("new carbonaut configuration parsed",
+	c.connectorConfig.Log.Debug("new carbonaut configuration parsed",
 		"unaltered accounts", remainingAccounts,
 		"deleted accounts", toBeDeletedAccounts,
 		"new accounts", toBeCreatedAccounts,
@@ -61,92 +65,167 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 
 	// remove toBeDeletedAccounts from state
 	for i := range toBeDeletedAccounts {
-		c.cfg.Log.Debug("delete account from carbonaut state", "identifier", string(toBeDeletedAccounts[i]))
+		c.connectorConfig.Log.Debug("delete account from carbonaut state", "identifier", string(toBeDeletedAccounts[i]))
 		delete(c.state.Accounts, toBeDeletedAccounts[i])
 	}
 
 	// add toBeCreatedAccounts to "to-create" in state
 	for i := range toBeCreatedAccounts {
-		c.cfg.Log.Debug("added account to carbonaut state", "identifier", toBeCreatedAccounts[i])
+		c.connectorConfig.Log.Debug("added account to carbonaut state", "identifier", toBeCreatedAccounts[i])
 		c.state.Accounts[toBeCreatedAccounts[i]] = Account{
-			Status: ToCreate,
 			Meta: Meta{
 				Plugin:    newConfig.Resources[toBeCreatedAccounts[i]].StaticResource.Plugin,
 				CreatedAt: time.Now(),
 			},
-			DynamicResourceCollectors: map[resources.ResourceIdentifier]ResourceState{},
+			DiscoveredResources: map[plugin.ResourceIdentifier]ResourceState{},
 		}
 	}
 
-	c.configUpdated = true
-	c.cfg.Log.Info("configuration applied")
+	c.connectorConfig.Log.Info("configuration applied")
 	c.providerConfig = newConfig
 
 	return nil
 }
 
 // This function is run by the main control loop concurrently
-func (c *C) Run() {
-	for {
-		c.m.Lock()
-		c.cfg.Log.Debug("start connector Run cycle")
-		if c.configUpdated {
-			c.cfg.Log.Debug("config updated, bootstrap new accounts")
-			if err := c.bootstrapNewAccounts(); err != nil {
-				c.cfg.Log.Error("unable to boostrap new accounts", "error", err)
+func (c *C) Run(stopChan chan int, errChan chan error) {
+	go func() {
+		for {
+			c.mutex.Lock()
+			c.connectorConfig.Log.Debug("start connector Run cycle")
+			for accountIdentifier := range c.state.Accounts {
+				toBeDeletedResources, toBeCreatedResources, err := c.fetchRemoteResourceState(accountIdentifier)
+				if err != nil {
+					errMsg := fmt.Errorf("unable to fetch resources, err: %v", err)
+					c.connectorConfig.Log.Error("error", errMsg)
+					errChan <- errMsg
+				}
+
+				if err := c.updateLocalResourceState(accountIdentifier, toBeDeletedResources, toBeCreatedResources); err != nil {
+					errMsg := fmt.Errorf("unable to update resource data, err: %v", err)
+					c.connectorConfig.Log.Error("error", errMsg)
+					errChan <- errMsg
+				}
 			}
+
+			c.mutex.Unlock()
+			c.connectorConfig.Log.Debug("finished connector Run cycle")
+			time.Sleep(time.Duration(c.connectorConfig.TimeoutSeconds) * time.Second)
 		}
-		newDiscoveredResources, err := c.discoverResources()
+	}()
+	<-stopChan
+	c.connectorConfig.Log.Debug("received signal to stop the connector, shutting down")
+}
+
+func (c *C) fetchRemoteResourceState(accountIdentifier plugin.AccountIdentifier) ([]plugin.ResourceIdentifier, []plugin.ResourceIdentifier, error) {
+	c.connectorConfig.Log.Debug("fetch resources", "account identifier", accountIdentifier)
+	staticResPlugin := c.state.Accounts[accountIdentifier].Meta.Plugin
+	p, err := staticresplugin.GetPlugin(staticResPlugin)
+	if err != nil {
+		c.connectorConfig.Log.Error("unable to find plugin", "provider type", "staticresplugin", "plugin identifier", staticResPlugin, "error", err)
+		return nil, nil, err
+	}
+	disoveredResources, err := p.ListResources(c.providerConfig.Resources[accountIdentifier].StaticResource)
+	if err != nil {
+		c.connectorConfig.Log.Error("unable to list ressources", "provider type", "staticresplugin", "plugin identifier", staticResPlugin, "error", err)
+		return nil, nil, err
+	}
+
+	currentResources := make([]plugin.ResourceIdentifier, 0, len(c.state.Accounts[accountIdentifier].DiscoveredResources))
+
+	for res := range c.state.Accounts[accountIdentifier].DiscoveredResources {
+		currentResources = append(currentResources, res)
+	}
+
+	remainingResources, toBeDeletedResources, toBeCreatedResources := compareutils.CompareLists(disoveredResources, currentResources)
+
+	c.connectorConfig.Log.Debug("resources discovered",
+		"provider type", "staticresplugin",
+		"account identifier", accountIdentifier,
+		"plugin identifier", staticResPlugin,
+		"unaltered resources", remainingResources,
+		"deleted resources", toBeDeletedResources,
+		"new resources", toBeCreatedResources,
+	)
+
+	return toBeDeletedResources, toBeCreatedResources, nil
+}
+
+func (c *C) updateLocalResourceState(accountIdentifier plugin.AccountIdentifier, toBeDeletedResources []plugin.ResourceIdentifier, toBeCreatedResources []plugin.ResourceIdentifier) error {
+	updatedAccountDetails := c.state.Accounts[accountIdentifier]
+	for i := range toBeDeletedResources {
+		c.connectorConfig.Log.Debug("delete resource", "account identifier", accountIdentifier, "resource identifier", string(toBeDeletedResources[i]))
+		delete(updatedAccountDetails.DiscoveredResources, toBeDeletedResources[i])
+	}
+
+	for i := range toBeCreatedResources {
+		c.connectorConfig.Log.Debug("add resource to state", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
+
+		staticResCollector, err := staticresplugin.GetPlugin(c.providerConfig.Resources[accountIdentifier].StaticResource.Plugin)
 		if err != nil {
-			c.cfg.Log.Error("unable to discover static resource data", "error", err)
+			return err
 		}
 
-		c.cfg.Log.Error("finished discovering new resources", "number of new resources discovered", len(newDiscoveredResources))
-
-		if len(newDiscoveredResources) != 0 {
-			if err := c.discoverEnvironment(newDiscoveredResources); err != nil {
-				c.cfg.Log.Error("unable to discover static environment data", "error", err)
-			}
+		staticEnvCollector, err := staticenvplugin.GetPlugin(c.providerConfig.Environment.StaticEnvironment.Plugin)
+		if err != nil {
+			return err
 		}
 
-		c.m.Unlock()
-		c.cfg.Log.Debug("finished connector Run cycle")
-		time.Sleep(time.Duration(c.cfg.TimeoutSeconds) * time.Second)
+		c.connectorConfig.Log.Debug("request static resource information", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
+		staticResData, err := staticResCollector.GetResource(c.providerConfig.Resources[accountIdentifier].StaticResource, toBeCreatedResources[i])
+		if err != nil {
+			return err
+		}
+
+		c.connectorConfig.Log.Debug("request static environment information", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
+		staticEnvData, err := staticEnvCollector.Get(c.providerConfig.Environment.StaticEnvironment, staticenv.InfraData{
+			IP: staticResData.IP,
+		})
+		if err != nil {
+			return err
+		}
+
+		updatedAccountDetails.DiscoveredResources[toBeCreatedResources[i]] = ResourceState{
+			StaticResourceData:    staticResData,
+			StaticEnvironmentData: staticEnvData,
+			Meta: Meta{
+				Plugin:    c.providerConfig.Resources[accountIdentifier].DynamicResource.Plugin,
+				CreatedAt: time.Now(),
+			},
+		}
 	}
-}
 
-func (c *C) bootstrapNewAccounts() error {
-	for k, account := range c.state.Accounts {
-		if account.Status == ToCreate {
-			c.cfg.Log.Debug("detected account which needs to get created", "account identifier", k)
+	c.connectorConfig.Log.Debug("add new resources to account")
+	c.state.Accounts[accountIdentifier] = updatedAccountDetails
 
-			c.cfg.Log.Debug("fetch static resource data for account", "account identifier", k)
-
-			// 3. register dynamic observers
-
-			// 4. set status to "created"
-			account.Status = Created
-		}
-	}
-
-	return nil
-}
-
-func (c *C) discoverResources() ([]resourceReference, error) {
-	// BOOTSTRAP RESOURCES
-	// 1. get all static resources that are "to-create" state
-	// 2. register dynamic observers
-	// 3. set status to "created" for the resource
-	return []resourceReference{}, nil
-}
-
-func (c *C) discoverEnvironment(resourceInfo []resourceReference) error {
-	// BOOTSTRAP ENVIRONMENT DATA OF RESOURCES
-	// 1. get all static resources that are "to-create" state
-	// 2. register dynamic observers
-	// 3. set status to "created" for the resource
 	return nil
 }
 
 // This function is triggered by the user interface
-func (c *C) Collect() {}
+func (c *C) Collect() (*provider.Data, error) {
+	c.mutex.Lock()
+	c.connectorConfig.Log.Debug("collect data")
+	data := make(provider.Data)
+
+	for accountIdentifier := range c.state.Accounts {
+		dataAccount := []provider.AccountData{}
+		for _, resourceDetails := range c.state.Accounts[accountIdentifier].DiscoveredResources {
+			// collect dynamic data - environment
+			// TODO dynresplugin.GetPlugin()
+
+			// collect dynamic data - resource
+			// TODO: dynenvplugin.GetPlugin()
+
+			dataAccount = append(dataAccount, provider.AccountData{
+				StaticResourceData:     resourceDetails.StaticResourceData,
+				DynamicResourceData:    dynres.Data{},
+				StaticEnvironmentData:  resourceDetails.StaticEnvironmentData,
+				DynamicEnvironmentData: dynenv.Data{},
+			})
+		}
+		data[accountIdentifier] = dataAccount
+	}
+
+	c.mutex.Unlock()
+	return &data, nil
+}

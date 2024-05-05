@@ -1,18 +1,24 @@
 package staticenv
 
-import "carbonaut.dev/pkg/schema"
+import (
+	"carbonaut.dev/pkg/schema/plugin"
+)
 
 type Config struct {
-	Plugin    schema.PluginName `json:"plugin"`
-	AccessKey string            `json:"access_key"`
+	Plugin    plugin.Kind `json:"plugin"`
+	AccessKey string      `json:"access_key"`
+}
+
+type InfraData struct {
+	IP string
 }
 
 type Collector interface {
-	Get(Config) (Data, error)
+	Get(Config, InfraData) (Data, error)
 }
 
 // location data
 type Data struct {
-	Region  string
-	Country string
+	Region  string `json:"region"`
+	Country string `json:"country"`
 }

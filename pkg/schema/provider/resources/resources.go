@@ -1,17 +1,13 @@
 package resources
 
 import (
+	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider/resources/dynres"
 	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 )
 
-type (
-	AccountIdentifier  string
-	ResourceIdentifier string
-)
-
 // DATA
-type Data map[AccountIdentifier][]AccountData
+type Data map[plugin.AccountIdentifier][]AccountData
 
 type AccountData struct {
 	Static  staticres.Data
@@ -19,7 +15,7 @@ type AccountData struct {
 }
 
 // CONFIG
-type Config map[AccountIdentifier]ResourceConfig
+type Config map[plugin.AccountIdentifier]ResourceConfig
 
 type ResourceConfig struct {
 	StaticResource  staticres.Config `json:"static_resource"`
