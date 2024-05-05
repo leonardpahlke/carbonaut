@@ -3,10 +3,10 @@ package connector
 import (
 	"time"
 
-	"carbonaut.dev/pkg/connector/provider/environment/staticenv"
-	"carbonaut.dev/pkg/connector/provider/resources"
-	"carbonaut.dev/pkg/connector/provider/resources/staticres"
 	"carbonaut.dev/pkg/schema"
+	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
+	"carbonaut.dev/pkg/schema/provider/resources"
+	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 )
 
 type state struct {
@@ -51,3 +51,9 @@ const (
 	ToCreate Status = "to-create"
 	Created  Status = "created"
 )
+
+// resourceReference is used internally to transport information about newly discovered resources within an account
+type resourceReference struct {
+	accountIdentifier  resources.AccountIdentifier
+	resourceIdentifier resources.ResourceIdentifier
+}

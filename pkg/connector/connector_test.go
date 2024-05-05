@@ -1,20 +1,22 @@
 package connector
 
 import (
+	"log/slog"
 	"testing"
 
-	"carbonaut.dev/pkg/connector/provider"
-	"carbonaut.dev/pkg/connector/provider/environment"
-	"carbonaut.dev/pkg/connector/provider/environment/dynenv"
-	"carbonaut.dev/pkg/connector/provider/environment/staticenv"
-	"carbonaut.dev/pkg/connector/provider/resources"
-	"carbonaut.dev/pkg/connector/provider/resources/dynres"
-	"carbonaut.dev/pkg/connector/provider/resources/staticres"
+	"carbonaut.dev/pkg/schema/provider"
+	"carbonaut.dev/pkg/schema/provider/environment"
+	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
+	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
+	"carbonaut.dev/pkg/schema/provider/resources"
+	"carbonaut.dev/pkg/schema/provider/resources/dynres"
+	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 )
 
 func TestConnectorInit(t *testing.T) {
 	connectorConfig := Config{
 		TimeoutSeconds: 10,
+		Log:            slog.Default(),
 	}
 	initialProviderConfig := provider.Config{
 		Resources: map[resources.AccountIdentifier]resources.ResourceConfig{
@@ -28,7 +30,7 @@ func TestConnectorInit(t *testing.T) {
 					AccessKey: "123",
 				},
 			},
-			"test-plugin-B": resources.ResourceConfig{
+			"test-plugin-B": {
 				StaticResource: staticres.Config{
 					Plugin:    "staticres-plug-B",
 					AccessKey: "321",

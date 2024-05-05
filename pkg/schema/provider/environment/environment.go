@@ -1,8 +1,8 @@
 package environment
 
 import (
-	"carbonaut.dev/pkg/connector/provider/environment/dynenv"
-	"carbonaut.dev/pkg/connector/provider/environment/staticenv"
+	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
+	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
 )
 
 type Data struct {

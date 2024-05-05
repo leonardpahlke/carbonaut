@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"carbonaut.dev/pkg/connector"
-	"carbonaut.dev/pkg/connector/provider"
+	"carbonaut.dev/pkg/schema/provider"
 )
 
 type Config struct {

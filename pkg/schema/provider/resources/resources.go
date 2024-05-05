@@ -1,8 +1,8 @@
 package resources
 
 import (
-	"carbonaut.dev/pkg/connector/provider/resources/dynres"
-	"carbonaut.dev/pkg/connector/provider/resources/staticres"
+	"carbonaut.dev/pkg/schema/provider/resources/dynres"
+	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 )
 
 type (
