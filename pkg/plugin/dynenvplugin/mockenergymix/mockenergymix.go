@@ -3,6 +3,7 @@ package mockenergymix
 import (
 	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
+	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
 )
 
 const PluginName plugin.Kind = "mockenergymix"
@@ -13,7 +14,7 @@ func New() p {
 	return p{}
 }
 
-func (p) Get(cfg dynenv.Config) (dynenv.Data, error) {
+func (p) Get(cfg dynenv.Config, data staticenv.Data) (dynenv.Data, error) {
 	return dynenv.Data{
 		SolarPercentage:        20.5,
 		WindPercentage:         30.0,

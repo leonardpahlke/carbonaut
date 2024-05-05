@@ -1,35 +1,62 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log/slog"
+	"os"
 
-	"carbonaut.dev/pkg/carbonautserver"
 	"carbonaut.dev/pkg/config"
-	"carbonaut.dev/pkg/connector/plugin/infrastructureaccount"
+	"carbonaut.dev/pkg/connector"
+	"carbonaut.dev/pkg/server"
 )
 
+var configFullPath string
+
+func init() {
+	flag.StringVar(&configFullPath, "c", "config.yaml", "Full path of the Carbonaut configuration file")
+	flag.Parse()
+}
+
 func main() {
-	config_path := "config.yaml"
-	config, err := config.ReadConfig(config_path)
-	if err != nil {
-		panic(err) // TODO: fail
-	}
-
 	exitChan := make(chan int)
-	// TODO: perphaps pass in some information about the deployment which can be accessed and updated by the resource plugin runners
-	go carbonautserver.Listen(exitChan)
+	connectorErrChan := make(chan error)
+	config, err := config.ReadConfig(configFullPath)
+	if err != nil {
+		panic(fmt.Sprintf("could not read configuration file, err: %v", err))
+	}
+	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		Level: GetLogLevel(config.Meta.LogLevel),
+	})
+	log := slog.New(handler)
+	log.Info("starting carbonaut", "config", config)
 
-	infrastructureaccounts := []infrastructureaccount.ResourceAccount{}
-	for i := range config.StaticResourceProviders {
-		a, err := infrastructureaccount.New(config.StaticResourceProviders[i])
-		if err != nil {
-			panic(err) // TODO: error handling
-		}
-		infrastructureaccounts = append(infrastructureaccounts, a)
-		go a.Observe()
-		// go collector.Collect(config.StaticResourceProviders[i])
+	connector, err := connector.New(config.Meta.Connector, log, config.Spec.Provider)
+	if err != nil {
+		log.Error("could not initialize connector with provided configuration", "connector config", config.Meta.Connector, "provider config", config.Spec.Provider, "error", err)
+		os.Exit(1)
 	}
 
-	<-exitChan
-	fmt.Println("Shutting down Carbonaut")
+	log.Info("starting carbonaut server", "address", fmt.Sprintf("http://0.0.0.0:%d", config.Spec.Server.Port))
+	server := server.New(connector, log, exitChan)
+	go server.Listen(config.Spec.Server)
+
+	log.Info("starting carbonaut connector")
+	// TODO: connectorErrChan do smth with errors (next to printing them)?
+	connector.Run(exitChan, connectorErrChan)
+}
+
+func GetLogLevel(logLevel string) slog.Level {
+	switch logLevel {
+	case "debug":
+		return slog.LevelDebug
+	case "info":
+		return slog.LevelInfo
+	case "warn":
+		return slog.LevelWarn
+	case "error":
+		return slog.LevelError
+	default:
+		return slog.LevelInfo
+	}
 }

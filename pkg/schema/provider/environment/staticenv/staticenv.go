@@ -5,8 +5,8 @@ import (
 )
 
 type Config struct {
-	Plugin    plugin.Kind `json:"plugin"`
-	AccessKey string      `json:"access_key"`
+	Plugin    plugin.Kind `json:"plugin" yaml:"plugin"`
+	AccessKey string      `json:"access_key" yaml:"access_key"`
 }
 
 type InfraData struct {
@@ -19,6 +19,6 @@ type Collector interface {
 
 // location data
 type Data struct {
-	Region  string `json:"region"`
-	Country string `json:"country"`
+	Region  string `json:"region" yaml:"region"`
+	Country string `json:"country" yaml:"country"`
 }

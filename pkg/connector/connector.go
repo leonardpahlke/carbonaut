@@ -6,13 +6,13 @@ import (
 	"sync"
 	"time"
 
+	"carbonaut.dev/pkg/plugin/dynenvplugin"
+	"carbonaut.dev/pkg/plugin/dynresplugin"
 	"carbonaut.dev/pkg/plugin/staticenvplugin"
 	"carbonaut.dev/pkg/plugin/staticresplugin"
 	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider"
-	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
 	"carbonaut.dev/pkg/schema/provider/environment/staticenv"
-	"carbonaut.dev/pkg/schema/provider/resources/dynres"
 	"carbonaut.dev/pkg/util/compareutils"
 )
 
@@ -21,19 +21,20 @@ type C struct {
 	connectorConfig *Config
 	providerConfig  *provider.Config
 	state           *state
+	log             *slog.Logger
 }
 
 type Config struct {
 	TimeoutSeconds int `json:"timeout_seconds"`
-	Log            *slog.Logger
 }
 
-func New(connectorConfig *Config, providerConfig *provider.Config) (*C, error) {
+func New(connectorConfig *Config, Log *slog.Logger, providerConfig *provider.Config) (*C, error) {
 	connector := C{
 		mutex:           sync.Mutex{},
 		connectorConfig: connectorConfig,
 		providerConfig:  &provider.Config{},
 		state:           newState(),
+		log:             Log,
 	}
 	if err := connector.LoadConfig(providerConfig); err != nil {
 		return nil, err
@@ -55,7 +56,8 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 
 	remainingAccounts, toBeDeletedAccounts, toBeCreatedAccounts := compareutils.CompareLists(newAccountSet, currentAccountSet)
 
-	c.connectorConfig.Log.Debug("new carbonaut configuration parsed",
+	c.log.Debug("new carbonaut configuration parsed",
+		"component", "connector.LoadConfig",
 		"unaltered accounts", remainingAccounts,
 		"deleted accounts", toBeDeletedAccounts,
 		"new accounts", toBeCreatedAccounts,
@@ -65,13 +67,13 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 
 	// remove toBeDeletedAccounts from state
 	for i := range toBeDeletedAccounts {
-		c.connectorConfig.Log.Debug("delete account from carbonaut state", "identifier", string(toBeDeletedAccounts[i]))
+		c.log.Debug("delete account from carbonaut state", "component", "connector.LoadConfig", "identifier", string(toBeDeletedAccounts[i]))
 		delete(c.state.Accounts, toBeDeletedAccounts[i])
 	}
 
 	// add toBeCreatedAccounts to "to-create" in state
 	for i := range toBeCreatedAccounts {
-		c.connectorConfig.Log.Debug("added account to carbonaut state", "identifier", toBeCreatedAccounts[i])
+		c.log.Debug("added account to carbonaut state", "component", "connector.LoadConfig", "identifier", toBeCreatedAccounts[i])
 		c.state.Accounts[toBeCreatedAccounts[i]] = Account{
 			Meta: Meta{
 				Plugin:    newConfig.Resources[toBeCreatedAccounts[i]].StaticResource.Plugin,
@@ -81,7 +83,7 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 		}
 	}
 
-	c.connectorConfig.Log.Info("configuration applied")
+	c.log.Info("configuration applied")
 	c.providerConfig = newConfig
 
 	return nil
@@ -92,42 +94,42 @@ func (c *C) Run(stopChan chan int, errChan chan error) {
 	go func() {
 		for {
 			c.mutex.Lock()
-			c.connectorConfig.Log.Debug("start connector Run cycle")
+			c.log.Debug("start connector Run cycle", "component", "connector.Run")
 			for accountIdentifier := range c.state.Accounts {
 				toBeDeletedResources, toBeCreatedResources, err := c.fetchRemoteResourceState(accountIdentifier)
 				if err != nil {
 					errMsg := fmt.Errorf("unable to fetch resources, err: %v", err)
-					c.connectorConfig.Log.Error("error", errMsg)
+					c.log.Error("error", errMsg)
 					errChan <- errMsg
 				}
 
 				if err := c.updateLocalResourceState(accountIdentifier, toBeDeletedResources, toBeCreatedResources); err != nil {
 					errMsg := fmt.Errorf("unable to update resource data, err: %v", err)
-					c.connectorConfig.Log.Error("error", errMsg)
+					c.log.Error("error", errMsg)
 					errChan <- errMsg
 				}
 			}
 
 			c.mutex.Unlock()
-			c.connectorConfig.Log.Debug("finished connector Run cycle")
+			c.log.Debug("finished connector Run cycle", "component", "connector.Run")
 			time.Sleep(time.Duration(c.connectorConfig.TimeoutSeconds) * time.Second)
 		}
 	}()
 	<-stopChan
-	c.connectorConfig.Log.Debug("received signal to stop the connector, shutting down")
+	c.log.Debug("received signal to stop the connector, shutting down", "component", "connector.Run")
 }
 
 func (c *C) fetchRemoteResourceState(accountIdentifier plugin.AccountIdentifier) ([]plugin.ResourceIdentifier, []plugin.ResourceIdentifier, error) {
-	c.connectorConfig.Log.Debug("fetch resources", "account identifier", accountIdentifier)
+	c.log.Info("fetch resources", "component", "connector.fetchRemoteResourceState", "account identifier", accountIdentifier)
 	staticResPlugin := c.state.Accounts[accountIdentifier].Meta.Plugin
 	p, err := staticresplugin.GetPlugin(staticResPlugin)
 	if err != nil {
-		c.connectorConfig.Log.Error("unable to find plugin", "provider type", "staticresplugin", "plugin identifier", staticResPlugin, "error", err)
+		c.log.Error("unable to find plugin", "component", "connector.fetchRemoteResourceState", "provider type", "staticresplugin", "plugin identifier", staticResPlugin, "error", err)
 		return nil, nil, err
 	}
 	disoveredResources, err := p.ListResources(c.providerConfig.Resources[accountIdentifier].StaticResource)
 	if err != nil {
-		c.connectorConfig.Log.Error("unable to list ressources", "provider type", "staticresplugin", "plugin identifier", staticResPlugin, "error", err)
+		c.log.Error("unable to list ressources", "component", "connector.fetchRemoteResourceState", "provider type", "staticresplugin", "plugin identifier", staticResPlugin, "error", err)
 		return nil, nil, err
 	}
 
@@ -139,7 +141,8 @@ func (c *C) fetchRemoteResourceState(accountIdentifier plugin.AccountIdentifier)
 
 	remainingResources, toBeDeletedResources, toBeCreatedResources := compareutils.CompareLists(disoveredResources, currentResources)
 
-	c.connectorConfig.Log.Debug("resources discovered",
+	c.log.Debug("resources discovered",
+		"component", "connector.fetchRemoteResourceState",
 		"provider type", "staticresplugin",
 		"account identifier", accountIdentifier,
 		"plugin identifier", staticResPlugin,
@@ -154,12 +157,12 @@ func (c *C) fetchRemoteResourceState(accountIdentifier plugin.AccountIdentifier)
 func (c *C) updateLocalResourceState(accountIdentifier plugin.AccountIdentifier, toBeDeletedResources []plugin.ResourceIdentifier, toBeCreatedResources []plugin.ResourceIdentifier) error {
 	updatedAccountDetails := c.state.Accounts[accountIdentifier]
 	for i := range toBeDeletedResources {
-		c.connectorConfig.Log.Debug("delete resource", "account identifier", accountIdentifier, "resource identifier", string(toBeDeletedResources[i]))
+		// c.log.Debug("delete resource", "component", "connector.updateLocalResourceState", "account identifier", accountIdentifier, "resource identifier", string(toBeDeletedResources[i]))
 		delete(updatedAccountDetails.DiscoveredResources, toBeDeletedResources[i])
 	}
 
 	for i := range toBeCreatedResources {
-		c.connectorConfig.Log.Debug("add resource to state", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
+		// c.log.Debug("add resource to state", "component", "connector.updateLocalResourceState", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
 
 		staticResCollector, err := staticresplugin.GetPlugin(c.providerConfig.Resources[accountIdentifier].StaticResource.Plugin)
 		if err != nil {
@@ -171,13 +174,13 @@ func (c *C) updateLocalResourceState(accountIdentifier plugin.AccountIdentifier,
 			return err
 		}
 
-		c.connectorConfig.Log.Debug("request static resource information", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
+		// c.log.Debug("request static resource information", "component", "connector.updateLocalResourceState", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
 		staticResData, err := staticResCollector.GetResource(c.providerConfig.Resources[accountIdentifier].StaticResource, toBeCreatedResources[i])
 		if err != nil {
 			return err
 		}
 
-		c.connectorConfig.Log.Debug("request static environment information", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
+		// c.log.Debug("request static environment information", "component", "connector.updateLocalResourceState", "account identifier", accountIdentifier, "resource identifier", toBeCreatedResources[i])
 		staticEnvData, err := staticEnvCollector.Get(c.providerConfig.Environment.StaticEnvironment, staticenv.InfraData{
 			IP: staticResData.IP,
 		})
@@ -195,7 +198,7 @@ func (c *C) updateLocalResourceState(accountIdentifier plugin.AccountIdentifier,
 		}
 	}
 
-	c.connectorConfig.Log.Debug("add new resources to account")
+	c.log.Info("add new resources to account", "component", "connector.updateLocalResourceState")
 	c.state.Accounts[accountIdentifier] = updatedAccountDetails
 
 	return nil
@@ -204,28 +207,50 @@ func (c *C) updateLocalResourceState(accountIdentifier plugin.AccountIdentifier,
 // This function is triggered by the user interface
 func (c *C) Collect() (*provider.Data, error) {
 	c.mutex.Lock()
-	c.connectorConfig.Log.Debug("collect data")
+	defer c.mutex.Unlock()
+	c.log.Info("collect data", "component", "connector.collect")
 	data := make(provider.Data)
 
 	for accountIdentifier := range c.state.Accounts {
+		c.log.Debug("collect data", "component", "connector.collect", "account", accountIdentifier)
 		dataAccount := []provider.AccountData{}
 		for _, resourceDetails := range c.state.Accounts[accountIdentifier].DiscoveredResources {
-			// collect dynamic data - environment
-			// TODO dynresplugin.GetPlugin()
+			c.log.Debug("collect dynamic data - resource", "component", "connector.collect", "plugin", c.providerConfig.Resources[accountIdentifier].DynamicResource.Plugin)
+			dynResCollector, err := dynresplugin.GetPlugin(c.providerConfig.Resources[accountIdentifier].DynamicResource.Plugin)
+			if err != nil {
+				return nil, err
+			}
 
-			// collect dynamic data - resource
-			// TODO: dynenvplugin.GetPlugin()
+			c.log.Debug("collect dynamic data - environment", "component", "connector.collect", "plugin", c.providerConfig.Environment.DynamicEnvironment.Plugin)
+			dynEnvCollector, err := dynenvplugin.GetPlugin(c.providerConfig.Environment.DynamicEnvironment.Plugin)
+			if err != nil {
+				return nil, err
+			}
+
+			dynResData, err := dynResCollector.Get(c.providerConfig.Resources[accountIdentifier].DynamicResource, resourceDetails.StaticResourceData)
+			if err != nil {
+				return nil, err
+			}
+			dynEnvData, err := dynEnvCollector.Get(c.providerConfig.Environment.DynamicEnvironment, resourceDetails.StaticEnvironmentData)
+			if err != nil {
+				return nil, err
+			}
 
 			dataAccount = append(dataAccount, provider.AccountData{
 				StaticResourceData:     resourceDetails.StaticResourceData,
-				DynamicResourceData:    dynres.Data{},
+				DynamicResourceData:    dynResData,
 				StaticEnvironmentData:  resourceDetails.StaticEnvironmentData,
-				DynamicEnvironmentData: dynenv.Data{},
+				DynamicEnvironmentData: dynEnvData,
 			})
 		}
-		data[accountIdentifier] = dataAccount
+
+		if len(dataAccount) == 0 {
+			c.log.Debug("No data collected for account", "component", "connector.collect", "account", accountIdentifier)
+		} else {
+			data[accountIdentifier] = dataAccount
+			c.log.Debug("Data collected for account", "component", "connector.collect", "account", accountIdentifier, "dataCount", len(dataAccount))
+		}
 	}
 
-	c.mutex.Unlock()
 	return &data, nil
 }

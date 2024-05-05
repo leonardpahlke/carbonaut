@@ -1,0 +1,32 @@
+kind: carbonaut
+meta:
+    name: carbonaut
+    log_level: debug
+    connector:
+        timeoutseconds: 10
+spec:
+    provider:
+        resources:
+            a-cloudprovider-account:
+                static_resource:
+                    plugin: mockcloudprovider
+                    access_key: 32-some-kind-of-key-23
+                dynamicresource:
+                    plugin: mockenergy
+                    access_key: 12-some-kind-of-key-21
+            b-cloudprovider-account:
+                static_resource:
+                    plugin: mockcloudprovider
+                    access_key: 456-some-kind-of-key-452
+                dynamicresource:
+                    plugin: mockenergy
+                    access_key: 2-some-kind-of-key-1
+        environment:
+            dynamic_environment:
+                plugin: mockenergymix
+                access_key: some-kind-of-key-22
+            static_environment:
+                plugin: mockgeolocation
+                access_key: 22-some-kind-of-key
+    server:
+        port: 8088

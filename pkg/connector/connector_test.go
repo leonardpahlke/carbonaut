@@ -93,9 +93,8 @@ var (
 func TestConnectorInit(t *testing.T) {
 	connectorConfig := Config{
 		TimeoutSeconds: 10,
-		Log:            slog.Default(),
 	}
-	c, err := New(&connectorConfig, &initialProviderConfig)
+	c, err := New(&connectorConfig, slog.Default(), &initialProviderConfig)
 	if err != nil {
 		t.Error(err)
 	}
@@ -117,10 +116,9 @@ func TestConnectorInit(t *testing.T) {
 func TestConnectorRun(t *testing.T) {
 	connectorConfig := Config{
 		TimeoutSeconds: 10,
-		Log:            slog.Default(),
 	}
 
-	c, err := New(&connectorConfig, &initialProviderConfig)
+	c, err := New(&connectorConfig, slog.Default(), &initialProviderConfig)
 	if err != nil {
 		t.Error(err)
 	}

@@ -5,8 +5,8 @@ import (
 )
 
 type Config struct {
-	Plugin    plugin.Kind `json:"plugin"`
-	AccessKey string      `json:"access_key"`
+	Plugin    plugin.Kind `json:"plugin" yaml:"plugin"`
+	AccessKey string      `json:"access_key" yaml:"access_key"`
 }
 
 type Collector interface {
@@ -16,10 +16,10 @@ type Collector interface {
 
 // computer hardware data
 type Data struct {
-	Name      string `json:"name"`
-	IP        string `json:"ip"`
-	CPUCores  int    `json:"cpu_cores"`
-	MemoryMB  int    `json:"memory_mb"`
-	Arch      string `json:"arch"`
-	StorageGB int    `json:"storage_gb"`
+	Name      string `json:"name" yaml:"name"`
+	IP        string `json:"ip" yaml:"ip"`
+	CPUCores  int    `json:"cpu_cores" yaml:"cpu_cores"`
+	MemoryMB  int    `json:"memory_mb" yaml:"memory_mb"`
+	Arch      string `json:"arch" yaml:"arch"`
+	StorageGB int    `json:"storage_gb" yaml:"storage_gb"`
 }

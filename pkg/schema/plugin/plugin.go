@@ -8,7 +8,3 @@ type (
 	// defines the name of a resource which was found in an account e.g. equinix-server-b
 	ResourceIdentifier string
 )
-
-// type Resource struct {
-// 	Name string
-// }

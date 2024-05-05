@@ -3,6 +3,7 @@ package mockenergy
 import (
 	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider/resources/dynres"
+	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 	"carbonaut.dev/pkg/util/rnd"
 )
 
@@ -14,7 +15,7 @@ func New() p {
 	return p{}
 }
 
-func (p) Get(cfg dynres.Config) (dynres.Data, error) {
+func (p) Get(cfg dynres.Config, data staticres.Data) (dynres.Data, error) {
 	return dynres.Data{
 		// Random CPU frequency between 1000 MHz and 3000 MHz
 		CPUFrequency: 1000 + rnd.RandFloat64()*2000,
