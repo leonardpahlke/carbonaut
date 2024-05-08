@@ -6,6 +6,6 @@ import (
 )
 
 type Config struct {
-	DynamicEnvironment dynenv.Config    `json:"dynamic_environment" yaml:"dynamic_environment"`
-	StaticEnvironment  staticenv.Config `json:"static_environment" yaml:"static_environment"`
+	DynamicEnvironment *dynenv.Config    `json:"dynamic_environment" yaml:"dynamic_environment"`
+	StaticEnvironment  *staticenv.Config `json:"static_environment"  yaml:"static_environment"`
 }

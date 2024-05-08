@@ -12,12 +12,12 @@ var plugins = map[plugin.Kind]staticenv.Collector{
 	mockgeolocation.PluginName: mockgeolocation.New(),
 }
 
-func GetPlugin(identifier plugin.Kind) (staticenv.Collector, error) {
-	plugin, found := plugins[identifier]
+func GetPlugin(identifier *plugin.Kind) (staticenv.Collector, error) {
+	p, found := plugins[*identifier]
 	if found {
-		return plugin, nil
+		return p, nil
 	}
-	return nil, fmt.Errorf("no plugin found with the name %s", identifier)
+	return nil, fmt.Errorf("no plugin found with the name %s", *identifier)
 }
 
 func GetPluginIdentifiers() []plugin.Kind {

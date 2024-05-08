@@ -24,14 +24,14 @@ type Account struct {
 }
 
 type ResourceState struct {
-	StaticResourceData    staticres.Data
-	StaticEnvironmentData staticenv.Data
+	StaticResourceData    *staticres.Data
+	StaticEnvironmentData *staticenv.Data
 	Meta                  Meta
 }
 
 // META
 type Meta struct {
-	Plugin    plugin.Kind
+	Plugin    *plugin.Kind
 	CreatedAt time.Time
 	DeletedAt time.Time
 }

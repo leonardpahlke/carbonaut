@@ -6,10 +6,12 @@ package promscraper
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
+	"math"
 	"net/http"
 	"os"
 	"os/signal"
@@ -55,7 +57,10 @@ func TestCollect(t *testing.T) {
 	t.Logf("received string %s: ", str)
 
 	d := []Family{}
-	json.Unmarshal(b, &d)
+	if err := json.Unmarshal(b, &d); err != nil {
+		t.Errorf("could not Unmarshal err: %v", err)
+		t.Fail()
+	}
 	if len(d) == 0 {
 		t.Errorf("received an empty list of metrics as response")
 		t.Fail()
@@ -64,7 +69,6 @@ func TestCollect(t *testing.T) {
 
 func testServerUp(port int) {
 	meterName := fmt.Sprintf("carbonaut-test-prom2json-%d", time.Now().Nanosecond())
-	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	ctx := context.Background()
 
 	exporter, err := prometheus.New()
@@ -94,7 +98,10 @@ func testServerUp(port int) {
 		log.Fatal(err)
 	}
 	_, err = meter.RegisterCallback(func(_ context.Context, o api.Observer) error {
-		n := -10. + rng.Float64()*(90.) // [-10, 100)
+		n, err := cryptoRandFloat(-10, 80)
+		if err != nil {
+			log.Fatal(err)
+		}
 		o.ObserveFloat64(gauge, n, opt)
 		return nil
 	}, gauge)
@@ -129,4 +136,17 @@ func serveMetrics(port int) {
 		fmt.Printf("error serving http: %v", err)
 		return
 	}
+}
+
+func cryptoRandFloat(min, max float64) (float64, error) {
+	var b [8]byte
+	_, err := rand.Read(b[:])
+	if err != nil {
+		return 0, err
+	}
+	// Convert the bytes to a uint64
+	num := binary.LittleEndian.Uint64(b[:])
+
+	// Scale and shift the number to the desired range
+	return (float64(num)/math.MaxUint64)*(max-min) + min, nil
 }

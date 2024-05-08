@@ -6,12 +6,13 @@ import (
 	"log"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"carbonaut.dev/pkg/connector"
 )
 
 type Config struct {
-	Port int `json:"port" yaml:"port" default:"8088"`
+	Port int `default:"8088" json:"port" yaml:"port"`
 }
 
 type Server struct {
@@ -20,20 +21,43 @@ type Server struct {
 	ExitChan  chan int
 }
 
-func New(Connector *connector.C, Log *slog.Logger, ExitChan chan int) *Server {
+type CacheItem struct {
+	Data      []byte
+	Timestamp time.Time
+}
+
+var (
+	cache         *CacheItem    = nil
+	cacheDuration time.Duration = 10 * time.Second
+)
+
+func New(c *connector.C, logger *slog.Logger, exitChan chan int) *Server {
 	return &Server{
-		Connector: Connector,
-		Log:       Log,
-		ExitChan:  ExitChan,
+		Connector: c,
+		Log:       logger,
+		ExitChan:  exitChan,
 	}
 }
 
 func (s Server) Listen(cfg *Config) {
 	server := &http.Server{
-		Addr: fmt.Sprintf(":%d", cfg.Port),
+		Addr:              fmt.Sprintf(":%d", cfg.Port),
+		ReadHeaderTimeout: 10 * time.Second,
 	}
 
 	http.HandleFunc("/metrics-json", func(w http.ResponseWriter, r *http.Request) {
+		now := time.Now()
+		if cache != nil && now.Sub(cache.Timestamp) < cacheDuration {
+			s.Log.Info("serving from cache", "component", "server")
+			w.Header().Set("Content-Type", "application/json")
+			_, err := w.Write(cache.Data)
+			if err != nil {
+				s.Log.Error("could not write response", "component", "server", "error", err)
+				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			}
+			return
+		}
+
 		data, err := s.Connector.Collect()
 		if err != nil {
 			s.Log.Error("could not collect data from connector", "component", "server", "error", err)
@@ -41,8 +65,7 @@ func (s Server) Listen(cfg *Config) {
 			return
 		}
 
-		s.Log.Info("collected data", "component", "server", "data", *data)
-
+		s.Log.Info("collected new data", "component", "server", "data", *data)
 		jsonData, err := json.Marshal(data)
 		if err != nil {
 			s.Log.Error("could not serialize data to JSON", "component", "server", "error", err)
@@ -50,8 +73,18 @@ func (s Server) Listen(cfg *Config) {
 			return
 		}
 
+		cache = &CacheItem{
+			Data:      jsonData,
+			Timestamp: now,
+		}
+
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(jsonData)
+		_, err = w.Write(jsonData)
+		if err != nil {
+			s.Log.Error("could not write response", "component", "server", "error", err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
 	})
 
 	http.HandleFunc("/stop", func(w http.ResponseWriter, r *http.Request) {

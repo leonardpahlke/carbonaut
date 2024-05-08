@@ -5,8 +5,8 @@ import (
 )
 
 type Config struct {
-	Plugin    plugin.Kind `json:"plugin" yaml:"plugin"`
-	AccessKey string      `json:"access_key" yaml:"access_key"`
+	Plugin    *plugin.Kind `json:"plugin"     yaml:"plugin"`
+	AccessKey *string      `json:"access_key" yaml:"access_key"`
 }
 
 type InfraData struct {
@@ -14,11 +14,11 @@ type InfraData struct {
 }
 
 type Collector interface {
-	Get(Config, InfraData) (Data, error)
+	Get(*Config, *InfraData) (*Data, error)
 }
 
 // location data
 type Data struct {
-	Region  string `json:"region" yaml:"region"`
+	Region  string `json:"region"  yaml:"region"`
 	Country string `json:"country" yaml:"country"`
 }

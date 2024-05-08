@@ -43,7 +43,7 @@ var _ = Describe("compareutils", func() {
 			Expect(*compareutils.GetListDuplicates(listWithDuplicates1)).To(Equal([]string{"A"}))
 		})
 		It("should return multiple values with mixed list of duplicate and none duplicates ", func() {
-			Expect(*compareutils.GetListDuplicates(listWithDuplicates2)).To(Equal([]string{"A", "A1"}))
+			Expect(*compareutils.GetListDuplicates(listWithDuplicates2)).To(Or(Equal([]string{"A", "A1"}), Equal([]string{"A1", "A"})))
 		})
 	})
 

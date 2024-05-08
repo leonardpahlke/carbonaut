@@ -9,6 +9,7 @@ import (
 	"io"
 	"mime"
 	"net/http"
+	"strconv"
 
 	"github.com/matttproud/golang_protobuf_extensions/pbutil"
 	"github.com/prometheus/common/expfmt"
@@ -54,7 +55,6 @@ type Histogram struct {
 // newFamily consumes a MetricFamily and transforms it to the local Family type.
 func newFamily(dtoMF *dto.MetricFamily) *Family {
 	mf := &Family{
-		// Time:    time.Now(),
 		Name:    dtoMF.GetName(),
 		Help:    dtoMF.GetHelp(),
 		Type:    dtoMF.GetType().String(),
@@ -67,22 +67,23 @@ func newFamily(dtoMF *dto.MetricFamily) *Family {
 				Labels:      makeLabels(m),
 				TimestampMs: makeTimestamp(m),
 				Quantiles:   makeQuantiles(m),
-				Count:       fmt.Sprint(m.GetSummary().GetSampleCount()),
-				Sum:         fmt.Sprint(m.GetSummary().GetSampleSum()),
+				Count:       strconv.FormatUint(m.GetSummary().GetSampleCount(), 10),
+				Sum:         strconv.FormatFloat(m.GetSummary().GetSampleSum(), 'f', -1, 64),
 			}
 		case dto.MetricType_HISTOGRAM:
 			mf.Metrics[i] = Histogram{
 				Labels:      makeLabels(m),
 				TimestampMs: makeTimestamp(m),
 				Buckets:     makeBuckets(m),
-				Count:       fmt.Sprint(m.GetHistogram().GetSampleCount()),
-				Sum:         fmt.Sprint(m.GetHistogram().GetSampleSum()),
+				Count:       strconv.FormatUint(m.GetHistogram().GetSampleCount(), 10),
+				Sum:         strconv.FormatFloat(m.GetHistogram().GetSampleSum(), 'f', -1, 64),
 			}
 		default:
+			value := getValue(m)
 			mf.Metrics[i] = Metric{
 				Labels:      makeLabels(m),
 				TimestampMs: makeTimestamp(m),
-				Value:       fmt.Sprint(getValue(m)),
+				Value:       strconv.FormatFloat(value, 'f', -1, 64),
 			}
 		}
 	}
@@ -114,13 +115,15 @@ func makeTimestamp(m *dto.Metric) string {
 	if m.TimestampMs == nil {
 		return ""
 	}
-	return fmt.Sprint(m.GetTimestampMs())
+	return strconv.FormatInt(m.GetTimestampMs(), 10)
 }
 
 func makeQuantiles(m *dto.Metric) map[string]string {
 	result := map[string]string{}
 	for _, q := range m.GetSummary().GetQuantile() {
-		result[fmt.Sprint(q.GetQuantile())] = fmt.Sprint(q.GetValue())
+		quantile := strconv.FormatFloat(q.GetQuantile(), 'f', -1, 64)
+		value := strconv.FormatFloat(q.GetValue(), 'f', -1, 64)
+		result[quantile] = value
 	}
 	return result
 }
@@ -128,8 +131,11 @@ func makeQuantiles(m *dto.Metric) map[string]string {
 func makeBuckets(m *dto.Metric) map[string]string {
 	result := map[string]string{}
 	for _, b := range m.GetHistogram().GetBucket() {
-		result[fmt.Sprint(b.GetUpperBound())] = fmt.Sprint(b.GetCumulativeCount())
+		upperBound := strconv.FormatFloat(b.GetUpperBound(), 'f', -1, 64) // Assumes GetUpperBound returns a float64
+		cumulativeCount := strconv.FormatUint(b.GetCumulativeCount(), 10) // Assumes GetCumulativeCount returns a uint64
+		result[upperBound] = cumulativeCount
 	}
+
 	return result
 }
 
@@ -138,22 +144,22 @@ func makeBuckets(m *dto.Metric) map[string]string {
 // returns after all MetricFamilies have been sent. The provided transport
 // may be nil (in which case the default Transport is used).
 func fetchMetricFamilies(url string, ch chan<- *dto.MetricFamily, transport http.RoundTripper) error {
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, http.NoBody)
 	if err != nil {
 		close(ch)
-		return fmt.Errorf("creating GET request for URL %q failed: %v", url, err)
+		return fmt.Errorf("creating %s request for URL %q failed: %v", http.MethodGet, url, err)
 	}
 	req.Header.Add("Accept", acceptHeader)
 	client := http.Client{Transport: transport}
 	resp, err := client.Do(req)
 	if err != nil {
 		close(ch)
-		return fmt.Errorf("executing GET request for URL %q failed: %v", url, err)
+		return fmt.Errorf("executing %s request for URL %q failed: %v", http.MethodGet, url, err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		close(ch)
-		return fmt.Errorf("GET request for URL %q returned HTTP status %s", url, resp.Status)
+		return fmt.Errorf("%s request for URL %q returned HTTP status %s", http.MethodGet, url, resp.Status)
 	}
 	return parseResponse(resp, ch)
 }
@@ -207,8 +213,7 @@ func parseReader(in io.Reader, ch chan<- *dto.MetricFamily) error {
 // AddLabel allows to add key/value labels to an already existing Family.
 func (f *Family) AddLabel(key, val string) {
 	for i, item := range f.Metrics {
-		switch m := item.(type) {
-		case Metric:
+		if m, ok := item.(Metric); ok {
 			m.Labels[key] = val
 			f.Metrics[i] = m
 		}

@@ -21,29 +21,29 @@ func init() {
 func main() {
 	exitChan := make(chan int)
 	connectorErrChan := make(chan error)
-	config, err := config.ReadConfig(configFullPath)
+	cfg, err := config.ReadConfig(configFullPath)
 	if err != nil {
 		panic(fmt.Sprintf("could not read configuration file, err: %v", err))
 	}
 	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: GetLogLevel(config.Meta.LogLevel),
+		Level: GetLogLevel(cfg.Meta.LogLevel),
 	})
 	log := slog.New(handler)
-	log.Info("starting carbonaut", "config", config)
+	log.Info("starting carbonaut", "config", cfg)
 
-	connector, err := connector.New(config.Meta.Connector, log, config.Spec.Provider)
+	c, err := connector.New(cfg.Meta.Connector, log, cfg.Spec.Provider)
 	if err != nil {
-		log.Error("could not initialize connector with provided configuration", "connector config", config.Meta.Connector, "provider config", config.Spec.Provider, "error", err)
+		log.Error("could not initialize connector with provided configuration", "connector config", cfg.Meta.Connector, "provider config", cfg.Spec.Provider, "error", err)
 		os.Exit(1)
 	}
 
-	log.Info("starting carbonaut server", "address", fmt.Sprintf("http://0.0.0.0:%d", config.Spec.Server.Port))
-	server := server.New(connector, log, exitChan)
-	go server.Listen(config.Spec.Server)
+	log.Info("starting carbonaut server", "address", fmt.Sprintf("http://0.0.0.0:%d", cfg.Spec.Server.Port))
+	s := server.New(c, log, exitChan)
+	go s.Listen(cfg.Spec.Server)
 
 	log.Info("starting carbonaut connector")
 	// TODO: connectorErrChan do smth with errors (next to printing them)?
-	connector.Run(exitChan, connectorErrChan)
+	c.Run(exitChan, connectorErrChan)
 }
 
 func GetLogLevel(logLevel string) slog.Level {

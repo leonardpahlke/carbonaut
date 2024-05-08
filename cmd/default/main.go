@@ -10,7 +10,6 @@ import (
 	"carbonaut.dev/pkg/plugin/dynresplugin/mockenergy"
 	"carbonaut.dev/pkg/plugin/staticenvplugin/mockgeolocation"
 	"carbonaut.dev/pkg/plugin/staticresplugin/mockcloudprovider"
-	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider"
 	"carbonaut.dev/pkg/schema/provider/environment"
 	"carbonaut.dev/pkg/schema/provider/environment/dynenv"
@@ -21,6 +20,12 @@ import (
 	"carbonaut.dev/pkg/server"
 	"github.com/creasty/defaults"
 	"gopkg.in/yaml.v3"
+)
+
+var (
+	exampleAccessKeyA = "123"
+	exampleAccessKeyB = "435"
+	exampleAccessKeyC = "7654asdE2"
 )
 
 func main() {
@@ -37,36 +42,36 @@ func main() {
 		},
 		Spec: config.Spec{
 			Provider: &provider.Config{
-				Resources: map[plugin.AccountIdentifier]resources.ResourceConfig{
-					"a-cloudprovider-account": {
-						StaticResource: staticres.Config{
-							Plugin:    mockcloudprovider.PluginName,
-							AccessKey: "32-some-kind-of-key-23",
+				Resources: &resources.Config{
+					"test-plugin-A": resources.ResourceConfig{
+						StaticResource: &staticres.Config{
+							Plugin:    &mockcloudprovider.PluginName,
+							AccessKey: &exampleAccessKeyA,
 						},
-						DynamicResource: dynres.Config{
-							Plugin:    mockenergy.PluginName,
-							AccessKey: "12-some-kind-of-key-21",
+						DynamicResource: &dynres.Config{
+							Plugin:    &mockenergy.PluginName,
+							AccessKey: &exampleAccessKeyB,
 						},
 					},
-					"b-cloudprovider-account": {
-						StaticResource: staticres.Config{
-							Plugin:    mockcloudprovider.PluginName,
-							AccessKey: "456-some-kind-of-key-452",
+					"test-plugin-B": resources.ResourceConfig{
+						StaticResource: &staticres.Config{
+							Plugin:    &mockcloudprovider.PluginName,
+							AccessKey: &exampleAccessKeyB,
 						},
-						DynamicResource: dynres.Config{
-							Plugin:    mockenergy.PluginName,
-							AccessKey: "2-some-kind-of-key-1",
+						DynamicResource: &dynres.Config{
+							Plugin:    &mockenergy.PluginName,
+							AccessKey: &exampleAccessKeyB,
 						},
 					},
 				},
-				Environment: environment.Config{
-					DynamicEnvironment: dynenv.Config{
-						Plugin:    mockenergymix.PluginName,
-						AccessKey: "some-kind-of-key-22",
+				Environment: &environment.Config{
+					DynamicEnvironment: &dynenv.Config{
+						Plugin:    &mockenergymix.PluginName,
+						AccessKey: &exampleAccessKeyC,
 					},
-					StaticEnvironment: staticenv.Config{
-						Plugin:    mockgeolocation.PluginName,
-						AccessKey: "22-some-kind-of-key",
+					StaticEnvironment: &staticenv.Config{
+						Plugin:    &mockgeolocation.PluginName,
+						AccessKey: &exampleAccessKeyA,
 					},
 				},
 			},

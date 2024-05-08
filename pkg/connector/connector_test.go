@@ -19,82 +19,88 @@ import (
 	"carbonaut.dev/pkg/schema/provider/resources/staticres"
 )
 
+// Adjust the initialProviderConfig and updatedProviderConfig to align with new Config structure
 var (
+	exampleAccessKeyA     = "123"
+	exampleAccessKeyB     = "435"
+	exampleAccessKeyC     = "7654asdE2"
+	examplePluginA        = plugin.Kind("dynres-plug-A")
+	examplePluginB        = plugin.Kind("dynres-plug-B")
+	examplePluginC        = plugin.Kind("dynres-plug-C")
 	initialProviderConfig = provider.Config{
-		Resources: map[plugin.AccountIdentifier]resources.ResourceConfig{
-			"test-plugin-A": {
-				StaticResource: staticres.Config{
-					Plugin:    mockcloudprovider.PluginName,
-					AccessKey: "321",
+		Resources: &resources.Config{
+			"test-plugin-A": resources.ResourceConfig{
+				StaticResource: &staticres.Config{
+					Plugin:    &mockcloudprovider.PluginName,
+					AccessKey: &exampleAccessKeyA,
 				},
-				DynamicResource: dynres.Config{
-					Plugin:    mockenergy.PluginName,
-					AccessKey: "123",
+				DynamicResource: &dynres.Config{
+					Plugin:    &mockenergy.PluginName,
+					AccessKey: &exampleAccessKeyB,
 				},
 			},
-			"test-plugin-B": {
-				StaticResource: staticres.Config{
-					Plugin:    mockcloudprovider.PluginName,
-					AccessKey: "321",
+			"test-plugin-B": resources.ResourceConfig{
+				StaticResource: &staticres.Config{
+					Plugin:    &mockcloudprovider.PluginName,
+					AccessKey: &exampleAccessKeyB,
 				},
-				DynamicResource: dynres.Config{
-					Plugin:    mockenergy.PluginName,
-					AccessKey: "321",
+				DynamicResource: &dynres.Config{
+					Plugin:    &mockenergy.PluginName,
+					AccessKey: &exampleAccessKeyB,
 				},
 			},
 		},
-		Environment: environment.Config{
-			DynamicEnvironment: dynenv.Config{
-				Plugin:    mockenergymix.PluginName,
-				AccessKey: "321",
+		Environment: &environment.Config{
+			DynamicEnvironment: &dynenv.Config{
+				Plugin:    &mockenergymix.PluginName,
+				AccessKey: &exampleAccessKeyC,
 			},
-			StaticEnvironment: staticenv.Config{
-				Plugin:    mockgeolocation.PluginName,
-				AccessKey: "123",
+			StaticEnvironment: &staticenv.Config{
+				Plugin:    &mockgeolocation.PluginName,
+				AccessKey: &exampleAccessKeyA,
 			},
 		},
 	}
 	updatedProviderConfig = provider.Config{
-		Resources: map[plugin.AccountIdentifier]resources.ResourceConfig{
-			"test-plugin-A": {
-				StaticResource: staticres.Config{
-					Plugin:    mockcloudprovider.PluginName,
-					AccessKey: "321",
+		Resources: &resources.Config{
+			"test-plugin-A": resources.ResourceConfig{
+				StaticResource: &staticres.Config{
+					Plugin:    &mockcloudprovider.PluginName,
+					AccessKey: &exampleAccessKeyB,
 				},
-				DynamicResource: dynres.Config{
-					Plugin:    "dynres-plug-A",
-					AccessKey: "123",
+				DynamicResource: &dynres.Config{
+					Plugin:    &examplePluginA,
+					AccessKey: &exampleAccessKeyB,
 				},
 			},
-			"test-plugin-C": {
-				StaticResource: staticres.Config{
-					Plugin:    "staticres-plug-C",
-					AccessKey: "432",
+			"test-plugin-C": resources.ResourceConfig{
+				StaticResource: &staticres.Config{
+					Plugin:    &examplePluginC,
+					AccessKey: &exampleAccessKeyC,
 				},
-				DynamicResource: dynres.Config{
-					Plugin:    mockenergy.PluginName,
-					AccessKey: "456",
+				DynamicResource: &dynres.Config{
+					Plugin:    &mockenergy.PluginName,
+					AccessKey: &exampleAccessKeyC,
 				},
 			},
 		},
-		Environment: environment.Config{
-			DynamicEnvironment: dynenv.Config{
-				Plugin:    mockenergymix.PluginName,
-				AccessKey: "321",
+		Environment: &environment.Config{
+			DynamicEnvironment: &dynenv.Config{
+				Plugin:    &mockenergymix.PluginName,
+				AccessKey: &exampleAccessKeyA,
 			},
-			StaticEnvironment: staticenv.Config{
-				Plugin:    "staticenv-plug",
-				AccessKey: "123",
+			StaticEnvironment: &staticenv.Config{
+				Plugin:    &examplePluginB,
+				AccessKey: &exampleAccessKeyA,
 			},
 		},
 	}
 )
 
 func TestConnectorInit(t *testing.T) {
-	connectorConfig := Config{
+	c, err := New(&Config{
 		TimeoutSeconds: 10,
-	}
-	c, err := New(&connectorConfig, slog.Default(), &initialProviderConfig)
+	}, slog.Default(), &initialProviderConfig)
 	if err != nil {
 		t.Error(err)
 	}
@@ -103,10 +109,10 @@ func TestConnectorInit(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(c.state.Accounts) != len(updatedProviderConfig.Resources) {
+	if len(c.state.Accounts) != len(*updatedProviderConfig.Resources) {
 		t.Error("state does not reflect configured resource accounts")
 	}
-	for accountID := range updatedProviderConfig.Resources {
+	for accountID := range *updatedProviderConfig.Resources {
 		if _, exists := c.state.Accounts[accountID]; !exists {
 			t.Errorf("expected key %s was not found in map %v", accountID, c.state.Accounts)
 		}

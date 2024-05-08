@@ -3,7 +3,7 @@ meta:
     name: carbonaut
     log_level: debug
     connector:
-        timeoutseconds: 10
+        timeout_seconds: 10
 spec:
     provider:
         resources:
@@ -11,14 +11,14 @@ spec:
                 static_resource:
                     plugin: mockcloudprovider
                     access_key: 32-some-kind-of-key-23
-                dynamicresource:
+                dynamic_resource:
                     plugin: mockenergy
                     access_key: 12-some-kind-of-key-21
             b-cloudprovider-account:
                 static_resource:
                     plugin: mockcloudprovider
                     access_key: 456-some-kind-of-key-452
-                dynamicresource:
+                dynamic_resource:
                     plugin: mockenergy
                     access_key: 2-some-kind-of-key-1
         environment:

@@ -12,12 +12,12 @@ var plugins = map[plugin.Kind]dynres.Collector{
 	mockenergy.PluginName: mockenergy.New(),
 }
 
-func GetPlugin(identifier plugin.Kind) (dynres.Collector, error) {
-	plugin, found := plugins[identifier]
+func GetPlugin(identifier *plugin.Kind) (dynres.Collector, error) {
+	p, found := plugins[*identifier]
 	if found {
-		return plugin, nil
+		return p, nil
 	}
-	return nil, fmt.Errorf("no plugin found with the name %s", identifier)
+	return nil, fmt.Errorf("no plugin found with the name %s", *identifier)
 }
 
 func GetPluginIdentifiers() []plugin.Kind {

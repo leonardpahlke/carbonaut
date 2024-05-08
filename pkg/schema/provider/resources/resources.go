@@ -10,6 +10,6 @@ import (
 type Config map[plugin.AccountIdentifier]ResourceConfig
 
 type ResourceConfig struct {
-	StaticResource  staticres.Config `json:"static_resource" yaml:"static_resource"`
-	DynamicResource dynres.Config    `json:"dynamic_resource" yaml:dynamic_resource"`
+	StaticResource  *staticres.Config `json:"static_resource"  yaml:"static_resource"`
+	DynamicResource *dynres.Config    `json:"dynamic_resource" yaml:"dynamic_resource"`
 }

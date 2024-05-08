@@ -81,7 +81,7 @@ func makeTransport(
 	transport.DisableKeepAlives = true
 	// Timeout early if the server doesn't even return the headers.
 	transport.ResponseHeaderTimeout = time.Minute
-	tlsConfig := &tls.Config{InsecureSkipVerify: skipServerCertCheck}
+	tlsConfig := &tls.Config{InsecureSkipVerify: skipServerCertCheck} // #nosec G402
 	if certificate != "" && key != "" {
 		cert, err := tls.LoadX509KeyPair(certificate, key)
 		if err != nil {

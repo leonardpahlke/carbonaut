@@ -131,7 +131,7 @@ var tcs = []testCase{
 						Bucket: []*dto.Bucket{
 							createBucket(250000, 3),
 							createBucket(500000, 4),
-							createBucket(1e+06, 5),
+							createBucket(1000000, 5),
 						},
 					},
 				},
@@ -148,9 +148,9 @@ var tcs = []testCase{
 						"tag2": "def",
 					},
 					Buckets: map[string]string{
-						"250000": "3",
-						"500000": "4",
-						"1e+06":  "5",
+						"250000":  "3",
+						"500000":  "4",
+						"1000000": "5",
 					},
 					Count: "1",
 					Sum:   "2",
@@ -190,14 +190,14 @@ func intPtr(i int64) *int64 {
 	return &i
 }
 
-func createLabelPair(name string, value string) *dto.LabelPair {
+func createLabelPair(name, value string) *dto.LabelPair {
 	return &dto.LabelPair{
 		Name:  &name,
 		Value: &value,
 	}
 }
 
-func createQuantile(q float64, v float64) *dto.Quantile {
+func createQuantile(q, v float64) *dto.Quantile {
 	return &dto.Quantile{
 		Quantile: &q,
 		Value:    &v,

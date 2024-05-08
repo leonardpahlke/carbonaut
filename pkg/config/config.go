@@ -13,20 +13,20 @@ import (
 )
 
 type Config struct {
-	Kind string `yaml:"kind" json:"kind" default:"carbonaut" validate:"required"`
-	Meta Meta   `yaml:"meta" validate:"required" json:"meta"`
-	Spec Spec   `yaml:"spec" validate:"required" json:"spec"`
+	Kind string `default:"carbonaut" json:"kind"         validate:"required" yaml:"kind"`
+	Meta Meta   `json:"meta"         validate:"required" yaml:"meta"`
+	Spec Spec   `json:"spec"         validate:"required" yaml:"spec"`
 }
 
 type Meta struct {
-	Name      string            `yaml:"name" json:"name" validate:"required" default:"carbonaut"`
-	LogLevel  string            `yaml:"log_level" json:"log_level" default:"info"`
-	Connector *connector.Config `yaml:"connector" json:"connector"`
+	Name      string            `default:"carbonaut" json:"name"      validate:"required" yaml:"name"`
+	LogLevel  string            `default:"info"      json:"log_level" yaml:"log_level"`
+	Connector *connector.Config `json:"connector"    yaml:"connector"`
 }
 
 type Spec struct {
-	Provider *provider.Config `yaml:"provider" json:"provider"`
-	Server   *server.Config   `yaml:"server" json:"server" verify:"required"`
+	Provider *provider.Config `json:"provider" yaml:"provider"`
+	Server   *server.Config   `json:"server"   verify:"required" yaml:"server"`
 }
 
 func ReadConfig(path string) (*Config, error) {
@@ -48,12 +48,6 @@ func ReadConfig(path string) (*Config, error) {
 		return nil, fmt.Errorf("could not set default values: %w", err)
 	}
 	return cfg, nil
-}
-
-// TODO: validate config
-// TODO: this may be limited to X number of resources. This depends on load testing results.
-func ValidateConfig() error {
-	return nil
 }
 
 // Marshal transforms the referenced config struct to yaml string bytes
