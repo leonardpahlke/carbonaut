@@ -1,10 +1,11 @@
 package mockenergy
 
 import (
+	"math/rand"
+
 	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider/resources/dynres"
 	"carbonaut.dev/pkg/schema/provider/resources/staticres"
-	"carbonaut.dev/pkg/util/rnd"
 )
 
 var PluginName plugin.Kind = "mockenergy"
@@ -18,10 +19,10 @@ func New() p {
 func (p) Get(cfg *dynres.Config, data *staticres.Data) (*dynres.Data, error) {
 	return &dynres.Data{
 		// Random CPU frequency between 1000 MHz and 3000 MHz
-		CPUFrequency: 1000 + rnd.RandFloat64()*2000,
+		CPUFrequency: 1000 + rand.Float64()*2000, // #nosec
 		// Random energy consumption between 50 mW and 150 mW
-		EnergyHostMilliwatt: rnd.RandIntn(100) + 50,
+		EnergyHostMilliwatt: rand.Intn(100) + 50, // #nosec
 		// Random CPU load percentage from 0% to 100%
-		CPULoadPercentage: rnd.RandFloat64() * 100,
+		CPULoadPercentage: rand.Float64() * 100, // #nosec
 	}, nil
 }

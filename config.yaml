@@ -14,13 +14,6 @@ spec:
                 dynamic_resource:
                     plugin: mockenergy
                     access_key: 12-some-kind-of-key-21
-            b-cloudprovider-account:
-                static_resource:
-                    plugin: mockcloudprovider
-                    access_key: 456-some-kind-of-key-452
-                dynamic_resource:
-                    plugin: mockenergy
-                    access_key: 2-some-kind-of-key-1
         environment:
             dynamic_environment:
                 plugin: mockenergymix

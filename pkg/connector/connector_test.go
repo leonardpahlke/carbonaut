@@ -134,9 +134,58 @@ func TestConnectorRun(t *testing.T) {
 	go func(t *testing.T) {
 		for e := range errChan {
 			t.Error(e)
+			t.Fail()
 		}
 	}(t)
 	go c.Run(stopChan, errChan)
 	time.Sleep(2 * time.Second)
 	stopChan <- 1
+}
+
+func TestConnectorCollect(t *testing.T) {
+	connectorConfig := Config{
+		TimeoutSeconds: 10,
+	}
+
+	c, err := New(&connectorConfig, slog.Default(), &initialProviderConfig)
+	if err != nil {
+		t.Error(err)
+		t.Fail()
+	}
+
+	stopChan := make(chan int)
+	errChan := make(chan error)
+	go func(t *testing.T) {
+		for e := range errChan {
+			t.Error(e)
+		}
+	}(t)
+	go c.Run(stopChan, errChan)
+	time.Sleep(1 * time.Second)
+	d, err := c.Collect()
+	if err != nil {
+		t.Error(err)
+		t.Fail()
+	}
+	t.Log(d)
+	stopChan <- 1
+}
+
+// BenchmarkCollect measures the performance of the Collect method.
+func BenchmarkCollect(b *testing.B) {
+	logger := slog.Default()
+	config := &Config{TimeoutSeconds: 10}
+
+	connector, err := New(config, logger, &initialProviderConfig)
+	if err != nil {
+		b.Fatal(err)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, err := connector.Collect()
+		if err != nil {
+			b.Error(err)
+		}
+	}
 }
