@@ -9,7 +9,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/davecgh/go-spew/spew"
 	dto "github.com/prometheus/client_model/go"
 )
 
@@ -164,8 +163,8 @@ func TestConvertToMetricFamily(t *testing.T) {
 	for _, tc := range tcs {
 		output := newFamily(tc.mFamily)
 		if !reflect.DeepEqual(tc.output, output) {
-			t.Errorf("test case %s: conversion to metricFamily format failed:\nexpected:\n%s\n\nactual:\n%s",
-				tc.name, spew.Sdump(tc.output), spew.Sdump(output))
+			t.Errorf("test case %s: conversion to metricFamily format failed:\nexpected:\n%v\n\nactual:\n%v",
+				tc.name, tc.output, output)
 		}
 	}
 }

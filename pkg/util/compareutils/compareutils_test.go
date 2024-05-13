@@ -125,35 +125,51 @@ var _ = Describe("compareutils", func() {
 func TestCompareLists(t *testing.T) {
 	cases := []struct {
 		name    string
-		newList []int
-		oldList []int
-		same    []int
-		missing []int
-		new     []int
+		newList []*int
+		oldList []*int
+		same    []*int
+		missing []*int
+		new     []*int
 	}{
 		{
 			name:    "Test integers",
-			newList: []int{1, 2, 3, 4},
-			oldList: []int{2, 3, 5},
-			same:    []int{2, 3},
-			missing: []int{5},
-			new:     []int{1, 4},
+			newList: convertToPointerSlice([]int{1, 2, 3, 4}),
+			oldList: convertToPointerSlice([]int{2, 3, 5}),
+			same:    convertToPointerSlice([]int{2, 3}),
+			missing: convertToPointerSlice([]int{5}),
+			new:     convertToPointerSlice([]int{1, 4}),
 		},
 		{
 			name:    "Test empty lists",
-			newList: []int{},
-			oldList: []int{},
-			same:    []int{},
-			missing: []int{},
-			new:     []int{},
+			newList: []*int{},
+			oldList: []*int{},
+			same:    []*int{},
+			missing: []*int{},
+			new:     []*int{},
 		},
 		{
 			name:    "Test no overlap",
-			newList: []int{1, 2},
-			oldList: []int{3, 4},
-			same:    []int{},
-			missing: []int{3, 4},
-			new:     []int{1, 2},
+			newList: convertToPointerSlice([]int{1, 2}),
+			oldList: convertToPointerSlice([]int{3, 4}),
+			same:    []*int{},
+			missing: convertToPointerSlice([]int{3, 4}),
+			new:     convertToPointerSlice([]int{1, 2}),
+		},
+		{
+			name:    "Test no new items",
+			newList: convertToPointerSlice([]int{}),
+			oldList: convertToPointerSlice([]int{3, 4}),
+			same:    []*int{},
+			missing: convertToPointerSlice([]int{3, 4}),
+			new:     convertToPointerSlice([]int{}),
+		},
+		{
+			name:    "Test only new items",
+			newList: convertToPointerSlice([]int{3, 4}),
+			oldList: convertToPointerSlice([]int{}),
+			same:    []*int{},
+			missing: convertToPointerSlice([]int{}),
+			new:     convertToPointerSlice([]int{3, 4}),
 		},
 	}
 
@@ -161,8 +177,27 @@ func TestCompareLists(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			sameL, missingL, newL := compareutils.CompareLists(tc.newList, tc.oldList)
 			if !reflect.DeepEqual(sameL, tc.same) || !reflect.DeepEqual(missingL, tc.missing) || !reflect.DeepEqual(newL, tc.new) {
-				t.Errorf("%s failed: expected (%v, %v, %v), got (%v, %v, %v)", tc.name, tc.same, tc.missing, tc.new, sameL, missingL, newL)
+				t.Errorf("%s failed: expected (%v, %v, %v), got (%v, %v, %v)", tc.name, pointersToStrings(tc.same), pointersToStrings(tc.missing), pointersToStrings(tc.new), pointersToStrings(sameL), pointersToStrings(missingL), pointersToStrings(newL))
 			}
 		})
 	}
+}
+
+func convertToPointerSlice(slice []int) []*int {
+	ptrSlice := make([]*int, len(slice))
+	for i, v := range slice {
+		value := v
+		ptrSlice[i] = &value
+	}
+	return ptrSlice
+}
+
+func pointersToStrings(pointers []*int) []int {
+	slice := make([]int, len(pointers))
+	for i, ptr := range pointers {
+		if ptr != nil {
+			slice[i] = *ptr
+		}
+	}
+	return slice
 }

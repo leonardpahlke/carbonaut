@@ -7,19 +7,23 @@ meta:
 spec:
     provider:
         resources:
-            a-cloudprovider-account:
+            exampleAccountA:
                 static_resource:
-                    plugin: mockcloudprovider
-                    access_key: 32-some-kind-of-key-23
+                    plugin: mockcloudplugin
+                    access_key: "123"
                 dynamic_resource:
                     plugin: mockenergy
-                    access_key: 12-some-kind-of-key-21
+                    access_key: "435"
+            exampleAccountB:
+                static_resource:
+                    plugin: mockcloudplugin
+                    access_key: "435"
+                dynamic_resource:
+                    plugin: mockenergy
+                    access_key: "435"
         environment:
             dynamic_environment:
                 plugin: mockenergymix
-                access_key: some-kind-of-key-22
-            static_environment:
-                plugin: mockgeolocation
-                access_key: 22-some-kind-of-key
+                access_key: 7654asdE2
     server:
         port: 8088

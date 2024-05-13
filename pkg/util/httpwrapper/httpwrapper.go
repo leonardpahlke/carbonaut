@@ -7,8 +7,6 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
-
-	"github.com/google/go-querystring/query"
 )
 
 type HTTPReqWrapper struct {
@@ -19,7 +17,7 @@ type HTTPReqWrapper struct {
 	// Path of the http request which is added to the baseURL: example "/foo"
 	Path string
 	// Query parameters as struct which are set after the "Path" of the http request: example {foo: a, bar: b} -> "?foo=a&bar=b"
-	QueryStruct interface{}
+	Query string
 	// Body as struct which gets send via POST requests: example {foo: a, bar: b} -> "{\"foo\": \"a\", \"bar\": \"b\"}"
 	BodyStruct interface{}
 	// list of http headers: example {Key: "Content-Type", Val: "application/json"}
@@ -34,12 +32,8 @@ type HTTPReqInfo struct {
 // SendHTTPRequest is a wrapper function for sending http requests
 // response: request body, status code, error
 func SendHTTPRequest(req *HTTPReqWrapper) (*HTTPReqInfo, error) {
-	slog.Info("prepare http request", "method", req.Method, "baseURL", req.BaseURL, "path", req.Path, "queryStruct", req.QueryStruct, "bodyStruct", req.BodyStruct, "headers", req.Headers)
-	v, err := query.Values(req.QueryStruct)
-	if err != nil {
-		return nil, fmt.Errorf("unable to encode query params: %w", err)
-	}
-	url := fmt.Sprintf("%s%s?%s", req.BaseURL, req.Path, v.Encode())
+	slog.Info("prepare http request", "method", req.Method, "baseURL", req.BaseURL, "path", req.Path, "queryStruct", req.Query, "bodyStruct", req.BodyStruct, "headers", req.Headers)
+	url := fmt.Sprintf("%s%s?%s", req.BaseURL, req.Path, req.Query)
 	slog.Info("sending http request", "url", url)
 	requestBodyBytes, err := json.Marshal(&req.BodyStruct)
 	if err != nil {

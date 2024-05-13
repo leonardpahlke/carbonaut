@@ -47,33 +47,33 @@ func GetListDuplicates[E comparable](l []E) *[]E {
 // sameItems: items present in both newList and oldList
 // missingItems: items present in oldList but not in newList
 // newItems: items present in newList but not in oldList
-func CompareLists[T comparable](newList, oldList []T) (sameItems, missingItems, newItems []T) {
+func CompareLists[T comparable](newList, oldList []*T) (sameItems, missingItems, newItems []*T) {
 	newSet := make(map[T]bool)
 	oldSet := make(map[T]bool)
 
-	sameItems = []T{}
-	missingItems = []T{}
-	newItems = []T{}
+	sameItems = []*T{}
+	missingItems = []*T{}
+	newItems = []*T{}
 
 	// Fill set for newList
-	for _, item := range newList {
-		newSet[item] = true
+	for i := range newList {
+		newSet[*newList[i]] = true
 	}
 
 	// Fill set for oldList and determine same and missing items
-	for _, item := range oldList {
-		oldSet[item] = true
-		if newSet[item] {
-			sameItems = append(sameItems, item)
+	for i := range oldList {
+		oldSet[*oldList[i]] = true
+		if newSet[*oldList[i]] {
+			sameItems = append(sameItems, oldList[i])
 		} else {
-			missingItems = append(missingItems, item)
+			missingItems = append(missingItems, oldList[i])
 		}
 	}
 
 	// Determine new items
-	for _, item := range newList {
-		if !oldSet[item] {
-			newItems = append(newItems, item)
+	for i := range newList {
+		if !oldSet[*newList[i]] {
+			newItems = append(newItems, newList[i])
 		}
 	}
 
