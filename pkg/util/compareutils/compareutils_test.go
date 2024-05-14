@@ -31,16 +31,22 @@ func TestGetListDuplicates(t *testing.T) {
 	tests := []struct {
 		name     string
 		input    []string
-		expected []string
+		expected [][]string
 	}{
-		{"List with Single Duplicate", []string{"A", "A"}, []string{"A"}},
-		{"List with Multiple Duplicates", []string{"1", "A", "A1", "B", "C", "A", "A", "DDD", "BB", "BBB", "A1"}, []string{"A", "A1"}},
+		{"List with Single Duplicate", []string{"A", "A"}, [][]string{{"A"}}},
+		{"List with Multiple Duplicates", []string{"1", "A", "A1", "B", "C", "A", "A", "DDD", "BB", "BBB", "A1"}, [][]string{{"A1", "A"}, {"A", "A1"}}},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			result := compareutils.GetListDuplicates(tc.input)
-			if !reflect.DeepEqual(*result, tc.expected) {
+			equalPairFound := false
+			for i := range tc.expected {
+				if reflect.DeepEqual(*result, tc.expected[i]) {
+					equalPairFound = true
+				}
+			}
+			if !equalPairFound {
 				t.Errorf("GetListDuplicates() = %v, want %v", *result, tc.expected)
 			}
 		})

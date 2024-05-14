@@ -48,11 +48,11 @@ func (s Server) Listen(cfg *Config) {
 	http.HandleFunc("/metrics-json", func(w http.ResponseWriter, r *http.Request) {
 		now := time.Now()
 		if cache != nil && now.Sub(cache.Timestamp) < cacheDuration {
-			s.Log.Info("serving from cache", "component", "server")
+			s.Log.Info("serving from cache")
 			w.Header().Set("Content-Type", "application/json")
 			_, err := w.Write(cache.Data)
 			if err != nil {
-				s.Log.Error("could not write response", "component", "server", "error", err)
+				s.Log.Error("could not write response", "error", err)
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			}
 			return
@@ -60,15 +60,15 @@ func (s Server) Listen(cfg *Config) {
 
 		data, err := s.Connector.Collect()
 		if err != nil {
-			s.Log.Error("could not collect data from connector", "component", "server", "error", err)
+			s.Log.Error("could not collect data from connector", "error", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
-		s.Log.Info("collected new data", "component", "server", "data", *data)
+		s.Log.Info("collected new data", "data", *data)
 		jsonData, err := json.Marshal(data)
 		if err != nil {
-			s.Log.Error("could not serialize data to JSON", "component", "server", "error", err)
+			s.Log.Error("could not serialize data to JSON", "error", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
@@ -81,14 +81,18 @@ func (s Server) Listen(cfg *Config) {
 		w.Header().Set("Content-Type", "application/json")
 		_, err = w.Write(jsonData)
 		if err != nil {
-			s.Log.Error("could not write response", "component", "server", "error", err)
+			s.Log.Error("could not write response", "error", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	})
 
 	http.HandleFunc("/stop", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Server is stopping")
+		if _, err := fmt.Fprintln(w, "Server is stopping"); err != nil {
+			s.Log.Error("Error writing response", "error", err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
 		s.ExitChan <- 1
 	})
 

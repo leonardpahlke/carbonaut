@@ -2,6 +2,7 @@ package freeport
 
 import (
 	"errors"
+	"log"
 	"net"
 )
 
@@ -14,7 +15,11 @@ func Get() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	defer l.Close()
+	defer func() {
+		if closeErr := l.Close(); closeErr != nil {
+			log.Printf("failed to close listener: %v", closeErr)
+		}
+	}()
 	p, ok := l.Addr().(*net.TCPAddr)
 	if !ok {
 		return 0, errors.New("could not decode to net.TCPAddr")

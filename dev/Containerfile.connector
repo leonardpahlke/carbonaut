@@ -1,4 +1,4 @@
-FROM golang:1.20.2 as goenv
+FROM golang:1.22.2 as goenv
 
 WORKDIR /connector
 

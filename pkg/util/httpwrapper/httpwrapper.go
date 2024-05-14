@@ -51,7 +51,11 @@ func SendHTTPRequest(req *HTTPReqWrapper) (*HTTPReqInfo, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to perform %s request: %w", req.Method, err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			slog.Warn("failed to close response body", "error", closeErr)
+		}
+	}()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("unable to read response body: %w", err)

@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Copyright (c) 2022 CARBONAUT AUTHORS
-#
-# Licensed under the MIT license: https://opensource.org/licenses/MIT
-# Permission is granted to use, copy, modify, and redistribute the work.
-# Full license information available in the project LICENSE file.
-
 # Exit script if you try to use an uninitialized variable.
 set -o nounset
 # Exit script if a statement returns a non-true return value.

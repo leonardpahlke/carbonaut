@@ -3,9 +3,11 @@ package config
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"regexp"
 
 	"carbonaut.dev/pkg/connector"
-	"carbonaut.dev/pkg/schema/provider"
+	"carbonaut.dev/pkg/provider"
 	"carbonaut.dev/pkg/server"
 	"github.com/creasty/defaults"
 	"github.com/gookit/validate"
@@ -30,7 +32,19 @@ type Spec struct {
 }
 
 func ReadConfig(path string) (*Config, error) {
-	data, err := os.ReadFile(path)
+	cleanedPath := filepath.Clean(os.ExpandEnv(path))
+	absPath, err := filepath.Abs(cleanedPath)
+	if err != nil {
+		return nil, fmt.Errorf("could not resolve absolute path: %w", err)
+	}
+
+	matchYAML := regexp.MustCompile(`\.yaml$`)
+	if !matchYAML.MatchString(absPath) {
+		return nil, fmt.Errorf("invalid file type: %s", filepath.Ext(absPath))
+	}
+
+	// #nosec G304
+	data, err := os.ReadFile(absPath)
 	if err != nil {
 		return nil, fmt.Errorf("could not read Config file: %w", err)
 	}

@@ -3,13 +3,13 @@ package connector
 import (
 	"fmt"
 
-	"carbonaut.dev/pkg/plugins/dynenvplugins"
-	"carbonaut.dev/pkg/plugins/dynresplugins"
-	"carbonaut.dev/pkg/schema/provider"
-	"carbonaut.dev/pkg/schema/provider/data/account"
-	"carbonaut.dev/pkg/schema/provider/data/account/project"
-	"carbonaut.dev/pkg/schema/provider/data/account/project/resource"
-	"carbonaut.dev/pkg/schema/provider/types/dynres"
+	"carbonaut.dev/pkg/plugin/dynenvplugins"
+	"carbonaut.dev/pkg/plugin/dynresplugins"
+	"carbonaut.dev/pkg/provider"
+	"carbonaut.dev/pkg/provider/data/account"
+	"carbonaut.dev/pkg/provider/data/account/project"
+	"carbonaut.dev/pkg/provider/data/account/project/resource"
+	"carbonaut.dev/pkg/provider/types/dynres"
 )
 
 // This function is triggered by the user interface

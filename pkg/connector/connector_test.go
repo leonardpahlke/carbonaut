@@ -5,14 +5,14 @@ import (
 	"testing"
 	"time"
 
-	"carbonaut.dev/pkg/plugins/dynenvplugins/mockenergymix"
-	"carbonaut.dev/pkg/plugins/dynresplugins/mockenergy"
-	"carbonaut.dev/pkg/plugins/staticresplugins/mockcloudplugin"
-	"carbonaut.dev/pkg/schema/provider"
-	"carbonaut.dev/pkg/schema/provider/data/account"
-	"carbonaut.dev/pkg/schema/provider/types/dynenv"
-	"carbonaut.dev/pkg/schema/provider/types/dynres"
-	"carbonaut.dev/pkg/schema/provider/types/staticres"
+	"carbonaut.dev/pkg/plugin/dynenvplugins/mockenergymix"
+	"carbonaut.dev/pkg/plugin/dynresplugins/mockenergy"
+	"carbonaut.dev/pkg/plugin/staticresplugins/mockcloudplugin"
+	"carbonaut.dev/pkg/provider"
+	"carbonaut.dev/pkg/provider/data/account"
+	"carbonaut.dev/pkg/provider/types/dynenv"
+	"carbonaut.dev/pkg/provider/types/dynres"
+	"carbonaut.dev/pkg/provider/types/staticres"
 )
 
 // Adjust the initialProviderConfig and updatedProviderConfig to align with new Config structure

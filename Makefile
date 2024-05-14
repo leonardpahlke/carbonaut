@@ -1,21 +1,12 @@
-.PHONY: all verify build install upgrade clean compile-grpc test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
+.PHONY: all verify format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
 
 # Default target executed
-all: build
+all: verify
 
 # Verify the project code (linting, testing, checking git state)
 verify:
 	@echo "Verifying the project code..."
-	@go vet ./...
-	@go mod tidy
-	@staticcheck -checks U1000 ./...
-	@./hack/check-go-build.bash
-	@./hack/check-go-lint.bash
-	@./hack/check-go-test.bash
-
-# Build project resources
-build: compile-grpc
-	@echo "Building project resources..."
+	@pre-commit run --all-files
 
 # Install project dependencies
 install:
@@ -23,21 +14,24 @@ install:
 	@go get ./...
 	@go install github.com/4meepo/tagalign/cmd/tagalign@latest
 	@go install honnef.co/go/tools/cmd/staticcheck@latest
+	@go install golang.org/x/tools/cmd/godoc@latest
+	@go install golang.org/x/tools/cmd/goimports@latest
+	@go install github.com/kisielk/errcheck@latest
+	@go install github.com/securego/gosec/v2/cmd/gosec@latest
+	@pre-commit install
 
 # Format Go project
 format:
+	@go fmt ./...
 	@tagalign -fix ./...
+	@goimports -w .
+	@go clean -i ./...
 
 # Upgrade project dependencies
 upgrade:
 	@echo "Upgrading project dependencies..."
 	@go mod tidy
 	@go get -u -t ./...
-
-# Clean build artifacts
-clean:
-	@echo "Cleaning build artifacts..."
-	@go clean -i ./...
 
 # Run test coverage report
 test-coverage:
@@ -114,12 +108,9 @@ help:
 	@echo "Available commands:"
 	@echo "  all                    - Build project resources and verify code"
 	@echo "  verify                 - Run verifications on the project (lint, vet, tests)"
-	@echo "  build                  - Build project resources"
 	@echo "  install                - Install project dependencies"
 	@echo "  format                 - Format Go files"
 	@echo "  upgrade                - Upgrade project dependencies"
-	@echo "  clean                  - Clean build artifacts and dependencies"
-	@echo "  compile-grpc           - Compile gRPC and protobuf definitions"
 	@echo "  test-coverage          - Generate and open test coverage report"
 	@echo "  clean-coverage         - Clean test coverage reports"
 	@echo "  tf-init                - Initialize OpenTofu configuration"

@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"carbonaut.dev/pkg/connector/state"
-	"carbonaut.dev/pkg/schema/provider"
-	"carbonaut.dev/pkg/schema/provider/data/account"
-	"carbonaut.dev/pkg/schema/provider/data/account/project"
+	"carbonaut.dev/pkg/provider"
+	"carbonaut.dev/pkg/provider/data/account"
+	"carbonaut.dev/pkg/provider/data/account/project"
 	"carbonaut.dev/pkg/util/compareutils"
 )
 

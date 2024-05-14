@@ -1,6 +1,7 @@
 package freeport_test
 
 import (
+	"log"
 	"net"
 	"strconv"
 	"testing"
@@ -21,5 +22,7 @@ func TestGetFreePort(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	l.Close()
+	if closeErr := l.Close(); closeErr != nil {
+		log.Printf("failed to close listener: %v", closeErr)
+	}
 }

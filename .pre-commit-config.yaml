@@ -1,0 +1,75 @@
+repos:
+  - repo: local
+    hooks:
+      - id: go-vet
+        name: Go Vet
+        entry: go vet ./...
+        language: system
+        pass_filenames: false
+
+      - id: tagalign
+        name: Go Tag Align
+        entry: tagalign -fix ./...
+        language: system
+        pass_filenames: false
+
+      - id: goimports
+        name: goimports
+        entry: goimports -w .
+        language: system
+        pass_filenames: false
+
+      - id: go-mod
+        name: Go Mod
+        entry: go mod tidy
+        language: system
+        pass_filenames: false
+
+      - id: go-check-build
+        name: Go Check Build
+        entry: ./hack/check-go-build.bash
+        language: system
+        pass_filenames: false
+
+      - id: go-fmt
+        name: Go Fmt
+        entry: go fmt ./...
+        language: system
+        pass_filenames: false
+
+      - id: go-imports
+        name: Go Imports
+        entry: goimports -w
+        language: system
+        types: [go]
+        pass_filenames: true
+
+      - id: staticcheck
+        name: Staticcheck
+        entry: staticcheck ./...
+        language: system
+        pass_filenames: false
+
+      - id: errcheck
+        name: Errcheck
+        entry: errcheck ./...
+        language: system
+        pass_filenames: false
+
+      - id: gosec
+        name: GoSec
+        entry: gosec ./...
+        language: system
+        pass_filenames: false
+
+      - id: check-go-lint
+        name: Check Go Lint
+        entry: ./hack/check-go-lint.bash
+        language: script
+        pass_filenames: false
+
+      - id: check-go-test
+        name: Check Go Test
+        entry: ./hack/check-go-test.bash
+        language: script
+        pass_filenames: false
