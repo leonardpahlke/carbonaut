@@ -12,7 +12,7 @@ type Config struct {
 	Environment *EnvConfig `json:"environment" yaml:"environment"`
 }
 
-type ResConfig map[account.ID]Res
+type ResConfig map[account.Name]Res
 
 type Res struct {
 	StaticResConfig  *staticres.Config `json:"static_resource"  yaml:"static_resource"`
@@ -23,6 +23,10 @@ type EnvConfig struct {
 	DynamicEnvConfig *dynenv.Config `json:"dynamic_environment" yaml:"dynamic_environment"`
 }
 
-type Topology map[account.ID]*account.Topology
+// internal state
+type Topology struct {
+	Accounts          map[account.ID]*account.Topology `json:"accounts"         yaml:"accounts"`
+	AccountsIDCounter *int32                           `json:"project_id_counter"         yaml:"project_id_counter"`
+}
 
-type Data map[account.ID]account.Data
+type Data map[account.Name]account.Data

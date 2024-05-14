@@ -40,29 +40,22 @@ func New(connectorConfig *Config, logger *slog.Logger, providerConfig *provider.
 }
 
 func (c *C) LoadConfig(newConfig *provider.Config) error {
-	var newAccountLen int
-	var currentAccountLen int
+	var currentAccountSet, newAccountSet []*account.Name
+
+	buildAccountSet := func(resources provider.ResConfig) []*account.Name {
+		accountSet := make([]*account.Name, 0, len(resources))
+		for r := range resources {
+			accountName := r
+			accountSet = append(accountSet, &accountName)
+		}
+		return accountSet
+	}
 
 	if c.providerConfig != nil && c.providerConfig.Resources != nil {
-		currentAccountLen = len(c.providerConfig.Resources)
+		currentAccountSet = buildAccountSet(c.providerConfig.Resources)
 	}
 	if newConfig != nil && newConfig.Resources != nil {
-		newAccountLen = len(newConfig.Resources)
-	}
-
-	newAccountSet := make([]*account.ID, 0, newAccountLen)
-	currentAccountSet := make([]*account.ID, 0, currentAccountLen)
-
-	if c.providerConfig != nil && c.providerConfig.Resources != nil {
-		for k := range c.providerConfig.Resources {
-			currentAccountSet = append(currentAccountSet, &k)
-		}
-	}
-
-	if newConfig != nil && newConfig.Resources != nil {
-		for k := range newConfig.Resources {
-			newAccountSet = append(newAccountSet, &k)
-		}
+		newAccountSet = buildAccountSet(newConfig.Resources)
 	}
 
 	remainingAccounts, toBeDeletedAccounts, toBeCreatedAccounts := compareutils.CompareLists(newAccountSet, currentAccountSet)
@@ -79,15 +72,18 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 	// remove toBeDeletedAccounts from state
 	for i := range toBeDeletedAccounts {
 		c.log.Debug("delete account from carbonaut state", "identifier", string(*toBeDeletedAccounts[i]))
-		c.state.RemoveAccount(toBeDeletedAccounts[i])
+		c.state.RemoveAccount(c.state.GetAccountID(toBeDeletedAccounts[i]))
 	}
 
 	// add toBeCreatedAccounts to "to-create" in state
 	for i := range toBeCreatedAccounts {
 		c.log.Debug("added account to carbonaut state", "identifier", toBeCreatedAccounts[i])
-		c.state.AddAccount(toBeCreatedAccounts[i], &account.Topology{
-			Projects:  make(map[project.ID]*project.Topology),
-			CreatedAt: time.Now(),
+		c.state.AddAccount(&account.Topology{
+			Name:             toBeCreatedAccounts[i],
+			Projects:         make(map[project.ID]*project.Topology),
+			CreatedAt:        time.Now(),
+			ProjectIDCounter: new(int32),
+			Config:           newConfig.Resources[*toBeCreatedAccounts[i]].StaticResConfig,
 		})
 	}
 
@@ -103,7 +99,7 @@ func (c *C) Run(stopChan chan int, errChan chan error) {
 		for {
 			c.mutex.Lock()
 			c.log.Debug("start connector Run cycle")
-			for aID := range c.state.Accounts {
+			for aID := range c.state.T.Accounts {
 				if err := c.updateStaticData(&aID); err != nil {
 					errMsg := fmt.Errorf("unable to fetch resources, err: %v", err)
 					c.log.Error("error", errMsg)

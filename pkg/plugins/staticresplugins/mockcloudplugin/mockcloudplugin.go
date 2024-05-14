@@ -19,24 +19,24 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.ID, error) {
-	prjA := project.ID("project-a")
-	prjB := project.ID("project-b")
-	data := make([]*project.ID, 0)
+func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.Name, error) {
+	prjA := project.Name("project-a")
+	prjB := project.Name("project-b")
+	data := make([]*project.Name, 0)
 	data = append(data, &prjA, &prjB)
 	return data, nil
 }
 
-func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pID *project.ID) ([]*resource.ID, error) {
-	resA := resource.ID("resource-a")
-	resB := resource.ID("resource-b")
-	resC := resource.ID("resource-c")
-	data := make([]*resource.ID, 0)
+func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pName *project.Name) ([]*resource.Name, error) {
+	resA := resource.Name("resource-a")
+	resB := resource.Name("resource-b")
+	resC := resource.Name("resource-c")
+	data := make([]*resource.Name, 0)
 	data = append(data, &resA, &resB, &resC)
 	return data, nil
 }
 
-func (p) GetStaticResourceData(cfg *staticres.Config, pID *project.ID, rID *resource.ID) (*resource.StaticResData, error) {
+func (p) GetStaticResourceData(cfg *staticres.Config, pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
 	return &resource.StaticResData{
 		ID:   "0131acc3-82d8-488b-a8e2-c4a00e897145",
 		User: "root",

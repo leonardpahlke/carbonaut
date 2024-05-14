@@ -7,8 +7,14 @@ import (
 	"carbonaut.dev/pkg/schema/provider/data/environment"
 )
 
-// defines the name of a resource which was found in an account e.g. equinix-server-b
-type ID string
+type (
+	// internal ID which get's counted up
+	ID int32
+	// defines the name of a resource which was found in an account e.g. equinix-server-b
+	Name string
+)
+
+var NotFoundID ID = -1
 
 type Data struct {
 	DynamicData *DynamicData   `json:"dynamic_data"         yaml:"dynamic_data"`
@@ -24,7 +30,9 @@ type StaticData struct {
 	ResData *StaticResData `json:"res_data"         yaml:"res_data"`
 }
 
+// internal state
 type Topology struct {
+	Name       *Name          `json:"name"         yaml:"name"`
 	StaticData *StaticResData `json:"static_data"         yaml:"static_data"`
 	CreatedAt  time.Time      `json:"created_at"         yaml:"created_at"`
 	Plugin     *plugin.Kind   `json:"plugin"         yaml:"plugin"`

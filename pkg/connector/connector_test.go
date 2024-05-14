@@ -8,7 +8,6 @@ import (
 	"carbonaut.dev/pkg/plugins/dynenvplugins/mockenergymix"
 	"carbonaut.dev/pkg/plugins/dynresplugins/mockenergy"
 	"carbonaut.dev/pkg/plugins/staticresplugins/mockcloudplugin"
-	"carbonaut.dev/pkg/schema/plugin"
 	"carbonaut.dev/pkg/schema/provider"
 	"carbonaut.dev/pkg/schema/provider/data/account"
 	"carbonaut.dev/pkg/schema/provider/types/dynenv"
@@ -21,14 +20,11 @@ var (
 	exampleAccessKeyA     = "123"
 	exampleAccessKeyB     = "435"
 	exampleAccessKeyC     = "7654asdE2"
-	examplePluginA        = plugin.Kind("dynres-plug-A")
-	examplePluginB        = plugin.Kind("dynres-plug-B")
-	examplePluginC        = plugin.Kind("dynres-plug-C")
-	exampleAccountA       = account.ID("test-plugin-A")
-	exampleAccountB       = account.ID("test-plugin-B")
-	exampleAccountC       = account.ID("test-plugin-C")
+	exampleAccountA       = account.Name("test-plugin-A")
+	exampleAccountB       = account.Name("test-plugin-B")
+	exampleAccountC       = account.Name("test-plugin-C")
 	initialProviderConfig = provider.Config{
-		Resources: map[account.ID]provider.Res{
+		Resources: map[account.Name]provider.Res{
 			exampleAccountA: {
 				StaticResConfig: &staticres.Config{
 					Plugin:    &mockcloudplugin.PluginName,
@@ -58,14 +54,14 @@ var (
 	}
 
 	updatedProviderConfig = provider.Config{
-		Resources: map[account.ID]provider.Res{
+		Resources: map[account.Name]provider.Res{
 			exampleAccountA: {
 				StaticResConfig: &staticres.Config{
 					Plugin:    &mockcloudplugin.PluginName,
 					AccessKey: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
-					Plugin:    &examplePluginA,
+					Plugin:    &mockenergy.PluginName,
 					AccessKey: &exampleAccessKeyB,
 				},
 			},
@@ -101,12 +97,22 @@ func TestConnectorInit(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(c.state.Accounts) != len(updatedProviderConfig.Resources) {
+	if len(c.state.T.Accounts) != len(updatedProviderConfig.Resources) {
 		t.Error("state does not reflect configured resource accounts")
 	}
-	for accountID := range updatedProviderConfig.Resources {
-		if _, exists := c.state.Accounts[accountID]; !exists {
-			t.Errorf("expected key %s was not found in map %v", accountID, c.state.Accounts)
+	for aName := range updatedProviderConfig.Resources {
+		found := false
+		for i := range c.state.T.Accounts {
+			if *c.state.T.Accounts[i].Name == aName {
+				found = true
+				if c.state.T.Accounts[i].Config == nil {
+					t.Errorf("configuration of account not set")
+				}
+				continue
+			}
+		}
+		if !found {
+			t.Errorf("expected key %s was not found in map %v", aName, c.state.T)
 		}
 	}
 }

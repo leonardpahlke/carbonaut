@@ -13,7 +13,7 @@ type Config struct {
 
 type Provider interface {
 	GetName() *plugin.Kind
-	GetStaticResourceData(*Config, *project.ID, *resource.ID) (*resource.StaticResData, error)
-	DiscoverStaticResourceIdentifiers(*Config, *project.ID) ([]*resource.ID, error)
-	DiscoverProjectIdentifiers(*Config) ([]*project.ID, error)
+	GetStaticResourceData(*Config, *project.Name, *resource.Name) (*resource.StaticResData, error)
+	DiscoverStaticResourceIdentifiers(*Config, *project.Name) ([]*resource.Name, error)
+	DiscoverProjectIdentifiers(*Config) ([]*project.Name, error)
 }

@@ -24,15 +24,15 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.ID, error) {
+func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.Name, error) {
 	return nil, fmt.Errorf("not yet implemented")
 }
 
-func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pID *project.ID) ([]*resource.ID, error) {
+func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pName *project.Name) ([]*resource.Name, error) {
 	return nil, fmt.Errorf("not yet implemented")
 }
 
-func (p) GetStaticResourceData(cfg *staticres.Config, pID *project.ID, rID *resource.ID) (*resource.StaticResData, error) {
+func (p) GetStaticResourceData(cfg *staticres.Config, pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
 	return nil, fmt.Errorf("not yet implemented")
 }
 

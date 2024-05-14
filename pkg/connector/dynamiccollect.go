@@ -20,29 +20,29 @@ func (c *C) Collect() (*provider.Data, error) {
 	c.log.Info("start collecting data")
 	data := make(provider.Data)
 
-	for aID := range c.state.Accounts {
+	for aID := range c.state.T.Accounts {
 		accountData := make(account.Data)
-		if staticAccountResources, ok := (c.providerConfig.Resources)[aID]; ok {
+		if staticAccountResources, ok := (c.providerConfig.Resources)[*c.state.T.Accounts[aID].Name]; ok {
 			c.log.Debug("collect data", "account", aID)
 
-			for p := range c.state.Accounts[aID].Projects {
+			for p := range c.state.T.Accounts[aID].Projects {
 				c.log.Debug("collect data", "account", aID, "project", p)
 				projectData := make(project.Data)
-				for r := range c.state.Accounts[aID].Projects[p].Resources {
-					dynData, err := c.collectDynResData(&aID, c.state.Accounts[aID].Projects[p].Resources[r], staticAccountResources.DynamicResConfig)
+				for r := range c.state.T.Accounts[aID].Projects[p].Resources {
+					dynData, err := c.collectDynResData(c.state.T.Accounts[aID].Projects[p].Resources[r], staticAccountResources.DynamicResConfig)
 					if err != nil {
 						return nil, err
 					}
-					projectData[r] = &resource.Data{
+					projectData[*c.state.T.Accounts[aID].Projects[p].Resources[r].Name] = &resource.Data{
 						DynamicData: dynData,
-						StaticData:  c.state.Accounts[aID].Projects[p].Resources[r].StaticData,
+						StaticData:  c.state.T.Accounts[aID].Projects[p].Resources[r].StaticData,
 					}
 				}
-				accountData[p] = projectData
+				accountData[*c.state.T.Accounts[aID].Projects[p].Name] = projectData
 			}
 
 		}
-		data[aID] = accountData
+		data[*c.state.T.Accounts[aID].Name] = accountData
 	}
 
 	c.log.Info("data collected")
@@ -50,7 +50,7 @@ func (c *C) Collect() (*provider.Data, error) {
 	return &data, nil
 }
 
-func (c *C) collectDynResData(aID *account.ID, r *resource.Topology, DynamicResConfig *dynres.Config) (*resource.DynamicData, error) {
+func (c *C) collectDynResData(r *resource.Topology, DynamicResConfig *dynres.Config) (*resource.DynamicData, error) {
 	pRes, found := dynresplugins.GetPlugin(DynamicResConfig.Plugin)
 	if !found {
 		return nil, fmt.Errorf("could not find plugin: %s", *DynamicResConfig.Plugin)

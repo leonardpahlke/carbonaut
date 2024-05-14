@@ -39,18 +39,18 @@ func main() {
 		},
 		Spec: config.Spec{
 			Provider: &provider.Config{
-				Resources: map[account.ID]provider.Res{
-					"exampleAccountA": {
+				Resources: map[account.Name]provider.Res{
+					"example-account-a": {
 						StaticResConfig: &staticres.Config{
 							Plugin:    &mockcloudplugin.PluginName,
-							AccessKey: &exampleAccessKeyA,
+							AccessKey: &exampleAccessKeyB,
 						},
 						DynamicResConfig: &dynres.Config{
 							Plugin:    &mockenergy.PluginName,
 							AccessKey: &exampleAccessKeyB,
 						},
 					},
-					"exampleAccountB": {
+					"example-account-c": {
 						StaticResConfig: &staticres.Config{
 							Plugin:    &mockcloudplugin.PluginName,
 							AccessKey: &exampleAccessKeyB,
@@ -63,7 +63,8 @@ func main() {
 				},
 				Environment: &provider.EnvConfig{
 					DynamicEnvConfig: &dynenv.Config{
-						Plugin: &mockenergymix.PluginName, AccessKey: &exampleAccessKeyC,
+						Plugin:    &mockenergymix.PluginName,
+						AccessKey: &exampleAccessKeyA,
 					},
 				},
 			},
