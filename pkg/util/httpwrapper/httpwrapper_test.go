@@ -2,51 +2,42 @@ package httpwrapper_test
 
 import (
 	"net/http"
+	"testing"
 
 	"carbonaut.dev/pkg/util/httpwrapper"
-
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("httpwrapper", func() {
-	doesNotExistPath := "https://example.does-not-exist/"
+func TestSendHTTPRequest(t *testing.T) {
+	tests := []struct {
+		name    string
+		method  string
+		baseURL string
+		wantErr bool
+	}{
+		{"Valid Endpoint POST", http.MethodPost, "https://httpbin.org/post", false},
+		{"Valid Endpoint GET", http.MethodGet, "https://httpbin.org/get", false},
+		{"Invalid Endpoint POST", http.MethodPost, "https://example.does-not-exist/", true},
+		{"Invalid Endpoint GET", http.MethodGet, "https://example.does-not-exist/", true},
+	}
 
-	Describe("sending a http request to a valid endpoint", func() {
-		It("should return no error using post", func() {
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
 			resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
-				Method:  http.MethodPost,
-				BaseURL: "https://httpbin.org/post",
+				Method:  tc.method,
+				BaseURL: tc.baseURL,
 			})
-			Expect(err).ToNot(HaveOccurred())
-			Expect(resp).To(Not(BeNil()))
-			Expect(resp.StatusCode).To(Equal(http.StatusOK))
-		})
-		It("should return no error using get", func() {
-			resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
-				Method:  http.MethodGet,
-				BaseURL: "https://httpbin.org/get",
-			})
-			Expect(err).ToNot(HaveOccurred())
-			Expect(resp).To(Not(BeNil()))
-			Expect(resp.StatusCode).To(Equal(http.StatusOK))
-		})
-	})
 
-	Describe("sending a http request to an invalid endpoint", func() {
-		It("should return an error using post", func() {
-			_, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
-				Method:  http.MethodPost,
-				BaseURL: doesNotExistPath,
-			})
-			Expect(err).To(HaveOccurred())
+			if (err != nil) != tc.wantErr {
+				t.Fatalf("SendHTTPRequest() error = %v, wantErr %v", err, tc.wantErr)
+			}
+
+			if !tc.wantErr {
+				if resp == nil {
+					t.Error("Expected non-nil response")
+				} else if resp.StatusCode != http.StatusOK {
+					t.Errorf("Expected status code %d, got %d", http.StatusOK, resp.StatusCode)
+				}
+			}
 		})
-		It("should return an error using get", func() {
-			_, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
-				Method:  http.MethodGet,
-				BaseURL: doesNotExistPath,
-			})
-			Expect(err).To(HaveOccurred())
-		})
-	})
-})
+	}
+}

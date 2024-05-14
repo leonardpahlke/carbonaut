@@ -2,6 +2,7 @@ package equinixplugin
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -25,23 +26,23 @@ func (p) GetName() *plugin.Kind {
 }
 
 func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.Name, error) {
-	return nil, fmt.Errorf("not yet implemented")
+	return nil, errors.New("not yet implemented")
 }
 
 func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pName *project.Name) ([]*resource.Name, error) {
-	return nil, fmt.Errorf("not yet implemented")
+	return nil, errors.New("not yet implemented")
 }
 
 func (p) GetStaticResourceData(cfg *staticres.Config, pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
-	return nil, fmt.Errorf("not yet implemented")
+	return nil, errors.New("not yet implemented")
 }
 
 func (p) GetStaticEnvironmentAndResourceData(cfg *staticres.Config) (*resource.StaticData, error) {
 	if cfg.Plugin == nil {
-		return nil, fmt.Errorf("[equinix-plugin] plugin is not set")
+		return nil, errors.New("[equinix-plugin] plugin is not set")
 	}
 	if cfg.AccessKey == nil || *cfg.AccessKey == "" {
-		return nil, fmt.Errorf("[equinix-plugin] access key is not set or empty")
+		return nil, errors.New("[equinix-plugin] access key is not set or empty")
 	}
 
 	resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{

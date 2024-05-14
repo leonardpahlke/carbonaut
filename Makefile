@@ -8,6 +8,7 @@ verify:
 	@echo "Verifying the project code..."
 	@go vet ./...
 	@go mod tidy
+	@staticcheck -checks U1000 ./...
 	@./hack/check-go-build.bash
 	@./hack/check-go-lint.bash
 	@./hack/check-go-test.bash
@@ -20,8 +21,12 @@ build: compile-grpc
 install:
 	@echo "Installing project dependencies..."
 	@go get ./...
-	@go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-	@go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+	@go install github.com/4meepo/tagalign/cmd/tagalign@latest
+	@go install honnef.co/go/tools/cmd/staticcheck@latest
+
+# Format Go project
+format:
+	@tagalign -fix ./...
 
 # Upgrade project dependencies
 upgrade:
@@ -111,6 +116,7 @@ help:
 	@echo "  verify                 - Run verifications on the project (lint, vet, tests)"
 	@echo "  build                  - Build project resources"
 	@echo "  install                - Install project dependencies"
+	@echo "  format                 - Format Go files"
 	@echo "  upgrade                - Upgrade project dependencies"
 	@echo "  clean                  - Clean build artifacts and dependencies"
 	@echo "  compile-grpc           - Compile gRPC and protobuf definitions"

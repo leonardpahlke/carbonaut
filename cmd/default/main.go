@@ -22,7 +22,6 @@ import (
 var (
 	exampleAccessKeyA = "123"
 	exampleAccessKeyB = "435"
-	exampleAccessKeyC = "7654asdE2"
 )
 
 func main() {

@@ -56,7 +56,6 @@ linters:
     - rowserrcheck
     - staticcheck
     - stylecheck
-    - tagalign
     - testableexamples
     - typecheck
     - unconvert

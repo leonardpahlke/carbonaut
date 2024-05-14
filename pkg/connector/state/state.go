@@ -54,15 +54,6 @@ func (s *S) AddResource(aID *account.ID, pID *project.ID, r *resource.Topology) 
 	return &rID
 }
 
-// func (s *S) AddProjectResources(aID *account.ID, pID *project.ID, r project.Resources) {
-// 	s.mutex.Lock()
-// 	defer s.mutex.Unlock()
-// 	s.T.Accounts[*aID].Projects[*pID] = &project.Topology{
-// 		Resources: r,
-// 		CreatedAt: time.Now(),
-// 	}
-// }
-
 // DELETE
 
 func (s *S) RemoveAccount(aID *account.ID) {
@@ -130,89 +121,92 @@ func (s *S) RemoveResource(aID *account.ID, pID *project.ID, rID *resource.ID) {
 // COLLECT
 
 func (s *S) CurrentAccounts() []*account.ID {
-	currentAccountIDs := make([]*account.ID, 0)
+	aIDs := make([]*account.ID, 0)
 	for k := range s.T.Accounts {
-		currentAccountIDs = append(currentAccountIDs, &k)
+		kCopy := k
+		aIDs = append(aIDs, &kCopy)
 	}
-	return currentAccountIDs
+	return aIDs
 }
 
 func (s *S) CurrentProjects(aID *account.ID) []*project.ID {
-	currentProjectIDs := make([]*project.ID, 0)
-	if account, ok := s.T.Accounts[*aID]; ok {
-		for k := range account.Projects {
-			currentProjectIDs = append(currentProjectIDs, &k)
+	pIDs := make([]*project.ID, 0)
+	if a, ok := s.T.Accounts[*aID]; ok {
+		for k := range a.Projects {
+			kCopy := k
+			pIDs = append(pIDs, &kCopy)
 		}
 	}
-	return currentProjectIDs
+	return pIDs
 }
 
 func (s *S) CurrentResources(aID *account.ID, pID *project.ID) []*resource.ID {
-	currentResourceIDs := make([]*resource.ID, 0)
-	if account, ok := s.T.Accounts[*aID]; ok {
-		if project, ok := account.Projects[*pID]; ok {
-			for k := range project.Resources {
-				currentResourceIDs = append(currentResourceIDs, &k)
+	rIDs := make([]*resource.ID, 0)
+	if a, ok := s.T.Accounts[*aID]; ok {
+		if p, ok := a.Projects[*pID]; ok {
+			for k := range p.Resources {
+				kCopy := k
+				rIDs = append(rIDs, &kCopy)
 			}
 		}
 	}
-	return currentResourceIDs
+	return rIDs
 }
 
 func (s *S) CurrentAccountNames() []*account.Name {
-	accountNames := make([]*account.Name, 0)
+	aNames := make([]*account.Name, 0)
 	for aID := range s.T.Accounts {
-		accountNames = append(accountNames, s.T.Accounts[aID].Name)
+		aNames = append(aNames, s.T.Accounts[aID].Name)
 	}
-	return accountNames
+	return aNames
 }
 
 func (s *S) CurrentProjectNames(aID *account.ID) []*project.Name {
-	projectNames := make([]*project.Name, 0)
-	if account, ok := s.T.Accounts[*aID]; ok {
-		for pID := range account.Projects {
-			projectNames = append(projectNames, s.T.Accounts[*aID].Projects[pID].Name)
+	pNames := make([]*project.Name, 0)
+	if a, ok := s.T.Accounts[*aID]; ok {
+		for pID := range a.Projects {
+			pNames = append(pNames, s.T.Accounts[*aID].Projects[pID].Name)
 		}
 	}
-	return projectNames
+	return pNames
 }
 
 func (s *S) CurrentResourceNames(aID *account.ID, pID *project.ID) []*resource.Name {
-	resourceNames := make([]*resource.Name, 0)
+	rNames := make([]*resource.Name, 0)
 	if aTopo, ok := s.T.Accounts[*aID]; ok {
 		if pTopo, ok := aTopo.Projects[*pID]; ok {
 			for rID := range pTopo.Resources {
-				resourceNames = append(resourceNames, pTopo.Resources[rID].Name)
+				rNames = append(rNames, pTopo.Resources[rID].Name)
 			}
 		}
 	}
-	return resourceNames
+	return rNames
 }
 
 // GET
 
 func (s *S) GetAccountID(aName *account.Name) *account.ID {
-	for i := range s.T.Accounts {
-		if *s.T.Accounts[i].Name == *aName {
-			return &i
+	for aID := range s.T.Accounts {
+		if *s.T.Accounts[aID].Name == *aName {
+			return &aID
 		}
 	}
 	return &account.NotFoundID
 }
 
 func (s *S) GetProjectID(aID *account.ID, pName *project.Name) *project.ID {
-	for i := range s.T.Accounts[*aID].Projects {
-		if *s.T.Accounts[*aID].Projects[i].Name == *pName {
-			return &i
+	for pID := range s.T.Accounts[*aID].Projects {
+		if *s.T.Accounts[*aID].Projects[pID].Name == *pName {
+			return &pID
 		}
 	}
 	return &project.NotFoundID
 }
 
 func (s *S) GetResourceID(aID *account.ID, pID *project.ID, rName *resource.Name) *resource.ID {
-	for i := range s.T.Accounts[*aID].Projects[*pID].Resources {
-		if *s.T.Accounts[*aID].Projects[*pID].Resources[i].Name == *rName {
-			return &i
+	for rID := range s.T.Accounts[*aID].Projects[*pID].Resources {
+		if *s.T.Accounts[*aID].Projects[*pID].Resources[rID].Name == *rName {
+			return &rID
 		}
 	}
 	return &resource.NotFoundID

@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetFreePort(t *testing.T) {
-	port, err := freeport.GetFreePort()
+	port, err := freeport.Get()
 	if err != nil {
 		t.Error(err)
 	}

@@ -25,8 +25,8 @@ type EnvConfig struct {
 
 // internal state
 type Topology struct {
-	Accounts          map[account.ID]*account.Topology `json:"accounts"         yaml:"accounts"`
-	AccountsIDCounter *int32                           `json:"project_id_counter"         yaml:"project_id_counter"`
+	Accounts          map[account.ID]*account.Topology `json:"accounts"           yaml:"accounts"`
+	AccountsIDCounter *int32                           `json:"project_id_counter" yaml:"project_id_counter"`
 }
 
 type Data map[account.Name]account.Data

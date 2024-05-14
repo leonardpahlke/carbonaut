@@ -40,7 +40,6 @@ func (c *C) Collect() (*provider.Data, error) {
 				}
 				accountData[*c.state.T.Accounts[aID].Projects[p].Name] = projectData
 			}
-
 		}
 		data[*c.state.T.Accounts[aID].Name] = accountData
 	}
@@ -50,20 +49,20 @@ func (c *C) Collect() (*provider.Data, error) {
 	return &data, nil
 }
 
-func (c *C) collectDynResData(r *resource.Topology, DynamicResConfig *dynres.Config) (*resource.DynamicData, error) {
-	pRes, found := dynresplugins.GetPlugin(DynamicResConfig.Plugin)
+func (c *C) collectDynResData(r *resource.Topology, dynResConfig *dynres.Config) (*resource.DynamicData, error) {
+	pRes, found := dynresplugins.GetPlugin(dynResConfig.Plugin)
 	if !found {
-		return nil, fmt.Errorf("could not find plugin: %s", *DynamicResConfig.Plugin)
+		return nil, fmt.Errorf("could not find plugin: %s", *dynResConfig.Plugin)
 	}
 
 	pEnv, found := dynenvplugins.GetPlugin(c.providerConfig.Environment.DynamicEnvConfig.Plugin)
 	if !found {
-		return nil, fmt.Errorf("could not find plugin: %s", *DynamicResConfig.Plugin)
+		return nil, fmt.Errorf("could not find plugin: %s", *dynResConfig.Plugin)
 	}
 
 	c.log.Debug("collect dynamic data - resource", "plugin", *r.Plugin)
 
-	dynResData, err := pRes.GetDynamicResourceData(DynamicResConfig, r.StaticData)
+	dynResData, err := pRes.GetDynamicResourceData(dynResConfig, r.StaticData)
 	if err != nil {
 		return nil, err
 	}

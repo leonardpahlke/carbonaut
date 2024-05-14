@@ -17,11 +17,11 @@ type (
 
 // internal state
 type Topology struct {
-	Name             *Name             `json:"name"         yaml:"name"`
-	Projects         Projects          `json:"projects"         yaml:"projects"`
-	CreatedAt        time.Time         `json:"created_at"         yaml:"created_at"`
-	ProjectIDCounter *int32            `json:"project_id_counter"         yaml:"project_id_counter"`
-	Config           *staticres.Config `json:"config"         yaml:"config"`
+	Name             *Name             `json:"name"`
+	Projects         Projects          `json:"projects"`
+	CreatedAt        time.Time         `json:"created_at"`
+	ProjectIDCounter *int32            `json:"project_id_counter"`
+	Config           *staticres.Config `json:"config"`
 }
 
 type Projects map[project.ID]*project.Topology

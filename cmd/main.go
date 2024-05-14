@@ -4,9 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
-	"net/http"
 	"os"
-	_ "net/http/pprof"
 
 	"carbonaut.dev/pkg/config"
 	"carbonaut.dev/pkg/connector"
@@ -38,14 +36,6 @@ func main() {
 		log.Error("could not initialize connector with provided configuration", "connector config", cfg.Meta.Connector, "provider config", cfg.Spec.Provider, "error", err)
 		os.Exit(1)
 	}
-
-	// pprof HTTP server
-	go func() {
-		log.Info("pprof HTTP server starting on localhost:6060")
-		if err := http.ListenAndServe("localhost:6060", nil); err != nil {
-			log.Error("pprof HTTP server failed to start", "error", err)
-		}
-	}()
 
 	log.Info("starting carbonaut server", "address", fmt.Sprintf("http://0.0.0.0:%d", cfg.Spec.Server.Port))
 	s := server.New(c, log, exitChan)

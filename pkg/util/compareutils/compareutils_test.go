@@ -1,19 +1,3 @@
-/*
-Copyright 2023 CARBONAUT AUTHORS
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
 package compareutils_test
 
 import (
@@ -21,106 +5,150 @@ import (
 	"testing"
 
 	"carbonaut.dev/pkg/util/compareutils"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("compareutils", func() {
-	Describe("CountValuesOfMap", func() {
-		It("should return an empty map again", func() {
-			Expect(compareutils.CountValuesOfMap(map[string]int{})).To(Equal(map[int]int{}))
-		})
+func TestCountValuesOfMap(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    map[string]int
+		expected map[int]int
+	}{
+		{"Empty Map", map[string]int{}, map[int]int{}},
+		{"Map with Values", map[string]int{"foo": 1, "bar": 1}, map[int]int{1: 2}},
+	}
 
-		It("should be counted up", func() {
-			Expect(compareutils.CountValuesOfMap(map[string]int{"foo": 1, "bar": 1})).To(Equal(map[int]int{1: 2}))
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := compareutils.CountValuesOfMap(tc.input)
+			if !reflect.DeepEqual(result, tc.expected) {
+				t.Errorf("CountValuesOfMap() = %v, want %v", result, tc.expected)
+			}
 		})
-	})
+	}
+}
 
-	Describe("GetListDuplicates", func() {
-		listWithDuplicates1 := []string{"A", "A"}
-		listWithDuplicates2 := []string{"1", "A", "A1", "B", "C", "A", "A", "DDD", "BB", "BBB", "A1"}
-		It("should return two a single value with two duplicate values in a list ", func() {
-			Expect(*compareutils.GetListDuplicates(listWithDuplicates1)).To(Equal([]string{"A"}))
-		})
-		It("should return multiple values with mixed list of duplicate and none duplicates ", func() {
-			Expect(*compareutils.GetListDuplicates(listWithDuplicates2)).To(Or(Equal([]string{"A", "A1"}), Equal([]string{"A1", "A"})))
-		})
-	})
+func TestGetListDuplicates(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []string
+		expected []string
+	}{
+		{"List with Single Duplicate", []string{"A", "A"}, []string{"A"}},
+		{"List with Multiple Duplicates", []string{"1", "A", "A1", "B", "C", "A", "A", "DDD", "BB", "BBB", "A1"}, []string{"A", "A1"}},
+	}
 
-	Describe("CheckListContains", func() {
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := compareutils.GetListDuplicates(tc.input)
+			if !reflect.DeepEqual(*result, tc.expected) {
+				t.Errorf("GetListDuplicates() = %v, want %v", *result, tc.expected)
+			}
+		})
+	}
+}
+
+func TestCheckListContains(t *testing.T) {
+	list := []string{"A", "B", "C"}
+	tests := []struct {
+		name     string
+		element  string
+		expected bool
+	}{
+		{"Element Exists", "A", true},
+		{"Element Does Not Exist", "D", false},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := compareutils.CheckListContains(list, tc.element)
+			if result != tc.expected {
+				t.Errorf("CheckListContains() = %v, want %v", result, tc.expected)
+			}
+		})
+	}
+}
+
+func TestFilter(t *testing.T) {
+	t.Run("basic filtering should return a filtered list", func(t *testing.T) {
 		list := []string{"A", "B", "C"}
-		It("should return true", func() {
-			Expect(compareutils.CheckListContains(list, "A")).To(BeTrue())
-		})
-		It("should return false", func() {
-			Expect(compareutils.CheckListContains(list, "D")).To(BeFalse())
-		})
+		list2 := []string{"A", "B", "A", "C"}
+		expected1 := []string{"A"}
+		expected2 := []string{"A", "A"}
+
+		result1 := compareutils.Filter(list, "A")
+		if !reflect.DeepEqual(result1, expected1) {
+			t.Errorf("Filter() = %v, want %v", result1, expected1)
+		}
+
+		result2 := compareutils.Filter(list2, "A")
+		if !reflect.DeepEqual(result2, expected2) {
+			t.Errorf("Filter() = %v, want %v", result2, expected2)
+		}
 	})
 
-	Describe("Check if two maps are equal", func() {
+	t.Run("deep filtering should return a filtered list", func(t *testing.T) {
 		type S1 struct {
 			A int
 			B int
 			C int
 		}
-		map1 := S1{A: 1, B: 2}
-		map2 := S1{A: 1, B: 2}
-		map3 := S1{A: 1, B: 3}
-		map4 := S1{A: 1, B: 2, C: 3}
-		It("should return true", func() {
-			eql, err := compareutils.Equal(&map1, &map2)
-			Expect(err).ToNot(HaveOccurred())
-			Expect(eql).To(BeTrue())
-		})
-		It("should return false", func() {
-			eql, err := compareutils.Equal(&map1, &map3)
-			Expect(err).ToNot(HaveOccurred())
-			Expect(eql).To(BeFalse())
-		})
-		It("should return false", func() {
-			eql, err := compareutils.Equal(&map1, &map4)
-			Expect(err).ToNot(HaveOccurred())
-			Expect(eql).To(BeFalse())
-		})
-		It("should not manipulate the interfaces provided", func() {
-			m1Tmp := map1
-			m2Tmp := map2
-			eql, err := compareutils.Equal(&m1Tmp, &m2Tmp)
-			Expect(err).ToNot(HaveOccurred())
-			Expect(eql).To(BeTrue())
-			Expect(m1Tmp).To(Equal(map1))
-			Expect(m2Tmp).To(Equal(map2))
-		})
+		list := []S1{{A: 1, B: 2}, {A: 1, B: 3}, {A: 1, B: 4}}
+		expected1 := []S1{{A: 1, B: 2}}
+
+		type S2 struct {
+			A  int
+			B  int
+			S1 S1
+		}
+		list2 := []S2{{A: 1, B: 2, S1: S1{A: 1, B: 2}}, {A: 1, B: 3, S1: S1{A: 1, B: 3}}, {A: 1, B: 4, S1: S1{A: 1, B: 4}}}
+		expected2 := []S2{{A: 1, B: 2, S1: S1{A: 1, B: 2}}}
+
+		result1 := compareutils.Filter(list, S1{A: 1, B: 2})
+		if !reflect.DeepEqual(result1, expected1) {
+			t.Errorf("Filter() = %v, want %v", result1, expected1)
+		}
+
+		result2 := compareutils.Filter(list2, S2{A: 1, B: 2, S1: S1{A: 1, B: 2}})
+		if !reflect.DeepEqual(result2, expected2) {
+			t.Errorf("Filter() = %v, want %v", result2, expected2)
+		}
 	})
+}
 
-	Describe("Filter", func() {
-		It("basic filtering should return a filtered list", func() {
-			list := []string{"A", "B", "C"}
-			list2 := []string{"A", "B", "A", "C"}
-			Expect(compareutils.Filter(list, "A")).To(Equal([]string{"A"}))
-			Expect(compareutils.Filter(list2, "A")).To(Equal([]string{"A", "A"}))
-		})
+func TestEqual(t *testing.T) {
+	type S1 struct {
+		A int
+		B int
+		C int
+	}
+	map1 := S1{A: 1, B: 2}
+	map2 := S1{A: 1, B: 2}
+	map3 := S1{A: 1, B: 3}
+	map4 := S1{A: 1, B: 2, C: 3}
 
-		It("deep filtering should return a filtered list", func() {
-			type S1 struct {
-				A int
-				B int
-				C int
+	tests := []struct {
+		name     string
+		map1     *S1
+		map2     *S1
+		expected bool
+	}{
+		{"Maps are Equal", &map1, &map2, true},
+		{"Maps are Not Equal", &map1, &map3, false},
+		{"Maps with Different Fields", &map1, &map4, false},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			equal, err := compareutils.Equal(tc.map1, tc.map2)
+			if err != nil {
+				t.Fatal("Unexpected error:", err)
 			}
-			list := []S1{{A: 1, B: 2}, {A: 1, B: 3}, {A: 1, B: 4}}
-			Expect(compareutils.Filter(list, S1{A: 1, B: 2})).To(Equal([]S1{{A: 1, B: 2}}))
-
-			type S2 struct {
-				A  int
-				B  int
-				S1 S1
+			if equal != tc.expected {
+				t.Errorf("Equal() = %v, want %v", equal, tc.expected)
 			}
-
-			list2 := []S2{{A: 1, B: 2, S1: S1{A: 1, B: 2}}, {A: 1, B: 3, S1: S1{A: 1, B: 3}}, {A: 1, B: 4, S1: S1{A: 1, B: 4}}}
-			Expect(compareutils.Filter(list2, S2{A: 1, B: 2, S1: S1{A: 1, B: 2}})).To(Equal([]S2{{A: 1, B: 2, S1: S1{A: 1, B: 2}}}))
 		})
-	})
-})
+	}
+}
 
 func TestCompareLists(t *testing.T) {
 	cases := []struct {
