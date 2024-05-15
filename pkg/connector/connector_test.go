@@ -2,6 +2,7 @@ package connector
 
 import (
 	"log/slog"
+	"os"
 	"testing"
 	"time"
 
@@ -15,7 +16,6 @@ import (
 	"carbonaut.dev/pkg/provider/types/staticres"
 )
 
-// Adjust the initialProviderConfig and updatedProviderConfig to align with new Config structure
 var (
 	exampleAccessKeyA     = "123"
 	exampleAccessKeyB     = "435"
@@ -169,21 +169,49 @@ func TestConnectorCollect(t *testing.T) {
 	stopChan <- 1
 }
 
+// PERFORMANCE TESTS
+
 // BenchmarkCollect measures the performance of the Collect method.
 func BenchmarkCollect(b *testing.B) {
-	logger := slog.Default()
-	config := &Config{TimeoutSeconds: 10}
+	l := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelWarn,
+	}))
+	cfg := &Config{TimeoutSeconds: 10}
 
-	connector, err := New(config, logger, &initialProviderConfig)
+	c, err := New(cfg, l, &initialProviderConfig)
 	if err != nil {
 		b.Fatal(err)
 	}
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, err := connector.Collect()
+		_, err := c.Collect()
 		if err != nil {
 			b.Error(err)
 		}
 	}
+}
+
+// BenchmarkLoadConfig measures the performance of the LoadConfig method.
+func BenchmarkLoadConfig(b *testing.B) {
+	l := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelWarn,
+	}))
+	cfg := &Config{TimeoutSeconds: 10}
+
+	c, err := New(cfg, l, &initialProviderConfig)
+	if err != nil {
+		b.Fatal(err)
+	}
+
+	b.ResetTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			updatedConfig := updatedProviderConfig
+			if err := c.LoadConfig(&updatedConfig); err != nil {
+				b.Error("Error during LoadConfig: ", err)
+			}
+		}
+	})
+	b.StopTimer()
 }
