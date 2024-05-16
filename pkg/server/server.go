@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"carbonaut.dev/pkg/connector"
+	"carbonaut.dev/pkg/util/cache"
 )
 
 type Config struct {
@@ -19,23 +20,24 @@ type Server struct {
 	Connector *connector.C
 	Log       *slog.Logger
 	ExitChan  chan int
-}
-
-type CacheItem struct {
-	Data      []byte
-	Timestamp time.Time
+	cache     *cache.Cache
 }
 
 var (
-	cache         *CacheItem    = nil
-	cacheDuration time.Duration = 10 * time.Second
+	cacheDuration time.Duration = 30 * time.Second
+	// the cache just contains one key value pair
+	cacheDataKey string = "data"
 )
 
 func New(c *connector.C, logger *slog.Logger, exitChan chan int) *Server {
+	// Create a cache with an expiration time of 60 seconds, and which
+	// purges expired items every 5 minutes
+	newCache := cache.New(cacheDuration, 5*time.Minute)
 	return &Server{
 		Connector: c,
 		Log:       logger,
 		ExitChan:  exitChan,
+		cache:     newCache,
 	}
 }
 
@@ -46,11 +48,16 @@ func (s Server) Listen(cfg *Config) {
 	}
 
 	http.HandleFunc("/metrics-json", func(w http.ResponseWriter, r *http.Request) {
-		now := time.Now()
-		if cache != nil && now.Sub(cache.Timestamp) < cacheDuration {
+		cachedProjectResources, found := s.cache.Get(cacheDataKey)
+		if found {
+			cachedProviderData, ok := cachedProjectResources.([]byte)
+			if !ok {
+				http.Error(w, "Internal Server Error, cached value is not of type []byte", http.StatusInternalServerError)
+				return
+			}
 			s.Log.Info("serving from cache")
 			w.Header().Set("Content-Type", "application/json")
-			_, err := w.Write(cache.Data)
+			_, err := w.Write(cachedProviderData)
 			if err != nil {
 				s.Log.Error("could not write response", "error", err)
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -73,10 +80,7 @@ func (s Server) Listen(cfg *Config) {
 			return
 		}
 
-		cache = &CacheItem{
-			Data:      jsonData,
-			Timestamp: now,
-		}
+		s.cache.Set(cacheDataKey, jsonData, cache.DefaultExpiration)
 
 		w.Header().Set("Content-Type", "application/json")
 		_, err = w.Write(jsonData)

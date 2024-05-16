@@ -50,12 +50,6 @@ repos:
         language: system
         pass_filenames: false
 
-      - id: errcheck
-        name: Errcheck
-        entry: errcheck ./...
-        language: system
-        pass_filenames: false
-
       - id: gosec
         name: GoSec
         entry: gosec ./...

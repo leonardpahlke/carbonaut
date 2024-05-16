@@ -16,7 +16,6 @@ install:
 	@go install honnef.co/go/tools/cmd/staticcheck@latest
 	@go install golang.org/x/tools/cmd/godoc@latest
 	@go install golang.org/x/tools/cmd/goimports@latest
-	@go install github.com/kisielk/errcheck@latest
 	@go install github.com/securego/gosec/v2/cmd/gosec@latest
 	@pre-commit install
 

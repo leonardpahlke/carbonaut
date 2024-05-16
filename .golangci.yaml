@@ -5,10 +5,11 @@ run:
 
 issues:
   exclude-rules:
-    - path: fake_.*\.go
+    - path: pkg/util/cache/cache_test.go
       linters:
+        - errcheck
+        - gocyclo
         - gocritic
-        - dupl
 
   max-issues-per-linter: 0
   max-same-issues: 0
