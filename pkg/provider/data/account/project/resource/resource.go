@@ -62,8 +62,8 @@ type StaticResData struct {
 type CPU struct {
 	Count        int    `json:"count"        yaml:"count"        default:"1"`
 	Type         string `json:"type"         yaml:"type"         default:"Intel Xeon E-2278G 8-Core Processor @ 3.40GHz"`
-	Cores        int    `json:"cores"        yaml:"cores"        default:"8"`
-	Threads      int    `json:"threads"      yaml:"threads"      default:"16"`
+	Cores        string `json:"cores"        yaml:"cores"        default:"8"`
+	Threads      string `json:"threads"      yaml:"threads"      default:"16"`
 	Speed        string `json:"speed"        yaml:"speed"        default:"3.40GHz"`
 	Arch         string `json:"arch"         yaml:"arch"         default:"x86"`
 	Model        string `json:"model"        yaml:"model"        default:"E-2278G"`

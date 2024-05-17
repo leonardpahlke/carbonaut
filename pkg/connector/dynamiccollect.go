@@ -2,6 +2,7 @@ package connector
 
 import (
 	"fmt"
+	"log/slog"
 
 	"carbonaut.dev/pkg/plugin/dynenvplugins"
 	"carbonaut.dev/pkg/plugin/dynresplugins"
@@ -17,16 +18,16 @@ func (c *C) Collect() (*provider.Data, error) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
 
-	c.log.Info("start collecting data")
+	slog.Info("start collecting data")
 	data := make(provider.Data)
 
 	for aID := range c.state.T.Accounts {
 		accountData := make(account.Data)
 		if staticAccountResources, ok := (c.providerConfig.Resources)[*c.state.T.Accounts[aID].Name]; ok {
-			c.log.Debug("collect data", "account", aID)
+			slog.Debug("collect data", "account", aID)
 
 			for p := range c.state.T.Accounts[aID].Projects {
-				c.log.Debug("collect data", "account", aID, "project", p)
+				slog.Debug("collect data", "account", aID, "project", p)
 				projectData := make(project.Data)
 				for r := range c.state.T.Accounts[aID].Projects[p].Resources {
 					dynData, err := c.collectDynResData(c.state.T.Accounts[aID].Projects[p].Resources[r], staticAccountResources.DynamicResConfig)
@@ -44,7 +45,7 @@ func (c *C) Collect() (*provider.Data, error) {
 		data[*c.state.T.Accounts[aID].Name] = accountData
 	}
 
-	c.log.Info("data collected")
+	slog.Info("data collected")
 
 	return &data, nil
 }
@@ -60,14 +61,14 @@ func (c *C) collectDynResData(r *resource.Topology, dynResConfig *dynres.Config)
 		return nil, fmt.Errorf("could not find plugin: %s", *dynResConfig.Plugin)
 	}
 
-	c.log.Debug("collect dynamic data - resource", "plugin", *r.Plugin)
+	slog.Debug("collect dynamic data - resource", "plugin", *r.Plugin)
 
 	dynResData, err := pRes.GetDynamicResourceData(dynResConfig, r.StaticData)
 	if err != nil {
 		return nil, err
 	}
 
-	c.log.Debug("collect dynamic data - environment", "plugin", *c.providerConfig.Environment.DynamicEnvConfig.Plugin)
+	slog.Debug("collect dynamic data - environment", "plugin", *c.providerConfig.Environment.DynamicEnvConfig.Plugin)
 	dynEnvData, err := pEnv.GetDynamicEnvironmentData(c.providerConfig.Environment.DynamicEnvConfig, r.StaticData.Location)
 	if err != nil {
 		return nil, err

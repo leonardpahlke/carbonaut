@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/creasty/defaults v1.7.0
+	github.com/fatih/color v1.17.0
 	github.com/gookit/validate v1.5.2
 	github.com/prometheus/client_model v0.6.1
 	github.com/prometheus/common v0.53.0
@@ -16,6 +17,9 @@ require (
 	github.com/gookit/filter v1.2.1 // indirect
 	github.com/gookit/goutil v0.6.15 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
-	github.com/stretchr/testify v1.8.1 // indirect
-	golang.org/x/text v0.15.0 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/stretchr/testify v1.8.4 // indirect
+	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 )

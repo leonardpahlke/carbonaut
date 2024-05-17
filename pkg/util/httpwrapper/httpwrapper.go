@@ -32,7 +32,12 @@ type HTTPReqInfo struct {
 // SendHTTPRequest is a wrapper function for sending http requests
 // response: request body, status code, error
 func SendHTTPRequest(req *HTTPReqWrapper) (*HTTPReqInfo, error) {
-	slog.Info("prepare http request", "method", req.Method, "baseURL", req.BaseURL, "path", req.Path, "queryStruct", req.Query, "bodyStruct", req.BodyStruct, "headers", req.Headers)
+	// ? headerKey's are printed since headers are often used to transport secrets and accesskeys
+	headerKey := []string{}
+	for key := range req.Headers {
+		headerKey = append(headerKey, key)
+	}
+	slog.Debug("prepare http request", "method", req.Method, "baseURL", req.BaseURL, "path", req.Path, "queryStruct", req.Query, "bodyStruct", req.BodyStruct, "header keys", headerKey)
 	url := fmt.Sprintf("%s%s?%s", req.BaseURL, req.Path, req.Query)
 	slog.Info("sending http request", "url", url)
 	requestBodyBytes, err := json.Marshal(&req.BodyStruct)

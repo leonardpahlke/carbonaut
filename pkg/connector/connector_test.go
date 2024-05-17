@@ -14,7 +14,12 @@ import (
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"
+	"carbonaut.dev/pkg/util/logger"
 )
+
+func init() {
+	slog.SetDefault(slog.New(logger.NewHandler(os.Stderr, logger.DefaultOptions)))
+}
 
 var (
 	exampleAccessKeyA     = "123"
@@ -27,8 +32,8 @@ var (
 		Resources: map[account.Name]provider.Res{
 			exampleAccountA: {
 				StaticResConfig: &staticres.Config{
-					Plugin:    &mockcloudplugin.PluginName,
-					AccessKey: &exampleAccessKeyA,
+					Plugin:       &mockcloudplugin.PluginName,
+					AccessKeyEnv: &exampleAccessKeyA,
 				},
 				DynamicResConfig: &dynres.Config{
 					Plugin:    &mockenergy.PluginName,
@@ -37,8 +42,8 @@ var (
 			},
 			exampleAccountB: {
 				StaticResConfig: &staticres.Config{
-					Plugin:    &mockcloudplugin.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:       &mockcloudplugin.PluginName,
+					AccessKeyEnv: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
 					Plugin:    &mockenergy.PluginName,
@@ -57,8 +62,8 @@ var (
 		Resources: map[account.Name]provider.Res{
 			exampleAccountA: {
 				StaticResConfig: &staticres.Config{
-					Plugin:    &mockcloudplugin.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:       &mockcloudplugin.PluginName,
+					AccessKeyEnv: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
 					Plugin:    &mockenergy.PluginName,
@@ -67,8 +72,8 @@ var (
 			},
 			exampleAccountC: {
 				StaticResConfig: &staticres.Config{
-					Plugin:    &mockcloudplugin.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:       &mockcloudplugin.PluginName,
+					AccessKeyEnv: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
 					Plugin:    &mockenergy.PluginName,
@@ -88,7 +93,7 @@ var (
 func TestConnectorInit(t *testing.T) {
 	c, err := New(&Config{
 		TimeoutSeconds: 10,
-	}, slog.Default(), &initialProviderConfig)
+	}, &initialProviderConfig)
 	if err != nil {
 		t.Error(err)
 	}
@@ -122,7 +127,7 @@ func TestConnectorRun(t *testing.T) {
 		TimeoutSeconds: 10,
 	}
 
-	c, err := New(&connectorConfig, slog.Default(), &initialProviderConfig)
+	c, err := New(&connectorConfig, &initialProviderConfig)
 	if err != nil {
 		t.Error(err)
 	}
@@ -145,7 +150,7 @@ func TestConnectorCollect(t *testing.T) {
 		TimeoutSeconds: 10,
 	}
 
-	c, err := New(&connectorConfig, slog.Default(), &initialProviderConfig)
+	c, err := New(&connectorConfig, &initialProviderConfig)
 	if err != nil {
 		t.Error(err)
 		t.Fail()
@@ -173,12 +178,9 @@ func TestConnectorCollect(t *testing.T) {
 
 // BenchmarkCollect measures the performance of the Collect method.
 func BenchmarkCollect(b *testing.B) {
-	l := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: slog.LevelWarn,
-	}))
 	cfg := &Config{TimeoutSeconds: 10}
 
-	c, err := New(cfg, l, &initialProviderConfig)
+	c, err := New(cfg, &initialProviderConfig)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -194,12 +196,9 @@ func BenchmarkCollect(b *testing.B) {
 
 // BenchmarkLoadConfig measures the performance of the LoadConfig method.
 func BenchmarkLoadConfig(b *testing.B) {
-	l := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: slog.LevelWarn,
-	}))
 	cfg := &Config{TimeoutSeconds: 10}
 
-	c, err := New(cfg, l, &initialProviderConfig)
+	c, err := New(cfg, &initialProviderConfig)
 	if err != nil {
 		b.Fatal(err)
 	}

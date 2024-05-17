@@ -99,3 +99,12 @@ func Filter[E comparable](l []E, e E) []E {
 	}
 	return r
 }
+
+// CollectKeys retrieves all map keys
+func CollectKeys[E comparable, V any](m map[E]V) []E {
+	keys := make([]E, 0, len(m))
+	for key := range m {
+		keys = append(keys, key)
+	}
+	return keys
+}

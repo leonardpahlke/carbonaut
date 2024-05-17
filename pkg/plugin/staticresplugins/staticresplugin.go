@@ -1,18 +1,20 @@
 package staticresplugins
 
 import (
-	"carbonaut.dev/pkg/plugin"
+	"fmt"
+
 	"carbonaut.dev/pkg/plugin/staticresplugins/equinixplugin"
 	"carbonaut.dev/pkg/plugin/staticresplugins/mockcloudplugin"
 	"carbonaut.dev/pkg/provider/types/staticres"
 )
 
-var plugins = map[plugin.Kind]staticres.Provider{
-	mockcloudplugin.PluginName: mockcloudplugin.New(),
-	equinixplugin.PluginName:   equinixplugin.New(),
-}
-
-func GetPlugin(identifier *plugin.Kind) (staticres.Provider, bool) {
-	p, found := plugins[*identifier]
-	return p, found
+func GetPlugin(cfg *staticres.Config) (staticres.Provider, error) {
+	switch *cfg.Plugin {
+	case mockcloudplugin.PluginName:
+		return mockcloudplugin.New(cfg)
+	case equinixplugin.PluginName:
+		return equinixplugin.New(cfg)
+	default:
+		return nil, fmt.Errorf("plugin of kind %s not found", *cfg.Plugin)
+	}
 }

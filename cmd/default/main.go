@@ -41,8 +41,8 @@ func main() {
 				Resources: map[account.Name]provider.Res{
 					"example-account-a": {
 						StaticResConfig: &staticres.Config{
-							Plugin:    &mockcloudplugin.PluginName,
-							AccessKey: &exampleAccessKeyB,
+							Plugin:       &mockcloudplugin.PluginName,
+							AccessKeyEnv: &exampleAccessKeyB,
 						},
 						DynamicResConfig: &dynres.Config{
 							Plugin:    &mockenergy.PluginName,
@@ -51,8 +51,8 @@ func main() {
 					},
 					"example-account-c": {
 						StaticResConfig: &staticres.Config{
-							Plugin:    &mockcloudplugin.PluginName,
-							AccessKey: &exampleAccessKeyB,
+							Plugin:       &mockcloudplugin.PluginName,
+							AccessKeyEnv: &exampleAccessKeyB,
 						},
 						DynamicResConfig: &dynres.Config{
 							Plugin:    &mockenergy.PluginName,

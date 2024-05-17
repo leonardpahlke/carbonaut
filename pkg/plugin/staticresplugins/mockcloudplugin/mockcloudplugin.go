@@ -9,17 +9,21 @@ import (
 
 var PluginName plugin.Kind = "mockcloudplugin"
 
-type p struct{}
+type p struct {
+	cfg *staticres.Config
+}
 
-func New() p {
-	return p{}
+func New(cfg *staticres.Config) (p, error) {
+	return p{
+		cfg: cfg,
+	}, nil
 }
 
 func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.Name, error) {
+func (p) DiscoverProjectIdentifiers() ([]*project.Name, error) {
 	prjA := project.Name("project-a")
 	prjB := project.Name("project-b")
 	data := make([]*project.Name, 0)
@@ -27,7 +31,7 @@ func (p) DiscoverProjectIdentifiers(cfg *staticres.Config) ([]*project.Name, err
 	return data, nil
 }
 
-func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pName *project.Name) ([]*resource.Name, error) {
+func (p) DiscoverStaticResourceIdentifiers(pName *project.Name) ([]*resource.Name, error) {
 	resA := resource.Name("resource-a")
 	resB := resource.Name("resource-b")
 	resC := resource.Name("resource-c")
@@ -36,7 +40,7 @@ func (p) DiscoverStaticResourceIdentifiers(cfg *staticres.Config, pName *project
 	return data, nil
 }
 
-func (p) GetStaticResourceData(cfg *staticres.Config, pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
+func (p) GetStaticResourceData(pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
 	return &resource.StaticResData{
 		ID:   "0131acc3-82d8-488b-a8e2-c4a00e897145",
 		User: "root",
@@ -50,8 +54,8 @@ func (p) GetStaticResourceData(cfg *staticres.Config, pName *project.Name, rName
 			{
 				Count:        1,
 				Type:         "Intel Xeon E-2278G 8-Core Processor @ 3.40GHz",
-				Cores:        8,
-				Threads:      16,
+				Cores:        "8",
+				Threads:      "16",
 				Speed:        "3.40GHz",
 				Arch:         "x86",
 				Model:        "E-2278G",

@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"time"
 
 	"carbonaut.dev/pkg/config"
 	"carbonaut.dev/pkg/connector"
 	"carbonaut.dev/pkg/server"
+	"carbonaut.dev/pkg/util/logger"
 )
 
 var configFullPath string
@@ -25,37 +27,24 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("could not read configuration file, err: %v", err))
 	}
-	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: GetLogLevel(cfg.Meta.LogLevel),
-	})
-	log := slog.New(handler)
-	log.Info("starting carbonaut", "config", cfg)
 
-	c, err := connector.New(cfg.Meta.Connector, log, cfg.Spec.Provider)
+	slog.SetDefault(slog.New(logger.NewHandler(os.Stderr, &logger.Options{
+		Level:       logger.GetLogLevel(cfg.Meta.LogLevel),
+		TimeFormat:  time.DateTime,
+		SrcFileMode: logger.ShortFile,
+	})))
+	slog.Info("starting carbonaut", "config", cfg)
+
+	c, err := connector.New(cfg.Meta.Connector, cfg.Spec.Provider)
 	if err != nil {
-		log.Error("could not initialize connector with provided configuration", "connector config", cfg.Meta.Connector, "provider config", cfg.Spec.Provider, "error", err)
+		slog.Error("could not initialize connector with provided configuration", "connector config", cfg.Meta.Connector, "provider config", cfg.Spec.Provider, "error", err)
 		os.Exit(1)
 	}
 
-	log.Info("starting carbonaut server", "address", fmt.Sprintf("http://0.0.0.0:%d", cfg.Spec.Server.Port))
-	s := server.New(c, log, exitChan)
+	slog.Info("starting carbonaut server", "address", fmt.Sprintf("http://0.0.0.0:%d", cfg.Spec.Server.Port))
+	s := server.New(c, exitChan)
 	go s.Listen(cfg.Spec.Server)
 
-	log.Info("starting carbonaut connector")
+	slog.Info("starting carbonaut connector")
 	c.Run(exitChan, connectorErrChan)
-}
-
-func GetLogLevel(logLevel string) slog.Level {
-	switch logLevel {
-	case "debug":
-		return slog.LevelDebug
-	case "info":
-		return slog.LevelInfo
-	case "warn":
-		return slog.LevelWarn
-	case "error":
-		return slog.LevelError
-	default:
-		return slog.LevelInfo
-	}
 }

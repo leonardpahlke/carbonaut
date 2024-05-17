@@ -7,13 +7,13 @@ import (
 )
 
 type Config struct {
-	Plugin    *plugin.Kind `json:"plugin"     yaml:"plugin"`
-	AccessKey *string      `json:"access_key" yaml:"access_key"`
+	Plugin       *plugin.Kind `json:"plugin"         yaml:"plugin"`
+	AccessKeyEnv *string      `json:"access_key_env" yaml:"access_key_env"`
 }
 
 type Provider interface {
 	GetName() *plugin.Kind
-	GetStaticResourceData(*Config, *project.Name, *resource.Name) (*resource.StaticResData, error)
-	DiscoverStaticResourceIdentifiers(*Config, *project.Name) ([]*resource.Name, error)
-	DiscoverProjectIdentifiers(*Config) ([]*project.Name, error)
+	GetStaticResourceData(*project.Name, *resource.Name) (*resource.StaticResData, error)
+	DiscoverStaticResourceIdentifiers(*project.Name) ([]*resource.Name, error)
+	DiscoverProjectIdentifiers() ([]*project.Name, error)
 }
