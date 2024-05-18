@@ -48,3 +48,21 @@ Available commands:
 If access keys to external sources are not set, tests will either set a mock or skip the test. To run all tests the following information needs to be set as environment variables.
 * `ELECTRICITY_MAP_AUTH_TOKEN` needs to be set to run all integration tests for the electricity map provider
 * `METAL_AUTH_TOKEN` needs to be set to run all integration tests for the equinix provider
+
+
+## TODO
+
+Build own stress test container images since polinux/stress and yauritux/sysbench are not maintained. Smth like this could work.
+
+```Dockerfile
+FROM debian:12
+
+RUN apt-get update && apt-get install -y stress \
+        --no-install-recommends && rm -r /var/lib/apt/lists/*
+
+CMD ["stress", "--verbose", "--vm", "1", "--vm-bytes", "256M"]
+```
+
+---
+
+Extend Equinix provider to support paging in resource & project discovery. Paging information is provided in the "Meta" information which right now is not parsed and processed.

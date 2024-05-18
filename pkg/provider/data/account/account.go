@@ -20,8 +20,8 @@ type Topology struct {
 	Name             *Name             `json:"name"`
 	Projects         Projects          `json:"projects"`
 	CreatedAt        time.Time         `json:"created_at"`
-	ProjectIDCounter *int32            `json:"project_id_counter"`
-	Config           *staticres.Config `json:"config"`
+	ProjectIDCounter *int32            `json:"-"`
+	Config           *staticres.Config `json:"-"`
 }
 
 type Projects map[project.ID]*project.Topology

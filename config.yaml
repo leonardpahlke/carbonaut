@@ -12,8 +12,8 @@ spec:
                     plugin: equinix
                     access_key_env: "METAL_AUTH_TOKEN"
                 dynamic_resource:
-                    plugin: mockenergy
-                    access_key: "435"
+                    plugin: scaphandre
+                    endpoint: ":8080/metrics"
         environment:
             dynamic_environment:
                 plugin: electricitymaps

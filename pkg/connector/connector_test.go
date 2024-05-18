@@ -25,6 +25,7 @@ var (
 	exampleAccessKeyA     = "123"
 	exampleAccessKeyB     = "435"
 	exampleAccessKeyC     = "7654asdE2"
+	exampleEndpoint       = ":8080/metrics"
 	exampleAccountA       = account.Name("test-plugin-A")
 	exampleAccountB       = account.Name("test-plugin-B")
 	exampleAccountC       = account.Name("test-plugin-C")
@@ -36,8 +37,8 @@ var (
 					AccessKeyEnv: &exampleAccessKeyA,
 				},
 				DynamicResConfig: &dynres.Config{
-					Plugin:    &mockenergy.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:   mockenergy.PluginName,
+					Endpoint: exampleEndpoint,
 				},
 			},
 			exampleAccountB: {
@@ -46,8 +47,8 @@ var (
 					AccessKeyEnv: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
-					Plugin:    &mockenergy.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:   mockenergy.PluginName,
+					Endpoint: exampleEndpoint,
 				},
 			},
 		},
@@ -66,8 +67,8 @@ var (
 					AccessKeyEnv: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
-					Plugin:    &mockenergy.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:   mockenergy.PluginName,
+					Endpoint: exampleEndpoint,
 				},
 			},
 			exampleAccountC: {
@@ -76,8 +77,8 @@ var (
 					AccessKeyEnv: &exampleAccessKeyB,
 				},
 				DynamicResConfig: &dynres.Config{
-					Plugin:    &mockenergy.PluginName,
-					AccessKey: &exampleAccessKeyB,
+					Plugin:   mockenergy.PluginName,
+					Endpoint: exampleEndpoint,
 				},
 			},
 		},

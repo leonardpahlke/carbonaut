@@ -148,3 +148,12 @@
           - "8080:8080"
         command: prometheus
       become: yes
+
+    - name: Run CPU stress test using Docker
+      community.docker.docker_container:
+        name: cpu-stress
+        image: polinux/stress
+        state: started
+        restart_policy: unless-stopped
+        detach: true
+        command: "stress --cpu 8 --timeout 3600s"

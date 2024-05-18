@@ -19,7 +19,7 @@ type Topology struct {
 	Name              *Name     `json:"name"`
 	Resources         Resources `json:"resources"`
 	CreatedAt         time.Time `json:"created_at"`
-	ResourceIDCounter *int32    `json:"resource_id_counter"`
+	ResourceIDCounter *int32    `json:"-"`
 }
 
 type Resources map[resource.ID]*resource.Topology

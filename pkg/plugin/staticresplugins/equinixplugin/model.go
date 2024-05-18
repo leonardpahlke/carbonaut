@@ -1,6 +1,7 @@
 package equinixplugin
 
 import (
+	"strings"
 	"time"
 
 	"carbonaut.dev/pkg/provider/data/account/project/resource"
@@ -54,6 +55,12 @@ func EquinixDataIntegration(device *EquinixDevice) *resource.StaticResData {
 			Count: device.Plan.Specs.Nics[i].Count,
 			Type:  device.Plan.Specs.Nics[i].Type,
 		})
+	}
+	// Add IPv4
+	for i := range device.IPAddresses {
+		if device.IPAddresses[i].AddressFamily == 4 && !strings.HasPrefix(device.IPAddresses[i].Address, "10.") {
+			staticresData.IPv4 = device.IPAddresses[i].Address
+		}
 	}
 	return &staticresData
 }

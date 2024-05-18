@@ -24,6 +24,7 @@ import (
 var (
 	exampleAccessKeyA = "123"
 	exampleAccessKeyB = "435"
+	exampleEndpoint   = ":8080/metrics"
 )
 
 func main() {
@@ -51,8 +52,8 @@ func main() {
 							AccessKeyEnv: &exampleAccessKeyB,
 						},
 						DynamicResConfig: &dynres.Config{
-							Plugin:    &mockenergy.PluginName,
-							AccessKey: &exampleAccessKeyB,
+							Plugin:   mockenergy.PluginName,
+							Endpoint: exampleEndpoint,
 						},
 					},
 					"example-account-c": {
@@ -61,8 +62,8 @@ func main() {
 							AccessKeyEnv: &exampleAccessKeyB,
 						},
 						DynamicResConfig: &dynres.Config{
-							Plugin:    &mockenergy.PluginName,
-							AccessKey: &exampleAccessKeyB,
+							Plugin:   mockenergy.PluginName,
+							Endpoint: exampleAccessKeyB,
 						},
 					},
 				},

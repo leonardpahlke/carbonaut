@@ -25,7 +25,8 @@ type Server struct {
 var (
 	cacheDuration time.Duration = 30 * time.Second
 	// the cache just contains one key value pair
-	cacheDataKey string = "data"
+	cacheCollectDataKey string = "collect-data"
+	cacheStaticDataKey  string = "static-data"
 )
 
 func New(c *connector.C, exitChan chan int) *Server {
@@ -53,15 +54,53 @@ func (s Server) Listen(cfg *Config) {
 		}
 	})
 
+	http.HandleFunc("/static-data", func(w http.ResponseWriter, r *http.Request) {
+		data := s.Connector.GetStaticData()
+		cachedStaticData, found := s.cache.Get(cacheStaticDataKey)
+		if found {
+			cachedData, ok := cachedStaticData.([]byte)
+			if !ok {
+				http.Error(w, "Internal Server Error, cached value is not of type []byte", http.StatusInternalServerError)
+				return
+			}
+			slog.Debug("serving from cache")
+			w.Header().Set("Content-Type", "application/json")
+			_, err := w.Write(cachedData)
+			if err != nil {
+				slog.Error("could not write response", "error", err)
+				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			}
+			return
+		}
+
+		slog.Info("loaded static data from state", "data", *data)
+		jsonData, err := json.Marshal(data)
+		if err != nil {
+			slog.Error("could not serialize data to JSON", "error", err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+
+		s.cache.Set(cacheStaticDataKey, jsonData, cache.DefaultExpiration)
+
+		w.Header().Set("Content-Type", "application/json")
+		_, err = w.Write(jsonData)
+		if err != nil {
+			slog.Error("could not write response", "error", err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+	})
+
 	http.HandleFunc("/metrics-json", func(w http.ResponseWriter, r *http.Request) {
-		cachedProjectResources, found := s.cache.Get(cacheDataKey)
+		cachedProjectResources, found := s.cache.Get(cacheCollectDataKey)
 		if found {
 			cachedProviderData, ok := cachedProjectResources.([]byte)
 			if !ok {
 				http.Error(w, "Internal Server Error, cached value is not of type []byte", http.StatusInternalServerError)
 				return
 			}
-			slog.Info("serving from cache")
+			slog.Debug("serving from cache")
 			w.Header().Set("Content-Type", "application/json")
 			_, err := w.Write(cachedProviderData)
 			if err != nil {
@@ -86,7 +125,7 @@ func (s Server) Listen(cfg *Config) {
 			return
 		}
 
-		s.cache.Set(cacheDataKey, jsonData, cache.DefaultExpiration)
+		s.cache.Set(cacheCollectDataKey, jsonData, cache.DefaultExpiration)
 
 		w.Header().Set("Content-Type", "application/json")
 		_, err = w.Write(jsonData)

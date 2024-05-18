@@ -40,9 +40,9 @@ type Topology struct {
 
 // energy and utilization data
 type DynamicResData struct {
-	CPUFrequency        float64 `json:"cpu_frequency"         yaml:"cpu_frequency"`
-	EnergyHostMilliwatt int     `json:"energy_host_milliwatt" yaml:"energy_host_milliwatt"`
-	CPULoadPercentage   float64 `json:"cpu_load_percentage"   yaml:"cpu_load_percentage"`
+	CPUFrequency          float64 `json:"cpu_frequency"          yaml:"cpu_frequency"`
+	EnergyHostMicrojoules int     `json:"energy_host_mirojoules" yaml:"energy_host_mirojoules"`
+	CPULoadPercentage     float64 `json:"cpu_load_percentage"    yaml:"cpu_load_percentage"`
 }
 
 // Data represents computer hardware data.
