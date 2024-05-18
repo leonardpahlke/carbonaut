@@ -32,7 +32,7 @@ func New(cfg *dynenv.Config) (p, error) {
 		setupErrors = multierr.Append(setupErrors, errors.New("plugin is not set information"))
 	}
 	if authKey == "" {
-		setupErrors = multierr.Append(setupErrors, errors.New("access key environment variable is not set or empty"))
+		setupErrors = multierr.Append(setupErrors, errors.New("mockenergymix access key environment variable is not set or empty"))
 	}
 	if setupErrors != nil {
 		return p{}, setupErrors

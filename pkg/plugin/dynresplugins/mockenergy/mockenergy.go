@@ -15,20 +15,6 @@ type p struct {
 }
 
 func New(cfg *dynres.Config) (p, error) {
-	// Create a cache with an expiration time of 60 seconds, and which
-	// purges expired items every 5 minutes
-
-	// authKey := os.Getenv(*cfg.AccessKeyEnv)
-	// var setupErrors error
-	// if cfg.Plugin == nil {
-	// 	setupErrors = multierr.Append(setupErrors, errors.New("plugin is not set information"))
-	// }
-	// if authKey == "" {
-	// 	setupErrors = multierr.Append(setupErrors, errors.New("access key environment variable is not set or empty"))
-	// }
-	// if setupErrors != nil {
-	// 	return p{}, setupErrors
-	// }
 	return p{
 		cfg: cfg,
 	}, nil
