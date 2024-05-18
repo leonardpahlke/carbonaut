@@ -2,7 +2,7 @@ package freeport
 
 import (
 	"errors"
-	"log"
+	"log/slog"
 	"net"
 )
 
@@ -17,7 +17,7 @@ func Get() (int, error) {
 	}
 	defer func() {
 		if closeErr := l.Close(); closeErr != nil {
-			log.Printf("failed to close listener: %v", closeErr)
+			slog.Error("failed to close listener: %v", closeErr)
 		}
 	}()
 	p, ok := l.Addr().(*net.TCPAddr)

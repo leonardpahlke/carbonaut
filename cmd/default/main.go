@@ -3,6 +3,7 @@ package main
 import (
 	"log/slog"
 	"os"
+	"time"
 
 	"carbonaut.dev/pkg/config"
 	"carbonaut.dev/pkg/connector"
@@ -15,6 +16,7 @@ import (
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"
 	"carbonaut.dev/pkg/server"
+	"carbonaut.dev/pkg/util/logger"
 	"github.com/creasty/defaults"
 	"gopkg.in/yaml.v3"
 )
@@ -25,8 +27,12 @@ var (
 )
 
 func main() {
-	log := slog.Default()
-	log.Info("Create a new Carbonaut Config")
+	slog.SetDefault(slog.New(logger.NewHandler(os.Stderr, &logger.Options{
+		Level:       slog.LevelInfo,
+		TimeFormat:  time.DateTime,
+		SrcFileMode: logger.ShortFile,
+	})))
+	slog.Info("Create a new Carbonaut Config")
 	cfg := config.Config{
 		Kind: "carbonaut",
 		Meta: config.Meta{
@@ -74,20 +80,20 @@ func main() {
 	}
 
 	if err := defaults.Set(&cfg); err != nil {
-		log.Error("failed to set defaults", "error", err)
+		slog.Error("failed to set defaults", "error", err)
 		os.Exit(1)
 	}
 
 	y, err := yaml.Marshal(&cfg)
 	if err != nil {
-		log.Error("failed to marshal config", "error", err)
+		slog.Error("failed to marshal config", "error", err)
 		os.Exit(1)
 	}
 
-	log.Info("Write config to file")
+	slog.Info("Write config to file")
 	if err := os.WriteFile("config.yaml", y, 0o600); err != nil {
-		log.Error("failed to write config to file", "error", err)
+		slog.Error("failed to write config to file", "error", err)
 		os.Exit(1)
 	}
-	log.Info("Done, file written to config.yaml")
+	slog.Info("Done, file written to config.yaml")
 }

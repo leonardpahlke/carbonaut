@@ -4,27 +4,7 @@
 
 package promscraper
 
-// import (
-// 	"context"
-// 	"crypto/rand"
-// 	"encoding/binary"
-// 	"encoding/json"
-// 	"fmt"
-// 	"log"
-// 	"math"
-// 	"net/http"
-// 	"os"
-// 	"os/signal"
-// 	"testing"
-// 	"time"
-
-// 	"carbonaut.dev/pkg/util/freeport"
-// 	"github.com/prometheus/client_golang/prometheus/promhttp"
-// 	"go.opentelemetry.io/otel/attribute"
-// 	"go.opentelemetry.io/otel/exporters/prometheus"
-// 	api "go.opentelemetry.io/otel/metric"
-// 	"go.opentelemetry.io/otel/sdk/metric"
-// )
+// TODO: implement test
 
 // func TestCollect(t *testing.T) {
 // 	port, err := freeport.GetFreePort()
