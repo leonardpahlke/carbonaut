@@ -7,8 +7,8 @@ import (
 )
 
 type Config struct {
-	Plugin    *plugin.Kind `json:"plugin"     yaml:"plugin"`
-	AccessKey *string      `json:"access_key" yaml:"access_key"`
+	Plugin       *plugin.Kind `json:"plugin"         yaml:"plugin"`
+	AccessKeyEnv *string      `json:"access_key_env" yaml:"access_key_env"`
 }
 
 type Provider interface {

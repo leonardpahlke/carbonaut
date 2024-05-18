@@ -51,14 +51,14 @@ func (c *C) Collect() (*provider.Data, error) {
 }
 
 func (c *C) collectDynResData(r *resource.Topology, dynResConfig *dynres.Config) (*resource.DynamicData, error) {
-	pRes, found := dynresplugins.GetPlugin(dynResConfig.Plugin)
-	if !found {
-		return nil, fmt.Errorf("could not find plugin: %s", *dynResConfig.Plugin)
+	pRes, err := dynresplugins.GetPlugin(dynResConfig)
+	if err != nil {
+		return nil, fmt.Errorf("could not find plugin: %s, err: %v", *dynResConfig.Plugin, err)
 	}
 
-	pEnv, found := dynenvplugins.GetPlugin(c.providerConfig.Environment.DynamicEnvConfig.Plugin)
-	if !found {
-		return nil, fmt.Errorf("could not find plugin: %s", *dynResConfig.Plugin)
+	pEnv, err := dynenvplugins.GetPlugin(c.providerConfig.Environment.DynamicEnvConfig)
+	if err != nil {
+		return nil, fmt.Errorf("could not find plugin: %s, err: %v", *dynResConfig.Plugin, err)
 	}
 
 	slog.Debug("collect dynamic data - resource", "plugin", *r.Plugin)

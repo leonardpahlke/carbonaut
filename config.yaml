@@ -17,6 +17,6 @@ spec:
         environment:
             dynamic_environment:
                 plugin: mockenergymix
-                access_key: 7654asdE2
+                access_key_env: "ELECTRICITY_MAP_AUTH_TOKEN"
     server:
         port: 8088

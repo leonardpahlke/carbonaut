@@ -53,7 +53,7 @@ var (
 		},
 		Environment: &provider.EnvConfig{
 			DynamicEnvConfig: &dynenv.Config{
-				Plugin: &mockenergymix.PluginName, AccessKey: &exampleAccessKeyC,
+				Plugin: &mockenergymix.PluginName, AccessKeyEnv: &exampleAccessKeyC,
 			},
 		},
 	}
@@ -83,14 +83,22 @@ var (
 		},
 		Environment: &provider.EnvConfig{
 			DynamicEnvConfig: &dynenv.Config{
-				Plugin:    &mockenergymix.PluginName,
-				AccessKey: &exampleAccessKeyA,
+				Plugin:       &mockenergymix.PluginName,
+				AccessKeyEnv: &exampleAccessKeyA,
 			},
 		},
 	}
 )
 
 func TestConnectorInit(t *testing.T) {
+	if err := setMissingEnvVariables(&initialProviderConfig); err != nil {
+		t.Error("internal test error", err)
+	}
+
+	if err := setMissingEnvVariables(&updatedProviderConfig); err != nil {
+		t.Error("internal test error", err)
+	}
+
 	c, err := New(&Config{
 		TimeoutSeconds: 10,
 	}, &initialProviderConfig)
@@ -123,6 +131,10 @@ func TestConnectorInit(t *testing.T) {
 }
 
 func TestConnectorRun(t *testing.T) {
+	if err := setMissingEnvVariables(&initialProviderConfig); err != nil {
+		t.Error("internal test error", err)
+	}
+
 	connectorConfig := Config{
 		TimeoutSeconds: 10,
 	}
@@ -146,6 +158,10 @@ func TestConnectorRun(t *testing.T) {
 }
 
 func TestConnectorCollect(t *testing.T) {
+	if err := setMissingEnvVariables(&initialProviderConfig); err != nil {
+		t.Error("internal test error", err)
+	}
+
 	connectorConfig := Config{
 		TimeoutSeconds: 10,
 	}
@@ -180,6 +196,10 @@ func TestConnectorCollect(t *testing.T) {
 func BenchmarkCollect(b *testing.B) {
 	cfg := &Config{TimeoutSeconds: 10}
 
+	if err := setMissingEnvVariables(&initialProviderConfig); err != nil {
+		b.Error("internal test error", err)
+	}
+
 	c, err := New(cfg, &initialProviderConfig)
 	if err != nil {
 		b.Fatal(err)
@@ -198,6 +218,10 @@ func BenchmarkCollect(b *testing.B) {
 func BenchmarkLoadConfig(b *testing.B) {
 	cfg := &Config{TimeoutSeconds: 10}
 
+	if err := setMissingEnvVariables(&initialProviderConfig); err != nil {
+		b.Error("internal test error", err)
+	}
+
 	c, err := New(cfg, &initialProviderConfig)
 	if err != nil {
 		b.Fatal(err)
@@ -213,4 +237,23 @@ func BenchmarkLoadConfig(b *testing.B) {
 		}
 	})
 	b.StopTimer()
+}
+
+// mocked providers do not access these variables (use API keys etc.), but variables are checked if they are empty
+func setMissingEnvVariables(cfg *provider.Config) error {
+	if os.Getenv(*cfg.Environment.DynamicEnvConfig.AccessKeyEnv) == "" {
+		if err := os.Setenv(*cfg.Environment.DynamicEnvConfig.AccessKeyEnv, "some value"); err != nil {
+			return err
+		}
+	}
+
+	for i := range cfg.Resources {
+		if os.Getenv(*cfg.Resources[i].StaticResConfig.AccessKeyEnv) == "" {
+			if err := os.Setenv(*cfg.Resources[i].StaticResConfig.AccessKeyEnv, "some value"); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }

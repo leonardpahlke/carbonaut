@@ -68,8 +68,8 @@ func main() {
 				},
 				Environment: &provider.EnvConfig{
 					DynamicEnvConfig: &dynenv.Config{
-						Plugin:    &mockenergymix.PluginName,
-						AccessKey: &exampleAccessKeyA,
+						Plugin:       &mockenergymix.PluginName,
+						AccessKeyEnv: &exampleAccessKeyA,
 					},
 				},
 			},

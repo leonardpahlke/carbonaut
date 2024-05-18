@@ -10,17 +10,35 @@ import (
 
 var PluginName plugin.Kind = "mockenergy"
 
-type p struct{}
+type p struct {
+	cfg *dynres.Config
+}
 
-func New() p {
-	return p{}
+func New(cfg *dynres.Config) (p, error) {
+	// Create a cache with an expiration time of 60 seconds, and which
+	// purges expired items every 5 minutes
+
+	// authKey := os.Getenv(*cfg.AccessKeyEnv)
+	// var setupErrors error
+	// if cfg.Plugin == nil {
+	// 	setupErrors = multierr.Append(setupErrors, errors.New("plugin is not set information"))
+	// }
+	// if authKey == "" {
+	// 	setupErrors = multierr.Append(setupErrors, errors.New("access key environment variable is not set or empty"))
+	// }
+	// if setupErrors != nil {
+	// 	return p{}, setupErrors
+	// }
+	return p{
+		cfg: cfg,
+	}, nil
 }
 
 func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) GetDynamicResourceData(cfg *dynres.Config, data *resource.StaticResData) (*resource.DynamicResData, error) {
+func (p p) GetDynamicResourceData(cfg *dynres.Config, data *resource.StaticResData) (*resource.DynamicResData, error) {
 	return &resource.DynamicResData{
 		// Random CPU frequency between 1000 MHz and 3000 MHz
 		CPUFrequency: 1000 + rand.Float64()*2000, // #nosec

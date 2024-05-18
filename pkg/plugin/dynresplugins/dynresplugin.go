@@ -1,16 +1,17 @@
 package dynresplugins
 
 import (
-	"carbonaut.dev/pkg/plugin"
+	"fmt"
+
 	"carbonaut.dev/pkg/plugin/dynresplugins/mockenergy"
 	"carbonaut.dev/pkg/provider/types/dynres"
 )
 
-var plugins = map[plugin.Kind]dynres.Provider{
-	mockenergy.PluginName: mockenergy.New(),
-}
-
-func GetPlugin(identifier *plugin.Kind) (dynres.Provider, bool) {
-	p, found := plugins[*identifier]
-	return p, found
+func GetPlugin(cfg *dynres.Config) (dynres.Provider, error) {
+	switch *cfg.Plugin {
+	case mockenergy.PluginName:
+		return mockenergy.New(cfg)
+	default:
+		return nil, fmt.Errorf("plugin of kind %s not found", *cfg.Plugin)
+	}
 }
