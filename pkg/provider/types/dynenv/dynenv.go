@@ -13,5 +13,5 @@ type Config struct {
 
 type Provider interface {
 	GetName() *plugin.Kind
-	GetDynamicEnvironmentData(*Config, *resource.Location) (*environment.DynamicEnvData, error)
+	GetDynamicEnvironmentData(*resource.Location) (*environment.DynamicEnvData, error)
 }

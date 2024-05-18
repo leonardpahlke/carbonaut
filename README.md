@@ -26,3 +26,25 @@ Available commands:
   tf-init                - Initialize OpenTofu configuration
   ...
 ```
+
+
+## Implemented Providers
+
+### Static Resource Providers:
+
+* [Equinix](https://www.equinix.com/)
+
+### Dynamic Resource Providers:
+
+* [Scaphandre](https://github.com/hubblo-org/scaphandre)
+
+### Dynamic Environment Providers:
+
+* [Electricity Map](https://www.electricitymaps.com): (you can get a free tier account [here](https://www.electricitymaps.com/pricing))
+
+
+## Testing
+
+If access keys to external sources are not set, tests will either set a mock or skip the test. To run all tests the following information needs to be set as environment variables.
+* `ELECTRICITY_MAP_AUTH_TOKEN` needs to be set to run all integration tests for the electricity map provider
+* `METAL_AUTH_TOKEN` needs to be set to run all integration tests for the equinix provider

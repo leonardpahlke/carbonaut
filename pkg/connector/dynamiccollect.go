@@ -69,7 +69,7 @@ func (c *C) collectDynResData(r *resource.Topology, dynResConfig *dynres.Config)
 	}
 
 	slog.Debug("collect dynamic data - environment", "plugin", *c.providerConfig.Environment.DynamicEnvConfig.Plugin)
-	dynEnvData, err := pEnv.GetDynamicEnvironmentData(c.providerConfig.Environment.DynamicEnvConfig, r.StaticData.Location)
+	dynEnvData, err := pEnv.GetDynamicEnvironmentData(r.StaticData.Location)
 	if err != nil {
 		return nil, err
 	}

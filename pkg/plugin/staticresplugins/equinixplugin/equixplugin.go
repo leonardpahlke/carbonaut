@@ -55,13 +55,6 @@ func (p p) GetName() *plugin.Kind {
 }
 
 func (p p) DiscoverProjectIdentifiers() ([]*project.Name, error) {
-	if p.cfg.Plugin == nil {
-		return nil, errors.New("plugin is not set")
-	}
-	if p.accessKey == nil || *p.accessKey == "" {
-		return nil, errors.New("access key is not set or empty")
-	}
-
 	resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
 		Method:  http.MethodGet,
 		BaseURL: "https://api.equinix.com/metal/v1/projects",
@@ -114,8 +107,7 @@ func (p p) GetStaticResourceData(pName *project.Name, rName *resource.Name) (*re
 }
 
 func (p p) PGetResourceData(pName *project.Name) (map[resource.Name]*resource.StaticResData, error) {
-	cachedProjectResources, found := p.cache.Get(string(*pName))
-	if found {
+	if cachedProjectResources, found := p.cache.Get(string(*pName)); found {
 		resources, ok := cachedProjectResources.(map[resource.Name]*resource.StaticResData)
 		if !ok {
 			return nil, errors.New("cached value is not of type map[resource.Name]*resource.StaticResData")

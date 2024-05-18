@@ -37,14 +37,21 @@ func SendHTTPRequest(req *HTTPReqWrapper) (*HTTPReqInfo, error) {
 	for key := range req.Headers {
 		headerKey = append(headerKey, key)
 	}
+
 	slog.Debug("prepare http request", "method", req.Method, "baseURL", req.BaseURL, "path", req.Path, "queryStruct", req.Query, "bodyStruct", req.BodyStruct, "header keys", headerKey)
-	url := fmt.Sprintf("%s%s?%s", req.BaseURL, req.Path, req.Query)
+	url := fmt.Sprintf("%s%s%s", req.BaseURL, req.Path, req.Query)
 	slog.Info("sending http request", "url", url)
-	requestBodyBytes, err := json.Marshal(&req.BodyStruct)
-	if err != nil {
-		return nil, fmt.Errorf("unable to marshal request body: %v: %w", req, err)
+
+	var reader io.Reader
+	if req.BodyStruct != nil {
+		requestBodyBytes, err := json.Marshal(&req.BodyStruct)
+		if err != nil {
+			return nil, fmt.Errorf("unable to marshal request body: %v: %w", req, err)
+		}
+		reader = bytes.NewBuffer(requestBodyBytes)
 	}
-	request, err := http.NewRequest(req.Method, url, bytes.NewBuffer(requestBodyBytes))
+
+	request, err := http.NewRequest(req.Method, url, reader)
 	if err != nil {
 		return nil, fmt.Errorf("unable to create new %s request: %w", req.Method, err)
 	}

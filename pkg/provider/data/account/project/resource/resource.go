@@ -98,5 +98,5 @@ type Location struct {
 	Country string `json:"country"  yaml:"country"  default:"DE"`
 	Address string `json:"address"  yaml:"address"  default:"Kruppstrasse 121-127"`
 	ZipCode string `json:"zip_code" yaml:"zip_code" default:"60388"`
-	Code    string `default:"fr"    json:"code"     yaml:"code"`
+	Code    string `json:"code"     yaml:"code"     default:"fr"`
 }

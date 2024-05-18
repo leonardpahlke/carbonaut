@@ -48,14 +48,19 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) GetDynamicEnvironmentData(cfg *dynenv.Config, data *resource.Location) (*environment.DynamicEnvData, error) {
+func (p) GetDynamicEnvironmentData(data *resource.Location) (*environment.DynamicEnvData, error) {
 	return &environment.DynamicEnvData{
-		SolarPercentage:        20.5,
-		WindPercentage:         30.0,
-		HydroPercentage:        15.0,
-		NuclearPercentage:      10.0,
-		FossilFuelsPercentage:  20.0,
-		BioEnergyPercentage:    4.5,
-		OtherSourcesPercentage: 0.0,
+		SolarPercentage:        10,
+		WindPercentage:         20,
+		HydroPercentage:        10,
+		NuclearPercentage:      20,
+		GeothermalPercentage:   15,
+		GasPercentage:          5,
+		OilPercentage:          5,
+		BiomassPercentage:      7,
+		CoalPercentage:         8,
+		OtherSourcesPercentage: 0,
+		FossilFuelsPercentage:  38,
+		RenewablePercentage:    62,
 	}, nil
 }
