@@ -1,4 +1,4 @@
-.PHONY: all verify format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
+.PHONY: all verify hugo format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
 
 # Default target executed
 all: verify
@@ -17,6 +17,8 @@ install:
 	@go install golang.org/x/tools/cmd/godoc@latest
 	@go install golang.org/x/tools/cmd/goimports@latest
 	@go install github.com/securego/gosec/v2/cmd/gosec@latest
+	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.58.1
+	@go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
 	@pre-commit install
 
 # Format Go project
@@ -103,6 +105,9 @@ ansible-setup: ask-private-key
 ########################################
 ### GENERAL
 
+hugo:
+	hugo server --minify --theme hugo-book -s docs/
+
 help:
 	@echo "Available commands:"
 	@echo "  all                    - Build project resources and verify code"
@@ -120,3 +125,4 @@ help:
 	@echo "  SSH_KEY_PATH           - Current SSH key path: $(SSH_KEY_PATH)"
 	@echo "  ansible-setup          - Setup the machine with required packages etc."
 	@echo "  PRIVATE_KEY_PATH       - Current private SSH key path: $(PRIVATE_KEY_PATH)"
+	@echo "  hugo                   - Start the local hugo documentation website"

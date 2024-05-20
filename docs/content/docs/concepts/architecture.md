@@ -1,3 +1,8 @@
+---
+weight: 5
+---
+
+## **Carbonaut Architecture**
 
 To get an overview of the resource consumption of a cloud native system, you need to combine different data sources with each other. Carbonaut should be the platform to facilitate the data integration and transformation. To explore the architecture of the carbonaut system we first start with the data sources.
 
@@ -15,6 +20,25 @@ These data sources can be integrated dynamically (we add a data stream to the sy
 * **Emission**: formualar to estimate the emissions based on the energy consumption, energy mix and IT resource typ.
 
 These data sources depend on each other. 
+
+{{< hint info >}}
+**Markdown content**  
+Lorem markdownum insigne. Olympo signis Delphis! Retexi Nereius nova develat
+stringit, frustra Saturnius uteroque inter! Oculis non ritibus Telethusa
+{{< /hint >}}
+
+
+{{< mermaid class="optional" >}}
+stateDiagram-v2
+    State1: The state with a note
+    note right of State1
+        Important information! You can write
+        notes.
+    end note
+    State1 --> State2
+    note left of State2 : This is the note to the left.
+{{< /mermaid >}}
+
 
 ```mermaid
 graph TD;

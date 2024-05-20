@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"carbonaut.dev/pkg/plugin/dynenvplugins/electricitymaps"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
+	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"github.com/creasty/defaults"
 )

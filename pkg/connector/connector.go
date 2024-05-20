@@ -8,8 +8,8 @@ import (
 
 	"carbonaut.dev/pkg/connector/state"
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/data/account"
-	"carbonaut.dev/pkg/provider/data/account/project"
+	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/account/project"
 	"carbonaut.dev/pkg/util/compareutils"
 )
 

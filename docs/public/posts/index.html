@@ -1,7 +1,110 @@
-<!doctype html><html lang=en-us dir=ltr><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://localhost:1313/posts/"><meta property="og:site_name" content="Carbonaut Documentation"><meta property="og:title" content="Blog"><meta property="og:locale" content="en-us"><meta property="og:type" content="website"><title>Blog | Carbonaut Documentation</title>
-<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=canonical href=http://localhost:1313/posts/><link rel=stylesheet href=/book.min.309b7ed028807cdb68d8d61e26d609f48369c098dbf5e4d8c0dcf4cdf49feafc.css integrity="sha256-MJt+0CiAfNto2NYeJtYJ9INpwJjb9eTYwNz0zfSf6vw=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/en.search.min.86eb6c583b20643a56d9c6b618d39729761ec4e2e614c2ec2f6158552ce61a21.js integrity="sha256-hutsWDsgZDpW2ca2GNOXKXYexOLmFMLsL2FYVSzmGiE=" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=http://localhost:1313/posts/index.xml title="Carbonaut Documentation"></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
-<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Carbonaut Documentation</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><a href=/docs/table-of-contents/>Table of Contents</a><ul><li><a href=/docs/table-of-contents/with-toc/>With ToC</a></li></ul></li></ul><ul><li><a href=/posts/>Blog</a></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
-</label><strong>Blog</strong>
-<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav><ul><li class=book-section-flat><strong>Categories</strong><ul></ul></li><li class=book-section-flat><strong>Tags</strong><ul></ul></li></ul></nav></aside></header><article class="markdown book-post"><h2><a href=/posts/creating-a-new-theme/>Creating a New Theme</a></h2><h5>September 28, 2014</h5><p>Introduction # This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.
-We&rsquo;ll start with creating a new site with a very basic template.
-<a href=/posts/creating-a-new-theme/>...</a></p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav><ul><li class=book-section-flat><strong>Categories</strong><ul></ul></li><li class=book-section-flat><strong>Tags</strong><ul></ul></li></ul></nav></div></aside></main></body></html>
+<!doctype html>
+<html lang=en-us dir=ltr>
+
+<head>
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta name=description content>
+    <meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff">
+    <meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40">
+    <meta name=color-scheme content="light dark">
+    <meta property="og:url" content="http://localhost:1313/posts/">
+    <meta property="og:site_name" content="Carbonaut Documentation">
+    <meta property="og:title" content="Blog">
+    <meta property="og:locale" content="en-us">
+    <meta property="og:type" content="website">
+    <title>Blog | Carbonaut Documentation</title>
+    <link rel=manifest href=/manifest.json>
+    <link rel=icon href=/favicon.png>
+    <link rel=canonical href=http://localhost:1313/posts />
+    <link rel=stylesheet href=/book.min.309b7ed028807cdb68d8d61e26d609f48369c098dbf5e4d8c0dcf4cdf49feafc.css
+        integrity="sha256-MJt+0CiAfNto2NYeJtYJ9INpwJjb9eTYwNz0zfSf6vw=" crossorigin=anonymous>
+    <script defer src=/flexsearch.min.js></script>
+    <script defer src=/en.search.min.86eb6c583b20643a56d9c6b618d39729761ec4e2e614c2ec2f6158552ce61a21.js
+        integrity="sha256-hutsWDsgZDpW2ca2GNOXKXYexOLmFMLsL2FYVSzmGiE=" crossorigin=anonymous></script>
+    <link rel=alternate type=application/rss+xml href=http://localhost:1313/posts/index.xml
+        title="Carbonaut Documentation">
+</head>
+
+<body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+    <input type=checkbox class="hidden toggle" id=toc-control>
+    <main class="container flex">
+        <aside class=book-menu>
+            <div class=book-menu-content>
+                <nav>
+                    <h2 class=book-brand><a class="flex align-center" href= /><span>Carbonaut Documentation</span></a>
+                    </h2>
+                    <div class=book-search><input type=text id=book-search-input placeholder=Search aria-label=Search
+                            maxlength=64 data-hotkeys=s />
+                        <div class="book-search-spinner hidden"></div>
+                        <ul id=book-search-results></ul>
+                    </div>
+                    <ul>
+                        <li><a href=/docs/table-of-contents />Table of Contents</a>
+                            <ul>
+                                <li><a href=/docs/table-of-contents/with-toc />With ToC</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li><a href=/posts />Blog</a></li>
+                    </ul>
+                </nav>
+                <script>(function () { var e = document.querySelector("aside .book-menu-content"); addEventListener("beforeunload", function () { localStorage.setItem("menu.scrollTop", e.scrollTop) }), e.scrollTop = localStorage.getItem("menu.scrollTop") })()</script>
+            </div>
+        </aside>
+        <div class=book-page>
+            <header class=book-header>
+                <div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg
+                            class=book-icon alt=Menu>
+                    </label><strong>Blog</strong>
+                    <label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label>
+                </div>
+                <aside class="hidden clearfix">
+                    <nav>
+                        <ul>
+                            <li class=book-section-flat><strong>Categories</strong>
+                                <ul></ul>
+                            </li>
+                            <li class=book-section-flat><strong>Tags</strong>
+                                <ul></ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+            </header>
+            <article class="markdown book-post">
+                <h2><a href=/posts/creating-a-new-theme />Creating a New Theme</a></h2>
+                <h5>September 28, 2014</h5>
+                <p>Introduction # This tutorial will show you how to create a simple theme in Hugo. I assume that you
+                    are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format
+                    content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to
+                    create a theme. I won&rsquo;t cover using CSS to style your theme.
+                    We&rsquo;ll start with creating a new site with a very basic template.
+                    <a href=/posts/creating-a-new-theme />...</a>
+                </p>
+            </article>
+            <footer class=book-footer>
+                <div class="flex flex-wrap justify-between"></div>
+                <script>(function () { function e(e) { const t = window.getSelection(), n = document.createRange(); n.selectNodeContents(e), t.removeAllRanges(), t.addRange(n) } document.querySelectorAll("pre code").forEach(t => { t.addEventListener("click", function () { if (window.getSelection().toString()) return; e(t.parentElement), navigator.clipboard && navigator.clipboard.writeText(t.parentElement.textContent) }) }) })()</script>
+            </footer><label for=menu-control class="hidden book-menu-overlay"></label>
+        </div>
+        <aside class=book-toc>
+            <div class=book-toc-content>
+                <nav>
+                    <ul>
+                        <li class=book-section-flat><strong>Categories</strong>
+                            <ul></ul>
+                        </li>
+                        <li class=book-section-flat><strong>Tags</strong>
+                            <ul></ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+    </main>
+</body>
+
+</html>

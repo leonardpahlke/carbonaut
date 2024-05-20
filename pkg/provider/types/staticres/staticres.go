@@ -1,9 +1,9 @@
 package staticres
 
 import (
-	"carbonaut.dev/pkg/plugin"
-	"carbonaut.dev/pkg/provider/data/account/project"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
+	"carbonaut.dev/pkg/provider/account/project"
+	"carbonaut.dev/pkg/provider/account/project/resource"
+	"carbonaut.dev/pkg/provider/plugin"
 )
 
 type Config struct {

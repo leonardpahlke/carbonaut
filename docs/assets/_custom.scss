@@ -1,0 +1,25 @@
+/* Set Space Grotesk as the default font */
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-optical-sizing: auto;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 800; // Bold weight for headings
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+  
+  em {
+    font-style: italic;
+  }
+  
+  /* Code blocks can use a different weight or stay with monospace style */
+  code {
+    font-family: 'Roboto Mono', monospace; // Optionally change this if needed
+  }
+  

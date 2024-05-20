@@ -4,9 +4,9 @@ import (
 	"sync"
 
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/data/account"
-	"carbonaut.dev/pkg/provider/data/account/project"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
+	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/account/project"
+	"carbonaut.dev/pkg/provider/account/project/resource"
 )
 
 type S struct {

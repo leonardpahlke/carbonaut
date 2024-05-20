@@ -1,7 +1,7 @@
 package provider
 
 import (
-	"carbonaut.dev/pkg/provider/data/account"
+	"carbonaut.dev/pkg/provider/account"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"

@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"carbonaut.dev/pkg/plugin/staticresplugins"
-	"carbonaut.dev/pkg/provider/data/account"
-	"carbonaut.dev/pkg/provider/data/account/project"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
+	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/account/project"
+	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/types/staticres"
 	"carbonaut.dev/pkg/util/compareutils"
 	"go.uber.org/multierr"

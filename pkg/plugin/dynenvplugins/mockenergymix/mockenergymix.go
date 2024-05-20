@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
-	"carbonaut.dev/pkg/plugin"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
-	"carbonaut.dev/pkg/provider/data/environment"
+	"carbonaut.dev/pkg/provider/account/project/resource"
+	"carbonaut.dev/pkg/provider/environment"
+	"carbonaut.dev/pkg/provider/plugin"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/util/cache"
 	"go.uber.org/multierr"

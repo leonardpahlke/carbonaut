@@ -1,4 +1,4 @@
-![carbonaut-banner](assets/carbonaut-banner.png)
+![carbonaut-banner](.github/carbonaut-banner.png)
 
 [![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/leonardpahlke/carbonaut.svg)](https://github.com/leonardpahlke/carbonaut)
 [![Go Report Card](https://goreportcard.com/badge/leonardpahlke/carbonaut)](https://goreportcard.com/report/leonardpahlke/carbonaut)

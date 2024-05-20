@@ -1,6 +1,6 @@
 {
-  "name": "Carbonaut Documentation",
-  "short_name": "Carbonaut Documentation",
+  "name": "Carbonaut Docs",
+  "short_name": "Carbonaut Docs",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

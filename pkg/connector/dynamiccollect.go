@@ -7,9 +7,9 @@ import (
 	"carbonaut.dev/pkg/plugin/dynenvplugins"
 	"carbonaut.dev/pkg/plugin/dynresplugins"
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/data/account"
-	"carbonaut.dev/pkg/provider/data/account/project"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
+	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/account/project"
+	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/types/dynres"
 )
 

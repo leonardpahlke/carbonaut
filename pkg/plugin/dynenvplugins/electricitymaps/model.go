@@ -3,7 +3,7 @@ package electricitymaps
 import (
 	"time"
 
-	"carbonaut.dev/pkg/provider/data/environment"
+	"carbonaut.dev/pkg/provider/environment"
 )
 
 type (

@@ -11,7 +11,7 @@ import (
 	"carbonaut.dev/pkg/plugin/dynresplugins/mockenergy"
 	"carbonaut.dev/pkg/plugin/staticresplugins/mockcloudplugin"
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/data/account"
+	"carbonaut.dev/pkg/provider/account"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"

@@ -1,9 +1,9 @@
 package dynenv
 
 import (
-	"carbonaut.dev/pkg/plugin"
-	"carbonaut.dev/pkg/provider/data/account/project/resource"
-	"carbonaut.dev/pkg/provider/data/environment"
+	"carbonaut.dev/pkg/provider/account/project/resource"
+	"carbonaut.dev/pkg/provider/environment"
+	"carbonaut.dev/pkg/provider/plugin"
 )
 
 type Config struct {
