@@ -323,3 +323,8 @@ terraform.rc
 
 # Ignore any temporary directory
 tmp
+
+# hugo docs
+docs/public/
+.DS_Store
+.hugo_build.lock
