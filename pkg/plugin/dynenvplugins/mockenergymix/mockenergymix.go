@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"carbonaut.dev/pkg/provider/environment"
 	"carbonaut.dev/pkg/provider/plugin"
 	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
@@ -47,8 +48,8 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) GetDynamicEnvironmentData(data *resource.Location) (*resource.DynamicEnvData, error) {
-	return &resource.DynamicEnvData{
+func (p) GetDynamicEnvironmentData(data *resource.Location) (*environment.DynamicEnvData, error) {
+	return &environment.DynamicEnvData{
 		SolarPercentage:        10,
 		WindPercentage:         20,
 		HydroPercentage:        10,

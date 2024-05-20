@@ -1,5 +1,7 @@
 package resource
 
+import "carbonaut.dev/pkg/provider/environment"
+
 type (
 	AccountName  string
 	ProjectName  string
@@ -15,8 +17,8 @@ type ResourceData struct {
 }
 
 type DynamicData struct {
-	ResData *DynamicResData `json:"res_data" yaml:"res_data"`
-	EnvData *DynamicEnvData `json:"env_data" yaml:"env_data"`
+	ResData *DynamicResData             `json:"res_data" yaml:"res_data"`
+	EnvData *environment.DynamicEnvData `json:"env_data" yaml:"env_data"`
 }
 
 type StaticData struct {
@@ -28,21 +30,6 @@ type DynamicResData struct {
 	CPUFrequency          float64 `json:"cpu_frequency"          yaml:"cpu_frequency"`
 	EnergyHostMicrojoules int     `json:"energy_host_mirojoules" yaml:"energy_host_mirojoules"`
 	CPULoadPercentage     float64 `json:"cpu_load_percentage"    yaml:"cpu_load_percentage"`
-}
-
-type DynamicEnvData struct {
-	SolarPercentage        float64 `json:"solar_percentage"         yaml:"solar_percentage"`
-	WindPercentage         float64 `json:"wind_percentage"          yaml:"wind_percentage"`
-	HydroPercentage        float64 `json:"hydro_percentage"         yaml:"hydro_percentage"`
-	NuclearPercentage      float64 `json:"nuclear_percentage"       yaml:"nuclear_percentage"`
-	GeothermalPercentage   float64 `json:"geothermal_percentage"    yaml:"geothermal_percentage"`
-	GasPercentage          float64 `json:"gas_percentage"           yaml:"gas_percentage"`
-	OilPercentage          float64 `json:"oil_percentage"           yaml:"oil_percentage"`
-	BiomassPercentage      float64 `json:"biomass_percentage"       yaml:"biomass_percentage"`
-	CoalPercentage         float64 `json:"coal_percentage"          yaml:"coal_percentage"`
-	OtherSourcesPercentage float64 `json:"other_sources_percentage" yaml:"other_sources_percentage"`
-	FossilFuelsPercentage  float64 `json:"fossil_fuels_percentage"  yaml:"fossil_fuels_percentage"`
-	RenewablePercentage    float64 `json:"renewable_percentage"     yaml:"renewable_percentage"`
 }
 
 // Data represents computer hardware data.
