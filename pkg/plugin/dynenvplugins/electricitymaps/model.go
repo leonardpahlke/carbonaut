@@ -3,7 +3,7 @@ package electricitymaps
 import (
 	"time"
 
-	"carbonaut.dev/pkg/provider/environment"
+	"carbonaut.dev/pkg/provider/resource"
 )
 
 type (
@@ -17,16 +17,16 @@ type ZoneDetails struct {
 	DisplayName string `json:"displayName"`
 }
 
-func (data *ZoneEnergyBreakdown) Convert() *environment.DynamicEnvData {
+func (data *ZoneEnergyBreakdown) Convert() *resource.DynamicEnvData {
 	total := data.PowerConsumptionBreakdown.Nuclear + data.PowerConsumptionBreakdown.Geothermal + data.PowerConsumptionBreakdown.Biomass + data.PowerConsumptionBreakdown.Coal + data.PowerConsumptionBreakdown.Wind + data.PowerConsumptionBreakdown.Solar +
 		data.PowerConsumptionBreakdown.Hydro + data.PowerConsumptionBreakdown.Gas + data.PowerConsumptionBreakdown.Oil + data.PowerConsumptionBreakdown.Unknown + data.PowerConsumptionBreakdown.HydroDischarge + data.PowerConsumptionBreakdown.BatteryDischarge
 
 	if total == 0 {
-		return &environment.DynamicEnvData{}
+		return &resource.DynamicEnvData{}
 	}
 
 	// Calculate percentages
-	p := environment.DynamicEnvData{
+	p := resource.DynamicEnvData{
 		SolarPercentage:        float64(data.PowerConsumptionBreakdown.Solar) / float64(total) * 100,
 		WindPercentage:         float64(data.PowerConsumptionBreakdown.Wind) / float64(total) * 100,
 		HydroPercentage:        float64(data.PowerConsumptionBreakdown.Hydro) / float64(total) * 100,

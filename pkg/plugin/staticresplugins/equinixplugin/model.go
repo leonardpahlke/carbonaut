@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"carbonaut.dev/pkg/provider/account/project/resource"
+	"carbonaut.dev/pkg/provider/resource"
 )
 
 func EquinixDataIntegration(device *EquinixDevice) *resource.StaticResData {

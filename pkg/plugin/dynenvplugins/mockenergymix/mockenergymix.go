@@ -5,9 +5,8 @@ import (
 	"os"
 	"time"
 
-	"carbonaut.dev/pkg/provider/account/project/resource"
-	"carbonaut.dev/pkg/provider/environment"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/util/cache"
 	"go.uber.org/multierr"
@@ -48,8 +47,8 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) GetDynamicEnvironmentData(data *resource.Location) (*environment.DynamicEnvData, error) {
-	return &environment.DynamicEnvData{
+func (p) GetDynamicEnvironmentData(data *resource.Location) (*resource.DynamicEnvData, error) {
+	return &resource.DynamicEnvData{
 		SolarPercentage:        10,
 		WindPercentage:         20,
 		HydroPercentage:        10,

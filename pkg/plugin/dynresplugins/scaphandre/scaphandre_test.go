@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"carbonaut.dev/pkg/plugin/dynresplugins/scaphandre"
-	"carbonaut.dev/pkg/provider/account/project/resource"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynres"
 )
 

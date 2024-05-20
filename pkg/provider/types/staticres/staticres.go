@@ -1,9 +1,8 @@
 package staticres
 
 import (
-	"carbonaut.dev/pkg/provider/account/project"
-	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 )
 
 type Config struct {
@@ -13,7 +12,7 @@ type Config struct {
 
 type Provider interface {
 	GetName() *plugin.Kind
-	GetStaticResourceData(*project.Name, *resource.Name) (*resource.StaticResData, error)
-	DiscoverStaticResourceIdentifiers(*project.Name) ([]*resource.Name, error)
-	DiscoverProjectIdentifiers() ([]*project.Name, error)
+	GetStaticResourceData(*resource.ProjectName, *resource.ResourceName) (*resource.StaticResData, error)
+	DiscoverStaticResourceIdentifiers(*resource.ProjectName) ([]*resource.ResourceName, error)
+	DiscoverProjectIdentifiers() ([]*resource.ProjectName, error)
 }

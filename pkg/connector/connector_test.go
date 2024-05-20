@@ -10,7 +10,7 @@ import (
 	"carbonaut.dev/pkg/plugin/dynresplugins/mockenergy"
 	"carbonaut.dev/pkg/plugin/staticresplugins/mockcloudplugin"
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"
@@ -26,11 +26,11 @@ var (
 	exampleAccessKeyB     = "435"
 	exampleAccessKeyC     = "7654asdE2"
 	exampleEndpoint       = ":8080/metrics"
-	exampleAccountA       = account.Name("test-plugin-A")
-	exampleAccountB       = account.Name("test-plugin-B")
-	exampleAccountC       = account.Name("test-plugin-C")
+	exampleAccountA       = resource.AccountName("test-plugin-A")
+	exampleAccountB       = resource.AccountName("test-plugin-B")
+	exampleAccountC       = resource.AccountName("test-plugin-C")
 	initialProviderConfig = provider.Config{
-		Resources: map[account.Name]provider.Res{
+		Resources: map[resource.AccountName]provider.Res{
 			exampleAccountA: {
 				StaticResConfig: &staticres.Config{
 					Plugin:       &mockcloudplugin.PluginName,
@@ -60,7 +60,7 @@ var (
 	}
 
 	updatedProviderConfig = provider.Config{
-		Resources: map[account.Name]provider.Res{
+		Resources: map[resource.AccountName]provider.Res{
 			exampleAccountA: {
 				StaticResConfig: &staticres.Config{
 					Plugin:       &mockcloudplugin.PluginName,

@@ -1,9 +1,8 @@
 package mockcloudplugin
 
 import (
-	"carbonaut.dev/pkg/provider/account/project"
-	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/staticres"
 )
 
@@ -23,24 +22,24 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p) DiscoverProjectIdentifiers() ([]*project.Name, error) {
-	prjA := project.Name("project-a")
-	prjB := project.Name("project-b")
-	data := make([]*project.Name, 0)
+func (p) DiscoverProjectIdentifiers() ([]*resource.ProjectName, error) {
+	prjA := resource.ProjectName("project-a")
+	prjB := resource.ProjectName("project-b")
+	data := make([]*resource.ProjectName, 0)
 	data = append(data, &prjA, &prjB)
 	return data, nil
 }
 
-func (p) DiscoverStaticResourceIdentifiers(pName *project.Name) ([]*resource.Name, error) {
-	resA := resource.Name("resource-a")
-	resB := resource.Name("resource-b")
-	resC := resource.Name("resource-c")
-	data := make([]*resource.Name, 0)
+func (p) DiscoverStaticResourceIdentifiers(pName *resource.ProjectName) ([]*resource.ResourceName, error) {
+	resA := resource.ResourceName("resource-a")
+	resB := resource.ResourceName("resource-b")
+	resC := resource.ResourceName("resource-c")
+	data := make([]*resource.ResourceName, 0)
 	data = append(data, &resA, &resB, &resC)
 	return data, nil
 }
 
-func (p) GetStaticResourceData(pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
+func (p) GetStaticResourceData(pName *resource.ProjectName, rName *resource.ResourceName) (*resource.StaticResData, error) {
 	return &resource.StaticResData{
 		ID:   "0131acc3-82d8-488b-a8e2-c4a00e897145",
 		User: "root",

@@ -8,8 +8,8 @@ import (
 
 	"carbonaut.dev/pkg/connector/state"
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/account"
-	"carbonaut.dev/pkg/provider/account/project"
+	"carbonaut.dev/pkg/provider/resource"
+	"carbonaut.dev/pkg/provider/topology"
 	"carbonaut.dev/pkg/util/compareutils"
 )
 
@@ -38,10 +38,10 @@ func New(connectorConfig *Config, providerConfig *provider.Config) (*C, error) {
 }
 
 func (c *C) LoadConfig(newConfig *provider.Config) error {
-	var currentAccountSet, newAccountSet []*account.Name
+	var currentAccountSet, newAccountSet []*resource.AccountName
 
-	buildAccountSet := func(resources provider.ResConfig) []*account.Name {
-		accountSet := make([]*account.Name, 0, len(resources))
+	buildAccountSet := func(resources provider.ResConfig) []*resource.AccountName {
+		accountSet := make([]*resource.AccountName, 0, len(resources))
 		for r := range resources {
 			accountName := r
 			accountSet = append(accountSet, &accountName)
@@ -76,9 +76,9 @@ func (c *C) LoadConfig(newConfig *provider.Config) error {
 	// add toBeCreatedAccounts to "to-create" in state
 	for i := range toBeCreatedAccounts {
 		slog.Debug("added account to carbonaut state", "identifier", toBeCreatedAccounts[i])
-		c.state.AddAccount(&account.Topology{
+		c.state.AddAccount(&topology.AccountT{
 			Name:             toBeCreatedAccounts[i],
-			Projects:         make(map[project.ID]*project.Topology),
+			Projects:         make(map[topology.ProjectID]*topology.ProjectT),
 			CreatedAt:        time.Now(),
 			ProjectIDCounter: new(int32),
 			Config:           newConfig.Resources[*toBeCreatedAccounts[i]].StaticResConfig,
@@ -114,7 +114,7 @@ func (c *C) Run(stopChan chan int, errChan chan error) {
 	slog.Debug("received signal to stop the connector, shutting down")
 }
 
-func (c *C) GetStaticData() *provider.Topology {
+func (c *C) GetStaticData() *topology.T {
 	s := c.state.T
 	return &s
 }

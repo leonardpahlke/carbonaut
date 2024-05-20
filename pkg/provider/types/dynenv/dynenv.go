@@ -1,9 +1,8 @@
 package dynenv
 
 import (
-	"carbonaut.dev/pkg/provider/account/project/resource"
-	"carbonaut.dev/pkg/provider/environment"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 )
 
 type Config struct {
@@ -13,5 +12,5 @@ type Config struct {
 
 type Provider interface {
 	GetName() *plugin.Kind
-	GetDynamicEnvironmentData(*resource.Location) (*environment.DynamicEnvData, error)
+	GetDynamicEnvironmentData(*resource.Location) (*resource.DynamicEnvData, error)
 }

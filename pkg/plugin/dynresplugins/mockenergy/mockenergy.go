@@ -3,8 +3,8 @@ package mockenergy
 import (
 	"math/rand"
 
-	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynres"
 )
 

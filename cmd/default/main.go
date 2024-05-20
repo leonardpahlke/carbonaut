@@ -11,7 +11,7 @@ import (
 	"carbonaut.dev/pkg/plugin/dynresplugins/mockenergy"
 	"carbonaut.dev/pkg/plugin/staticresplugins/mockcloudplugin"
 	"carbonaut.dev/pkg/provider"
-	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"
@@ -45,7 +45,7 @@ func main() {
 		},
 		Spec: config.Spec{
 			Provider: &provider.Config{
-				Resources: map[account.Name]provider.Res{
+				Resources: map[resource.AccountName]provider.Res{
 					"example-account-a": {
 						StaticResConfig: &staticres.Config{
 							Plugin:       &mockcloudplugin.PluginName,

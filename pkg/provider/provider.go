@@ -1,7 +1,7 @@
 package provider
 
 import (
-	"carbonaut.dev/pkg/provider/account"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"
@@ -12,7 +12,7 @@ type Config struct {
 	Environment *EnvConfig `json:"environment" yaml:"environment"`
 }
 
-type ResConfig map[account.Name]Res
+type ResConfig map[resource.AccountName]Res
 
 type Res struct {
 	StaticResConfig  *staticres.Config `json:"static_resource"  yaml:"static_resource"`
@@ -23,10 +23,4 @@ type EnvConfig struct {
 	DynamicEnvConfig *dynenv.Config `json:"dynamic_environment" yaml:"dynamic_environment"`
 }
 
-// internal state
-type Topology struct {
-	Accounts          map[account.ID]*account.Topology `json:"accounts" yaml:"accounts"`
-	AccountsIDCounter *int32                           `json:"-"`
-}
-
-type Data map[account.Name]account.Data
+type Data map[resource.AccountName]resource.AccountData

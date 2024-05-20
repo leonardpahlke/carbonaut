@@ -1,8 +1,8 @@
 package dynres
 
 import (
-	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 )
 
 type Config struct {

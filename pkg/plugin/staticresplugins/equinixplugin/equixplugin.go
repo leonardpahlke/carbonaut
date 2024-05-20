@@ -9,9 +9,8 @@ import (
 	"os"
 	"time"
 
-	"carbonaut.dev/pkg/provider/account/project"
-	"carbonaut.dev/pkg/provider/account/project/resource"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/staticres"
 	"carbonaut.dev/pkg/util/cache"
 	"carbonaut.dev/pkg/util/compareutils"
@@ -54,7 +53,7 @@ func (p p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p p) DiscoverProjectIdentifiers() ([]*project.Name, error) {
+func (p p) DiscoverProjectIdentifiers() ([]*resource.ProjectName, error) {
 	resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
 		Method:  http.MethodGet,
 		BaseURL: "https://api.equinix.com/metal/v1/projects",
@@ -71,21 +70,21 @@ func (p p) DiscoverProjectIdentifiers() ([]*project.Name, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error unmarshalling project list request: %v", err)
 	}
-	prj := make([]*project.Name, 0)
+	prj := make([]*resource.ProjectName, 0)
 	for i := range pResp.Projects {
 		slog.Debug("discovered equinix project", "project name", pResp.Projects[i].Name)
-		pName := project.Name(pResp.Projects[i].ID)
+		pName := resource.ProjectName(pResp.Projects[i].ID)
 		prj = append(prj, &pName)
 	}
 	return prj, nil
 }
 
-func (p p) DiscoverStaticResourceIdentifiers(pName *project.Name) ([]*resource.Name, error) {
+func (p p) DiscoverStaticResourceIdentifiers(pName *resource.ProjectName) ([]*resource.ResourceName, error) {
 	resData, err := p.PGetResourceData(pName)
 	if err != nil {
 		return nil, fmt.Errorf("error getResourceData error: %v", err)
 	}
-	resourceNames := []*resource.Name{}
+	resourceNames := []*resource.ResourceName{}
 	for i := range resData {
 		rName := i
 		resourceNames = append(resourceNames, &rName)
@@ -93,7 +92,7 @@ func (p p) DiscoverStaticResourceIdentifiers(pName *project.Name) ([]*resource.N
 	return resourceNames, nil
 }
 
-func (p p) GetStaticResourceData(pName *project.Name, rName *resource.Name) (*resource.StaticResData, error) {
+func (p p) GetStaticResourceData(pName *resource.ProjectName, rName *resource.ResourceName) (*resource.StaticResData, error) {
 	resData, err := p.PGetResourceData(pName)
 	if err != nil {
 		return nil, fmt.Errorf("error getResourceData error: %v", err)
@@ -106,9 +105,9 @@ func (p p) GetStaticResourceData(pName *project.Name, rName *resource.Name) (*re
 	return nil, errors.New("resource not found")
 }
 
-func (p p) PGetResourceData(pName *project.Name) (map[resource.Name]*resource.StaticResData, error) {
+func (p p) PGetResourceData(pName *resource.ProjectName) (map[resource.ResourceName]*resource.StaticResData, error) {
 	if cachedProjectResources, found := p.cache.Get(string(*pName)); found {
-		resources, ok := cachedProjectResources.(map[resource.Name]*resource.StaticResData)
+		resources, ok := cachedProjectResources.(map[resource.ResourceName]*resource.StaticResData)
 		if !ok {
 			return nil, errors.New("cached value is not of type map[resource.Name]*resource.StaticResData")
 		}
@@ -127,7 +126,7 @@ func (p p) PGetResourceData(pName *project.Name) (map[resource.Name]*resource.St
 	return fetchedProjectResources, nil
 }
 
-func (p p) PRequestResourceData(pName *project.Name) (map[resource.Name]*resource.StaticResData, error) {
+func (p p) PRequestResourceData(pName *resource.ProjectName) (map[resource.ResourceName]*resource.StaticResData, error) {
 	resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
 		Method:  http.MethodGet,
 		BaseURL: fmt.Sprintf("https://api.equinix.com/metal/v1/projects/%s/devices", *pName),
@@ -145,11 +144,11 @@ func (p p) PRequestResourceData(pName *project.Name) (map[resource.Name]*resourc
 		return nil, fmt.Errorf("error reading response body: %v", err)
 	}
 
-	resourceData := make(map[resource.Name]*resource.StaticResData)
+	resourceData := make(map[resource.ResourceName]*resource.StaticResData)
 	if len(devices.Devices) != 0 {
 		for i := range devices.Devices {
 			d := devices.Devices[i]
-			resourceData[resource.Name(devices.Devices[i].ID)] = EquinixDataIntegration(&d)
+			resourceData[resource.ResourceName(devices.Devices[i].ID)] = EquinixDataIntegration(&d)
 		}
 		slog.Debug("requested equinix resources", "resource names", compareutils.CollectKeys(resourceData))
 	} else {

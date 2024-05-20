@@ -9,9 +9,8 @@ import (
 	"os"
 	"time"
 
-	"carbonaut.dev/pkg/provider/account/project/resource"
-	"carbonaut.dev/pkg/provider/environment"
 	"carbonaut.dev/pkg/provider/plugin"
+	"carbonaut.dev/pkg/provider/resource"
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/util/cache"
 	"carbonaut.dev/pkg/util/httpwrapper"
@@ -57,7 +56,7 @@ func (p) GetName() *plugin.Kind {
 	return &PluginName
 }
 
-func (p p) GetDynamicEnvironmentData(data *resource.Location) (*environment.DynamicEnvData, error) {
+func (p p) GetDynamicEnvironmentData(data *resource.Location) (*resource.DynamicEnvData, error) {
 	resp, err := httpwrapper.SendHTTPRequest(&httpwrapper.HTTPReqWrapper{
 		Method:  http.MethodGet,
 		BaseURL: "https://api.electricitymap.org/v3/power-breakdown/latest?zone=" + data.Country,

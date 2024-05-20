@@ -6,15 +6,14 @@ import (
 	"time"
 
 	"carbonaut.dev/pkg/plugin/staticresplugins"
-	"carbonaut.dev/pkg/provider/account"
-	"carbonaut.dev/pkg/provider/account/project"
-	"carbonaut.dev/pkg/provider/account/project/resource"
+	"carbonaut.dev/pkg/provider/resource"
+	"carbonaut.dev/pkg/provider/topology"
 	"carbonaut.dev/pkg/provider/types/staticres"
 	"carbonaut.dev/pkg/util/compareutils"
 	"go.uber.org/multierr"
 )
 
-func (c *C) updateStaticData(aID *account.ID) error {
+func (c *C) updateStaticData(aID *topology.AccountID) error {
 	var pRes staticres.Provider
 	pRes, err := staticresplugins.GetPlugin(c.state.T.Accounts[*aID].Config)
 	if err != nil {
@@ -33,17 +32,17 @@ func (c *C) updateStaticData(aID *account.ID) error {
 	// INFO: remove all resources that are not found anymore but loaded to state
 	c.state.RemoveProjectsByName(aID, toBeDeletedProjects)
 
-	remainingProjectIDs := make([]*project.ID, 0)
-	toBeCreatedProjectIDs := make([]*project.ID, 0)
+	remainingProjectIDs := make([]*topology.ProjectID, 0)
+	toBeCreatedProjectIDs := make([]*topology.ProjectID, 0)
 
 	for i := range remainingProjects {
 		remainingProjectIDs = append(remainingProjectIDs, c.state.GetProjectID(aID, remainingProjects[i]))
 	}
 
 	for i := range toBeCreatedProjects {
-		toBeCreatedProjectIDs = append(toBeCreatedProjectIDs, c.state.AddProject(aID, &project.Topology{
+		toBeCreatedProjectIDs = append(toBeCreatedProjectIDs, c.state.AddProject(aID, &topology.ProjectT{
 			Name:              toBeCreatedProjects[i],
-			Resources:         make(map[resource.ID]*resource.Topology),
+			Resources:         make(map[topology.ResourceID]*topology.ResourceT),
 			CreatedAt:         time.Now(),
 			ResourceIDCounter: new(int32),
 		}))
@@ -61,7 +60,7 @@ func (c *C) updateStaticData(aID *account.ID) error {
 	return nil
 }
 
-func (c *C) updateProjectResources(aID *account.ID, pIDs []*project.ID, pRes staticres.Provider) error {
+func (c *C) updateProjectResources(aID *topology.AccountID, pIDs []*topology.ProjectID, pRes staticres.Provider) error {
 	var mError error
 	for i := range pIDs {
 		discoveredResourceNames, err := pRes.DiscoverStaticResourceIdentifiers(c.state.T.Accounts[*aID].Projects[*pIDs[i]].Name)
@@ -84,7 +83,7 @@ func (c *C) updateProjectResources(aID *account.ID, pIDs []*project.ID, pRes sta
 				mError = multierr.Append(mError, fmt.Errorf("could not GetStaticResourceData for resource %v in project %v in account %v, error: %v", *toBeCreatedResourceNames[j], *pIDs[i], *aID, err))
 				continue
 			}
-			c.state.AddResource(aID, pIDs[i], &resource.Topology{
+			c.state.AddResource(aID, pIDs[i], &topology.ResourceT{
 				Name:       toBeCreatedResourceNames[j],
 				StaticData: data,
 				CreatedAt:  time.Now(),
@@ -96,7 +95,7 @@ func (c *C) updateProjectResources(aID *account.ID, pIDs []*project.ID, pRes sta
 }
 
 // toStringSliceProjects converts a slice of pointers to project.Name to a slice of strings
-func toStringSliceProjects(names []*project.Name) []string {
+func toStringSliceProjects(names []*resource.ProjectName) []string {
 	var result []string
 	for _, name := range names {
 		if name != nil {
@@ -109,7 +108,7 @@ func toStringSliceProjects(names []*project.Name) []string {
 }
 
 // toStringSliceResources converts a slice of pointers to resource.Name to a slice of strings
-func toStringSliceResources(names []*resource.Name) []string {
+func toStringSliceResources(names []*resource.ResourceName) []string {
 	var result []string
 	for _, name := range names {
 		if name != nil {
