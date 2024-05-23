@@ -1,6 +1,6 @@
 ---
 weight: 5
-bookHidden: true
+# bookHidden: true
 ---
 
 ## **Carbonaut Server**

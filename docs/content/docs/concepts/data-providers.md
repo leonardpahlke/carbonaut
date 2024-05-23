@@ -18,7 +18,7 @@ Carbonaut collects data of your infrastructure over data providers. Providers ar
 ```mermaid
 classDiagram
     direction LR
-    ResourceData <|-- EnergyMixData : energymix data depends \n on location data
+    ResourceData <|-- EnergyMixData : energymix data depends on location \n data which is part of resource data
     ResourceData <|-- UtilizationData : utilization data depends \n on resource data
     class EnergyMixData{
       +SolarPercentage
@@ -48,7 +48,6 @@ classDiagram
 
 {{< /columns >}}
 
-
-
 These providers depend on each other. To collect energy usage of a system you first need to be aware of the system's topology. In the cloud environment we have heterogenous systems which changes dynamically. Therefore Resources are captured in projects (like K8s namespace's) and accounts (like K8s cluster's). The static resource provider just references the account and further discovery of projects and resources are done at runtime.
 
+Providers expose interfaces which are defined in the schema reference document. The [`dynenv` provider](/docs/reference/schema/#type-provider) integrates [data](/docs/reference/schema/#type-dynamicenvdata) about the energy mix. The [`dynres` provider](/docs/reference/schema/#type-provider-1) integrates [data](/docs/reference/schema/#type-dynamicresdata) umong other things about energy usage. The  [`staticres` provider](/docs/reference/schema/#type-provider-2) integrates [data](/docs/reference/schema/#type-staticresdata) umong other things about Operating System, Memory, Region.

@@ -66,3 +66,7 @@ CMD ["stress", "--verbose", "--vm", "1", "--vm-bytes", "256M"]
 ---
 
 Extend Equinix provider to support paging in resource & project discovery. Paging information is provided in the "Meta" information which right now is not parsed and processed.
+
+---
+
+The energy mix data could be cached across resources. It's likely that multiple resources are deployed in the same region - its therefore not needed to query data by resource.
