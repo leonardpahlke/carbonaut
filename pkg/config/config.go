@@ -2,12 +2,20 @@ package config
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"regexp"
 
 	"carbonaut.dev/pkg/connector"
+	"carbonaut.dev/pkg/plugin/dynenvplugins/mockenergymix"
+	"carbonaut.dev/pkg/plugin/dynresplugins/mockenergy"
+	"carbonaut.dev/pkg/plugin/staticresplugins/mockcloudplugin"
 	"carbonaut.dev/pkg/provider"
+	"carbonaut.dev/pkg/provider/resource"
+	"carbonaut.dev/pkg/provider/types/dynenv"
+	"carbonaut.dev/pkg/provider/types/dynres"
+	"carbonaut.dev/pkg/provider/types/staticres"
 	"carbonaut.dev/pkg/server"
 	"github.com/creasty/defaults"
 	"github.com/gookit/validate"
@@ -85,4 +93,61 @@ func (c *Config) Validate() error {
 		return v.Errors
 	}
 	return nil
+}
+
+func TestingConfiguration() *Config {
+	exampleAccessKeyA := "123"
+	exampleAccessKeyB := "435"
+	exampleEndpoint := ":8080/metrics"
+	cfg := Config{
+		Kind: "carbonaut",
+		Meta: Meta{
+			Name:     "carbonaut",
+			LogLevel: "debug",
+			Connector: &connector.Config{
+				TimeoutSeconds: 10,
+			},
+		},
+		Spec: Spec{
+			Provider: &provider.Config{
+				Resources: map[resource.AccountName]provider.Res{
+					"example-account-a": {
+						StaticResConfig: &staticres.Config{
+							Plugin:       &mockcloudplugin.PluginName,
+							AccessKeyEnv: &exampleAccessKeyB,
+						},
+						DynamicResConfig: &dynres.Config{
+							Plugin:   mockenergy.PluginName,
+							Endpoint: exampleEndpoint,
+						},
+					},
+					"example-account-c": {
+						StaticResConfig: &staticres.Config{
+							Plugin:       &mockcloudplugin.PluginName,
+							AccessKeyEnv: &exampleAccessKeyB,
+						},
+						DynamicResConfig: &dynres.Config{
+							Plugin:   mockenergy.PluginName,
+							Endpoint: exampleAccessKeyB,
+						},
+					},
+				},
+				Environment: &provider.EnvConfig{
+					DynamicEnvConfig: &dynenv.Config{
+						Plugin:       &mockenergymix.PluginName,
+						AccessKeyEnv: &exampleAccessKeyA,
+					},
+				},
+			},
+			Server: &server.Config{
+				Port: 8088,
+			},
+		},
+	}
+
+	if err := defaults.Set(&cfg); err != nil {
+		slog.Error("failed to set defaults", "error", err)
+		os.Exit(1)
+	}
+	return &cfg
 }

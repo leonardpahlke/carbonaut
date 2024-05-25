@@ -1,7 +1,11 @@
-.PHONY: all verify hugo format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
+.PHONY: all build verify hugo format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
 
 # Default target executed
 all: verify
+
+# Default target executed
+build:
+	@go build main.go
 
 # Verify the project code (linting, testing, checking git state)
 verify:
@@ -22,6 +26,7 @@ install:
 	@go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
 	@echo "Installing Node tooling..."
 	@npm install --global prettier
+	@echo "Additional tooling..."
 	@pre-commit install
 
 # Format Go project
@@ -30,7 +35,7 @@ format:
 	@tagalign -fix ./...
 	@goimports -w .
 	@go clean -i ./...
-	@find . -name "*.md" -exec prettier --write {} +
+	@find . -name "*.md" ! -path "./documentation/themes/*" -exec prettier --write {} +
 
 # Upgrade project dependencies
 upgrade:
@@ -110,11 +115,11 @@ ansible-setup: ask-private-key
 ### GENERAL
 
 hugo:
-	hugo server --minify --theme hugo-book -s docs/
+	hugo server --minify -p 8081 --theme hugo-book -s documentation/
 
 help:
 	@echo "Available commands:"
-	@echo "  all                    - Build project resources and verify code"
+	@echo "  build                  - Build the go binary locally"
 	@echo "  verify                 - Run verifications on the project (lint, vet, tests)"
 	@echo "  install                - Install project dependencies"
 	@echo "  format                 - Format Go files"

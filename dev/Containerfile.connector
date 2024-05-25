@@ -5,14 +5,14 @@ WORKDIR /connector
 RUN apt update
 RUN apt install bash
 
-COPY . /connector/
+COPY . .
 
-RUN make install
+RUN go get ./...
 
-RUN CGO_ENABLED=0 go build -o /go/bin/connector/ ./cmd/connector/main.go
+RUN CGO_ENABLED=0 go build -o /go/bin/ main.go
 
 FROM gcr.io/distroless/static-debian11 as prod
 
-COPY --from=goenv go/bin/connector /
+COPY --from=goenv go/bin /
 
 CMD ["/main"]

@@ -13,19 +13,31 @@ import (
 	"carbonaut.dev/pkg/util/logger"
 )
 
-var configFullPath string
+var (
+	configFullPath string
+	testRun        bool
+)
+
+const testRunSeconds = 5
 
 func init() {
 	flag.StringVar(&configFullPath, "c", "config.yaml", "Full path of the Carbonaut configuration file")
+	flag.BoolVar(&testRun, "test-run", false, "If turned on Carbonaut runs a local test scenario and shut down. This can be used for verification purposes. Any provided configuration file is omitted!")
 	flag.Parse()
 }
 
 func main() {
 	exitChan := make(chan int)
 	connectorErrChan := make(chan error)
-	cfg, err := config.ReadConfig(configFullPath)
-	if err != nil {
-		panic(fmt.Sprintf("could not read configuration file, err: %v", err))
+	var cfg *config.Config
+	if testRun {
+		cfg = config.TestingConfiguration()
+	} else {
+		parsedCfg, err := config.ReadConfig(configFullPath)
+		if err != nil {
+			panic(fmt.Sprintf("could not read configuration file, err: %v", err))
+		}
+		cfg = parsedCfg
 	}
 
 	slog.SetDefault(slog.New(logger.NewHandler(os.Stderr, &logger.Options{
@@ -33,7 +45,17 @@ func main() {
 		TimeFormat:  time.DateTime,
 		SrcFileMode: logger.ShortFile,
 	})))
-	slog.Info("starting carbonaut", "config", cfg)
+
+	if testRun {
+		slog.Info("starting carbonaut in test mode, stopping carbonaut automatically", "stopping in", testRunSeconds)
+		go func() {
+			time.Sleep(testRunSeconds * time.Second)
+			exitChan <- 1
+		}()
+		slog.Info("stopping carbonaut!")
+	} else {
+		slog.Info("starting carbonaut")
+	}
 
 	c, err := connector.New(cfg.Meta.Connector, cfg.Spec.Provider)
 	if err != nil {
