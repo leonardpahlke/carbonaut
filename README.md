@@ -8,17 +8,17 @@ The project is a POC published end of May 2024 and may not get developed further
 
 ## Information about the project is available on the carbonaut.dev website
 
-* **ARCHITECTURE**: [link](https://carbonaut.dev/docs/concepts/components/).
-* **API SCHEMA**: [link](https://carbonaut.dev/docs/reference/server-api/).
-* **DATA SCHEMA**: [link](https://carbonaut.dev/docs/reference/schema/).
-* **DEVELOPMENT AND CONTRIBUTION**: [link](https://carbonaut.dev/docs/reference/contributing/).
-* **INSTALLATION AND DEPLOYMENT**: [link](docs/installation/getting-started/)
+- **ARCHITECTURE**: [link](https://carbonaut.dev/docs/concepts/components/).
+- **API SCHEMA**: [link](https://carbonaut.dev/docs/reference/server-api/).
+- **DATA SCHEMA**: [link](https://carbonaut.dev/docs/reference/schema/).
+- **DEVELOPMENT AND CONTRIBUTION**: [link](https://carbonaut.dev/docs/reference/contributing/).
+- **INSTALLATION AND DEPLOYMENT**: [link](docs/installation/getting-started/)
 
 ## OPEN ISSUES / TODO
 
 ### (S) Own Stress Test Container images
 
- Build own stress test container images since polinux/stress and yauritux/sysbench are not maintained. Smth like this could work.
+Build own stress test container images since polinux/stress and yauritux/sysbench are not maintained. Smth like this could work.
 
 ```Dockerfile
 FROM debian:12
@@ -28,7 +28,6 @@ RUN apt-get update && apt-get install -y stress \
 
 CMD ["stress", "--verbose", "--vm", "1", "--vm-bytes", "256M"]
 ```
-
 
 ### (S) Provider Equinix Paging
 

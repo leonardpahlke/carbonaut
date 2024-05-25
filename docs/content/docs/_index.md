@@ -1,5 +1,5 @@
 ---
-bookToc: false    
+bookToc: false
 ---
 
 ## **Carbonaut Docs**

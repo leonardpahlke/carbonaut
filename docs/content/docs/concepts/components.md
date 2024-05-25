@@ -16,11 +16,9 @@ The Carbonaut Server hosts an HTTP server which serves collected metrics and ser
 
 ### Connector
 
-
 At a higher level, Carbonaut integrates data over providers, and exposes collected data over a server (see [Server API docs](/docs/reference/server-api/)). Between these two components is the **Connector** component which contains the main lifecycle of the system.
 
 ![carbonaut building blocks](/docs/concepts/building-blocks.drawio.png)
-
 
 #### Internal Runtime
 
@@ -78,7 +76,7 @@ sequenceDiagram
                     activate EInfra
                     EInfra-->>CConn: Energy Usage and CPU Frequency data
                     deactivate EInfra
-                    
+
                     CConn->>EEnv: Collect Dynamic Data (dynenv)
                     activate EEnv
                     EEnv-->>CConn: Energy Mix data
@@ -104,16 +102,13 @@ sequenceDiagram
 
 ### Provider & Plugins
 
-
 Carbonaut collects data of your infrastructure over data providers. Providers are interfaces which are implemented as plugins (see Plugin section in the sidebar). There are three different kinds of providers:
 
 - `Dynamic Environment Provider` collects data about the Energy Mix (may be extended).
 - `Dynamic Resource Provider` collects data about Energy Usage, CPU Frequency etc. (may be extended).
 - `Static Resource Provider` collects data about CPU, Memory, IP etc. and also data about the geolocation and region of the IT resource.
 
-
 {{< columns >}}
-
 
 ```mermaid
 classDiagram
@@ -141,7 +136,6 @@ classDiagram
     style UtilizationData fill:#DAE8FC
 ```
 
-
 <--->
 
 ![carbonaut data domain structure](/docs/concepts/data-domain-structure.drawio.png)
@@ -150,4 +144,4 @@ classDiagram
 
 These providers depend on each other. To collect energy usage of a system you first need to be aware of the system's topology. In the cloud environment we have heterogenous systems which changes dynamically. Therefore Resources are captured in projects (like K8s namespace's) and accounts (like K8s cluster's). The static resource provider just references the account and further discovery of projects and resources are done at runtime.
 
-Providers expose interfaces which are defined in the schema reference document. The [`dynenv` provider](/docs/reference/schema/#type-provider) integrates [data](/docs/reference/schema/#type-dynamicenvdata) about the energy mix. The [`dynres` provider](/docs/reference/schema/#type-provider-1) integrates [data](/docs/reference/schema/#type-dynamicresdata) umong other things about energy usage. The  [`staticres` provider](/docs/reference/schema/#type-provider-2) integrates [data](/docs/reference/schema/#type-staticresdata) umong other things about Operating System, Memory, Region.
+Providers expose interfaces which are defined in the schema reference document. The [`dynenv` provider](/docs/reference/schema/#type-provider) integrates [data](/docs/reference/schema/#type-dynamicenvdata) about the energy mix. The [`dynres` provider](/docs/reference/schema/#type-provider-1) integrates [data](/docs/reference/schema/#type-dynamicresdata) umong other things about energy usage. The [`staticres` provider](/docs/reference/schema/#type-provider-2) integrates [data](/docs/reference/schema/#type-staticresdata) umong other things about Operating System, Memory, Region.

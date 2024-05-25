@@ -11,7 +11,8 @@ verify:
 # Install project dependencies
 install:
 	@echo "Installing project dependencies..."
-	@go get ./...
+	@go get ./...	
+	@echo "Installing Go tooling..."
 	@go install github.com/4meepo/tagalign/cmd/tagalign@latest
 	@go install honnef.co/go/tools/cmd/staticcheck@latest
 	@go install golang.org/x/tools/cmd/godoc@latest
@@ -19,6 +20,8 @@ install:
 	@go install github.com/securego/gosec/v2/cmd/gosec@latest
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.58.1
 	@go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
+	@echo "Installing Node tooling..."
+	@npm install --global prettier
 	@pre-commit install
 
 # Format Go project
@@ -27,6 +30,7 @@ format:
 	@tagalign -fix ./...
 	@goimports -w .
 	@go clean -i ./...
+	@find . -name "*.md" -exec prettier --write {} +
 
 # Upgrade project dependencies
 upgrade:
