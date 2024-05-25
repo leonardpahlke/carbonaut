@@ -3,56 +3,22 @@
 [![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/leonardpahlke/carbonaut.svg)](https://github.com/leonardpahlke/carbonaut)
 [![Go Report Card](https://goreportcard.com/badge/leonardpahlke/carbonaut)](https://goreportcard.com/report/leonardpahlke/carbonaut)
 
-[Carbonaut](https://carbonaut.dev/) is an open-source cloud native software project which aims to establish transparency for energy and IT-Resources used, emissions caused and eventually, which natural resources are used to run your software.
-The project is at the start to fulfill this vision. 
+[Carbonaut](https://carbonaut.dev/) is an open source cloud native software project which aims to establish transparency for energy and IT-Resources used, emissions caused and eventually, which natural resources are used to run your software.
+The project is a POC published end of May 2024 and may not get developed further.
 
-## Development
+## Information about the project is available on the carbonaut.dev website
 
-**Install**:
-1. Install [`pre-commit`](https://pre-commit.com/) which is used to run code checks
-2. Run `make install` which installs Go packages and sets up pre-commit. 
+* **ARCHITECTURE**: [link](https://carbonaut.dev/docs/concepts/components/).
+* **API SCHEMA**: [link](https://carbonaut.dev/docs/reference/server-api/).
+* **DATA SCHEMA**: [link](https://carbonaut.dev/docs/reference/schema/).
+* **DEVELOPMENT AND CONTRIBUTION**: [link](https://carbonaut.dev/docs/reference/contributing/).
+* **INSTALLATION AND DEPLOYMENT**: [link](docs/installation/getting-started/)
 
-```
-$ make help
-Available commands:
-  all                    - Build project resources and verify code
-  verify                 - Run verifications on the project (lint, vet, tests)
-  install                - Install project dependencies
-  format                 - Format Go files
-  upgrade                - Upgrade project dependencies
-  compile-grpc           - Compile gRPC and protobuf definitions
-  test-coverage          - Generate and open test coverage report
-  clean-coverage         - Clean test coverage reports
-  tf-init                - Initialize OpenTofu configuration
-  ...
-```
+## OPEN ISSUES / TODO
 
+### (S) Own Stress Test Container images
 
-## Implemented Providers
-
-### Static Resource Providers:
-
-* [Equinix](https://www.equinix.com/)
-
-### Dynamic Resource Providers:
-
-* [Scaphandre](https://github.com/hubblo-org/scaphandre)
-
-### Dynamic Environment Providers:
-
-* [Electricity Map](https://www.electricitymaps.com): (you can get a free tier account [here](https://www.electricitymaps.com/pricing))
-
-
-## Testing
-
-If access keys to external sources are not set, tests will either set a mock or skip the test. To run all tests the following information needs to be set as environment variables.
-* `ELECTRICITY_MAP_AUTH_TOKEN` needs to be set to run all integration tests for the electricity map provider
-* `METAL_AUTH_TOKEN` needs to be set to run all integration tests for the equinix provider
-
-
-## TODO
-
-Build own stress test container images since polinux/stress and yauritux/sysbench are not maintained. Smth like this could work.
+ Build own stress test container images since polinux/stress and yauritux/sysbench are not maintained. Smth like this could work.
 
 ```Dockerfile
 FROM debian:12
@@ -63,10 +29,19 @@ RUN apt-get update && apt-get install -y stress \
 CMD ["stress", "--verbose", "--vm", "1", "--vm-bytes", "256M"]
 ```
 
----
+
+### (S) Provider Equinix Paging
 
 Extend Equinix provider to support paging in resource & project discovery. Paging information is provided in the "Meta" information which right now is not parsed and processed.
 
----
+### (S) Cache energy mix data
 
 The energy mix data could be cached across resources. It's likely that multiple resources are deployed in the same region - its therefore not needed to query data by resource.
+
+### (M) Detect static resource updates of remaining resources
+
+Some of the static data may be updated without changing the resource name. This is not picked up by carbonaut right now.
+
+### (M) Implement prometheus exporter
+
+Carbonaut just exposes metrics in json format. This should get extended in the future to a [prometheus exporter](https://prometheus.io/docs/concepts/metric_types/).
