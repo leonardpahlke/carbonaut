@@ -325,6 +325,6 @@ terraform.rc
 tmp
 
 # hugo docs
-docs/public/
+documentation/public/
 .DS_Store
 .hugo_build.lock
