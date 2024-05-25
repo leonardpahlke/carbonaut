@@ -1,9 +1,18 @@
 ---
-bookToc: false
+title: Documentation
+next: first-page
 ---
 
-## **Carbonaut Docs**
+This is a demo of the theme's documentation layout.
 
-Documentation can be navigated by the sidebar.
+## Hello, World!
 
-{{< button relref="/" >}}Get Home{{< /button >}}
+```go {filename="main.go"}
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+```
