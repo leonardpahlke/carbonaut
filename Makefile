@@ -115,7 +115,7 @@ ansible-setup: ask-private-key
 ### GENERAL
 
 hugo:
-	hugo server --minify -p 8081 --theme hugo-book -s documentation/
+	hugo server --logLevel debug --disableFastRender -p 1313 -s documentation/
 
 help:
 	@echo "Available commands:"
