@@ -18,7 +18,7 @@ set -o errexit
 # Use the error status of the first failure, rather than that of the last item in a pipeline.
 set -o pipefail
 
-gomarkdoc --output docs/content/docs/reference/schema.md ./pkg/provider/...
+gomarkdoc --output documentation/content/docs/reference/schema.md ./pkg/provider/...
 
 temp_file=$(mktemp)
 
@@ -26,7 +26,7 @@ temp_file=$(mktemp)
   echo "---"
   echo "weight: 2"
   echo "---"
-  cat docs/content/docs/reference/schema.md
+  cat documentation/content/docs/reference/schema.md
 } > "$temp_file"
 
-mv "$temp_file" docs/content/docs/reference/schema.md
+mv "$temp_file" documentation/content/docs/reference/schema.md
