@@ -1,7 +1,5 @@
 ---
 weight: 5
-# bookToc: false
-bookFlatSection: true
 ---
 
 ## **Carbonaut Contributing**

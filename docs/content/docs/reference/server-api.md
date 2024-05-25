@@ -1,6 +1,5 @@
 ---
 weight: 1
-bookFlatSection: true
 ---
 
 ## **Carbonaut Server API**

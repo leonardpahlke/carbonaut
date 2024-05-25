@@ -17,7 +17,7 @@ The Carbonaut Server hosts an HTTP server which serves collected metrics and ser
 ### Connector
 
 
-At a higher level, Carbonaut integrates data over providers (see [Data Provider docs](/docs/concepts/data-providers)), and exposes collected data over a server (see [Server API docs](/docs/reference/server-api/)). Between these two components is the **Connector** component which contains the main lifecycle of the system.
+At a higher level, Carbonaut integrates data over providers, and exposes collected data over a server (see [Server API docs](/docs/reference/server-api/)). Between these two components is the **Connector** component which contains the main lifecycle of the system.
 
 ![carbonaut building blocks](/docs/concepts/building-blocks.drawio.png)
 
