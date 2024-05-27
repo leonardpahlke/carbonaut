@@ -1,4 +1,4 @@
-.PHONY: all build verify hugo format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect
+.PHONY: all build verify hugo format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect container-build-local
 
 # Default target executed
 all: verify
@@ -54,6 +54,13 @@ test-coverage:
 clean-coverage:
 	@echo "Cleaning test coverage reports..."
 	@rm -f coverage.out coverage.html
+
+# This uses KO to build a container image.
+# Make sure to run Docker.
+# If there are problems locating the socket, run `docker context ls` 
+# and set DOCKER_HOST=unix:///Users/XYZ/.docker/run/docker.sock (example)
+container-build-local:
+	KO_DOCKER_REPO=ko.local ko build .
 
 ########################################
 ### OPEN TOFU
@@ -131,6 +138,7 @@ help:
 	@echo "  tf-apply               - Apply OpenTofu changes"
 	@echo "  tf-destroy             - Destroy the created OpenTofu infrastrucutre"
 	@echo "  tf-connect             - Connect to the created server"
+	@echo "  container-build-local  - Builds a local container image using KO"	
 	@echo "  SSH_KEY_PATH           - Current SSH key path: $(SSH_KEY_PATH)"
 	@echo "  ansible-setup          - Setup the machine with required packages etc."
 	@echo "  PRIVATE_KEY_PATH       - Current private SSH key path: $(PRIVATE_KEY_PATH)"
