@@ -3,12 +3,13 @@
   become: yes
   vars:
     non_root_user: dev
+    stress_test_iterations: 5 
 
   tasks:
     - name: Update all packages
       apt:
         update_cache: yes
-        cache_valid_time: 86400  # Cache valid for a day to avoid unnecessary updates
+        cache_valid_time: 86400  # Cache valid for a day
 
     - name: Create a non-root user with sudo access
       user:
@@ -113,13 +114,14 @@
       apt:
         name:
           - stress
-          - sysbench
+          - memtester
+          - fio
         state: latest
 
-    - name: Copy benchmarking stress.sh script to the remote server
+    - name: Copy benchmarking system_stress_test.bash script to the remote server
       copy:
-        src: "{{ playbook_dir }}/stress.sh"
-        dest: /usr/local/bin/stress
+        src: "{{ playbook_dir }}/system_stress_test.bash"
+        dest: /usr/local/bin/system_stress_test.bash
         owner: "{{ non_root_user }}"
         group: "{{ non_root_user }}"
         mode: '0755'
@@ -134,6 +136,20 @@
       debug:
         var: stress_test.stdout_lines
 
+    - name: Ensure permissions for powercap
+      ansible.builtin.shell: |
+        chmod -R a+r /sys/class/powercap
+      become: yes
+
+    - name: Verify if powercap energy_uj files exist
+      stat:
+        path: /sys/class/powercap/intel-rapl:0/energy_uj
+      register: powercap_rapl
+
+    - name: Output powercap_rapl existence
+      debug:
+        msg: "Powercap energy_uj file exists: {{ powercap_rapl.stat.exists }}"
+
     - name: Run Scaphandre for power consumption monitoring
       community.docker.docker_container:
         name: scaphandre
@@ -146,14 +162,6 @@
           - /proc:/proc
         ports:
           - "8080:8080"
-        command: prometheus
+        command: -s powercap_rapl prometheus
       become: yes
-
-    - name: Run CPU stress test using Docker
-      community.docker.docker_container:
-        name: cpu-stress
-        image: polinux/stress
-        state: started
-        restart_policy: unless-stopped
-        detach: true
-        command: "stress --cpu 8 --timeout 3600s"
+      # when: powercap_rapl.stat.exists

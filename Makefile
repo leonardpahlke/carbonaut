@@ -1,9 +1,9 @@
-.PHONY: all build verify hugo format install upgrade test-coverage clean-coverage tf-init tf-plan tf-apply tf-destroy tf-connect container-build-local
+.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local
 
 # Default target executed
 all: verify
 
-# Default target executed
+# Build the go binary locally
 build:
 	@go build main.go
 
@@ -15,7 +15,7 @@ verify:
 # Install project dependencies
 install:
 	@echo "Installing project dependencies..."
-	@go get ./...	
+	@go get ./...
 	@echo "Installing Go tooling..."
 	@go install github.com/4meepo/tagalign/cmd/tagalign@latest
 	@go install honnef.co/go/tools/cmd/staticcheck@latest
@@ -43,86 +43,59 @@ upgrade:
 	@go mod tidy
 	@go get -u -t ./...
 
-# Run test coverage report
+# Run and clean test coverage report
 test-coverage:
+	@rm -f coverage.out coverage.html
 	@echo "Checking test coverage and exporting report..."
 	@go test -coverprofile=coverage.out ./...
 	@go tool cover -html=coverage.out -o coverage.html
 	@open coverage.html
-
-# Clean test coverage report
-clean-coverage:
 	@echo "Cleaning test coverage reports..."
-	@rm -f coverage.out coverage.html
 
 # This uses KO to build a container image.
-# Make sure to run Docker.
-# If there are problems locating the socket, run `docker context ls` 
-# and set DOCKER_HOST=unix:///Users/XYZ/.docker/run/docker.sock (example)
+# - Make sure to run Docker.
+# - If there are problems locating the socket, run `docker context ls` 
+#   and set DOCKER_HOST (example) DOCKER_HOST=unix:///Users/XYZ/.docker/run/docker.sock 
 container-build-local:
 	KO_DOCKER_REPO=ko.local ko build .
 
 ########################################
 ### OPEN TOFU
 
-# Default SSH key path
 SSH_KEY_PATH ?= $(HOME)/.ssh/id_equinix_carbonaut_ed25519.pub
 PRIVATE_KEY_PATH ?= $(HOME)/.ssh/id_equinix_carbonaut_ed25519
+CARBONAUT_NUM_PROJECTS ?= 1
+CARBONAUT_VM_COUNT_PROJECTS ?= 1
 
-# Allow user to override the default SSH key path by input during runtime
-ask-ssh-key:
-	@if [ -z "$${USE_DEFAULT_KEYS}" ]; then \
-		echo "Current SSH key path: $(SSH_KEY_PATH)"; \
-		read -p "Enter new SSH key path or press enter to use default: " input_key; \
-		if [ "$$input_key" != "" ]; then \
-			export SSH_KEY_PATH=$$input_key; \
-		fi; \
-	else \
-		echo "Using default SSH key path: $(SSH_KEY_PATH)"; \
-	fi;
+tf:
+	./hack/tofu.bash $(cmd)
 
-# Allow user to override the default private key path by input during runtime
-ask-private-key:
-	@if [ -z "$${USE_DEFAULT_KEYS}" ]; then \
-		echo "Current private key path: $(PRIVATE_KEY_PATH)"; \
-		read -p "Enter new private key path or press enter to use default: " input_key; \
-		if [ "$$input_key" != "" ]; then \
-			export PRIVATE_KEY_PATH=$$input_key; \
-		fi; \
-	else \
-		echo "Using default private key path: $(PRIVATE_KEY_PATH)"; \
-	fi;
-
-# OpenTofu initialization
 tf-init:
-	tofu -chdir=dev init
+	@echo "Initializing OpenTofu configuration..."
+	@tofu init
 
-# OpenTofu planning
-tf-plan: ask-ssh-key
-	tofu -chdir=dev plan -var "public_key=$$(cat $(SSH_KEY_PATH))"
+tf-plan:
+	$(MAKE) tf cmd=plan
 
-# OpenTofu apply
-tf-apply: ask-ssh-key
-	tofu -chdir=dev apply -var "public_key=$$(cat $(SSH_KEY_PATH))"
+tf-apply:
+	$(MAKE) tf cmd=apply
 
-# OpenTofu Destroy
-tf-destroy: ask-ssh-key
-	tofu -chdir=dev destroy -var "public_key=$$(cat $(SSH_KEY_PATH))"
+tf-destroy:
+	$(MAKE) tf cmd=destroy
 
-# Fetch the IP address from OpenTofu and connect
-tf-connect: ask-private-key
-	$(eval SERVER_IP := $(shell tofu -chdir=dev output -raw device_public_ip))
-	ssh -i $(PRIVATE_KEY_PATH) root@$(SERVER_IP)
+tf-connect:
+	$(MAKE) tf cmd=connect
 
-ansible-setup: ask-private-key
-	$(eval SERVER_IP := $(shell tofu -chdir=dev output -raw device_public_ip))
-	ansible-playbook -i $(SERVER_IP), dev/setup_vm.yml -u root --private-key=$(PRIVATE_KEY_PATH)
+# uses ansible playbooks
+tf-configure:
+	$(MAKE) tf cmd=configure
+
+# runs the stress test for all configured machines
+tf-stress-test:
+	$(MAKE) tf cmd=stress-test
 
 ########################################
 ### GENERAL
-
-hugo:
-	hugo server --logLevel debug --disableFastRender -p 1313 -s documentation/
 
 help:
 	@echo "Available commands:"
@@ -131,15 +104,14 @@ help:
 	@echo "  install                - Install project dependencies"
 	@echo "  format                 - Format Go files"
 	@echo "  upgrade                - Upgrade project dependencies"
-	@echo "  test-coverage          - Generate and open test coverage report"
-	@echo "  clean-coverage         - Clean test coverage reports"
+	@echo "  test-coverage          - Generate and clean test coverage report"
 	@echo "  tf-init                - Initialize OpenTofu configuration"
 	@echo "  tf-plan                - Plan OpenTofu changes"
 	@echo "  tf-apply               - Apply OpenTofu changes"
-	@echo "  tf-destroy             - Destroy the created OpenTofu infrastrucutre"
+	@echo "  tf-destroy             - Destroy the created OpenTofu infrastructure"
 	@echo "  tf-connect             - Connect to the created server"
-	@echo "  container-build-local  - Builds a local container image using KO"	
+	@echo "  tf-configure           - Setup the machine with required packages using Ansible"
+	@echo "  tf-stress-test         - Run stress test script on all configured machines"
+	@echo "  container-build-local  - Builds a local container image using KO"
 	@echo "  SSH_KEY_PATH           - Current SSH key path: $(SSH_KEY_PATH)"
-	@echo "  ansible-setup          - Setup the machine with required packages etc."
 	@echo "  PRIVATE_KEY_PATH       - Current private SSH key path: $(PRIVATE_KEY_PATH)"
-	@echo "  hugo                   - Start the local hugo documentation website"

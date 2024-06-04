@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    non_root_user: dev
+    stress_test_iterations: 5
+
+  tasks:
+    - name: Run system stress test script in the background
+      ansible.builtin.shell: "nohup /usr/local/bin/system_stress_test.bash {{ stress_test_iterations }} > /tmp/system_stress_test.log 2>&1 &"
+      become: yes
+      environment:
+        CPU_WORKERS: 8
+        CPU_TIMEOUT: 60s
+        MEMORY_SIZE: 1024
+        MEMORY_ITERATIONS: 1
+        IO_NAME: randwrite
+        IO_ENGINE: libaio
+        IO_DEPTH: 4
+        IO_RW: randwrite
+        IO_BS: 4k
+        IO_SIZE: 1G
+        IO_JOBS: 4
+        IO_RUNTIME: 60
