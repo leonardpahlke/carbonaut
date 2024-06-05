@@ -1,4 +1,4 @@
-.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify
+.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push
 
 # Default target executed
 all: verify
@@ -52,12 +52,13 @@ test-coverage:
 	@open coverage.html
 	@echo "Cleaning test coverage reports..."
 
-# This uses KO to build a container image.
-# - Make sure to run Docker.
-# - If there are problems locating the socket, run `docker context ls` 
-#   and set DOCKER_HOST (example) DOCKER_HOST=unix:///Users/XYZ/.docker/run/docker.sock 
+# Build container image locally
 container-build-local:
-	KO_DOCKER_REPO=ko.local ko build --tags carbonaut-v1alpha1 .
+	@docker build -f Containerfile -t carbonaut:latest .
+
+# Build and push container image to the leonardpahlke/carbonaut repository
+container-image-push:
+	./hack/container-build-deploy.bash
 
 ########################################
 ### OPEN TOFU
