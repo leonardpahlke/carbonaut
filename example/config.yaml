@@ -1,7 +1,7 @@
 kind: carbonaut
 meta:
     name: carbonaut
-    log_level: debug
+    log_level: info
     connector:
         timeout_seconds: 10
 spec:

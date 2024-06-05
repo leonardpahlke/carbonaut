@@ -110,6 +110,19 @@ case $1 in
     
     ssh -i "$PRIVATE_KEY_PATH" root@"$SERVER_IP"
     ;;
+  connection-verify)
+    ask_private_key
+    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    IP_ADDRESSES=($(echo $OUTPUT | jq -r '.[]'))
+    
+    for i in "${!IP_ADDRESSES[@]}"; do
+      if curl --output /dev/null --silent --head --fail "${IP_ADDRESSES[$i]}:8080"; then
+        echo "✅ ${IP_ADDRESSES[$i]}"
+      else
+        echo "❌ ${IP_ADDRESSES[$i]}"
+      fi
+    done
+    ;;
   stress-test)
     ask_private_key
     OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)

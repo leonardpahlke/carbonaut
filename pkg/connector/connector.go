@@ -38,6 +38,8 @@ func New(connectorConfig *Config, providerConfig *provider.Config) (*C, error) {
 }
 
 func (c *C) LoadConfig(newConfig *provider.Config) error {
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
 	var currentAccountSet, newAccountSet []*resource.AccountName
 
 	buildAccountSet := func(resources provider.ResConfig) []*resource.AccountName {

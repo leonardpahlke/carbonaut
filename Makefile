@@ -1,4 +1,4 @@
-.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local
+.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify
 
 # Default target executed
 all: verify
@@ -57,7 +57,7 @@ test-coverage:
 # - If there are problems locating the socket, run `docker context ls` 
 #   and set DOCKER_HOST (example) DOCKER_HOST=unix:///Users/XYZ/.docker/run/docker.sock 
 container-build-local:
-	KO_DOCKER_REPO=ko.local ko build .
+	KO_DOCKER_REPO=ko.local ko build --tags carbonaut-v1alpha1 .
 
 ########################################
 ### OPEN TOFU
@@ -93,6 +93,12 @@ tf-configure:
 # runs the stress test for all configured machines
 tf-stress-test:
 	$(MAKE) tf cmd=stress-test
+
+tf-connection-verify:
+	$(MAKE) tf cmd=connection-verify
+
+tf-collect-scaph-data:
+	$(MAKE) tf cmd=collect-scaph-data
 
 ########################################
 ### GENERAL

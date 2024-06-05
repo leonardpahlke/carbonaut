@@ -1,0 +1,10 @@
+kind: carbonaut
+meta:
+    name: carbonaut
+    log_level: info
+    connector:
+        timeout_seconds: 10
+spec:
+    provider:
+    server:
+        port: 8088

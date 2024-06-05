@@ -16,7 +16,7 @@ import (
 	"carbonaut.dev/pkg/provider/types/dynenv"
 	"carbonaut.dev/pkg/provider/types/dynres"
 	"carbonaut.dev/pkg/provider/types/staticres"
-	"carbonaut.dev/pkg/server"
+	"carbonaut.dev/pkg/server/serverconfig"
 	"github.com/creasty/defaults"
 	"github.com/gookit/validate"
 	"gopkg.in/yaml.v3"
@@ -35,8 +35,8 @@ type Meta struct {
 }
 
 type Spec struct {
-	Provider *provider.Config `json:"provider" yaml:"provider"`
-	Server   *server.Config   `json:"server"   verify:"required" yaml:"server"`
+	Provider *provider.Config     `json:"provider" yaml:"provider"`
+	Server   *serverconfig.Config `json:"server"   verify:"required" yaml:"server"`
 }
 
 func ReadConfig(path string) (*Config, error) {
@@ -139,7 +139,7 @@ func TestingConfiguration() *Config {
 					},
 				},
 			},
-			Server: &server.Config{
+			Server: &serverconfig.Config{
 				Port: 8088,
 			},
 		},
