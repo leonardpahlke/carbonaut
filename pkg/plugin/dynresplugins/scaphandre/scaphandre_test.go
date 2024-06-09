@@ -40,7 +40,7 @@ func isPortInUse(port int) bool {
 		return true
 	}
 	if closeErr := ln.Close(); closeErr != nil {
-		slog.Error("failed to close listener: %v", closeErr)
+		slog.Error("failed to close listener", "error", closeErr)
 	}
 	return false
 }

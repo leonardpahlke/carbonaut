@@ -44,3 +44,10 @@ This folder contains information about executing manual testing scenarios. The f
 3. `make tf-connection-verify`
 4. `curl localhost:8088/metrics-json > tmp/s1-s5-metrics.json`
 5. `curl localhost:8088/static-data > tmp/s1-s5-state.json`
+
+
+## Scenario 2:
+
+1. Start a Kubernetes Cluster and connect to it. This can be done using tools like [minikube](https://minikube.sigs.k8s.io/).
+2. Deploy Infrastructure to observe by running `make tf-apply` and hitting - enter, enter, enter, yes -- this will create a Equinix Project with one resource. The [`config.yaml`](../config.yaml) matches this configuration. Make sure to set Equinix environment variables to create resources & allow Carbonaut to connect to it. The `config.yaml` uses `METAL_AUTH_TOKEN` as environment variable which is the standard.
+3. Starting Carbonaut in the Kubernetes Cluster. All required Kubernetes manifest files are located in the [`dev/k8s/`](../k8s/) folder. Run `kubectl apply -f dev/k8s/`. 

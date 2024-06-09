@@ -23,6 +23,6 @@ func TestGetFreePort(t *testing.T) {
 		t.Error(err)
 	}
 	if closeErr := l.Close(); closeErr != nil {
-		slog.Error("failed to close listener: %v", closeErr)
+		slog.Error("failed to close listener", "error", closeErr)
 	}
 }

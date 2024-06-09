@@ -78,6 +78,7 @@ func (c *C) updateProjectResources(aID *topology.AccountID, pIDs []*topology.Pro
 		c.state.RemoveResourceByName(aID, pIDs[i], toBeDeletedResourceNames)
 
 		for j := range toBeCreatedResourceNames {
+			slog.Info("create new resource", "resource name", *toBeCreatedResourceNames[j])
 			data, err := pRes.GetStaticResourceData(c.state.T.Accounts[*aID].Projects[*pIDs[i]].Name, toBeCreatedResourceNames[j])
 			if err != nil {
 				mError = multierr.Append(mError, fmt.Errorf("could not GetStaticResourceData for resource %v in project %v in account %v, error: %v", *toBeCreatedResourceNames[j], *pIDs[i], *aID, err))

@@ -17,7 +17,7 @@ func Get() (int, error) {
 	}
 	defer func() {
 		if closeErr := l.Close(); closeErr != nil {
-			slog.Error("failed to close listener: %v", closeErr)
+			slog.Error("failed to close listener", "error", closeErr)
 		}
 	}()
 	p, ok := l.Addr().(*net.TCPAddr)

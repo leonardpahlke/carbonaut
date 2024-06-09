@@ -329,3 +329,7 @@ documentation/public/
 .DS_Store
 .hugo_build.lock
 old/
+
+# Container images & SBOM stuff
+sbom-*.json
+cosign*

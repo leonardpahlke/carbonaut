@@ -40,7 +40,7 @@ func SendHTTPRequest(req *HTTPReqWrapper) (*HTTPReqInfo, error) {
 
 	slog.Debug("prepare http request", "method", req.Method, "baseURL", req.BaseURL, "path", req.Path, "queryStruct", req.Query, "bodyStruct", req.BodyStruct, "header keys", headerKey)
 	url := fmt.Sprintf("%s%s%s", req.BaseURL, req.Path, req.Query)
-	slog.Info("sending http request", "url", url)
+	slog.Debug("sending http request", "url", url)
 
 	var reader io.Reader
 	if req.BodyStruct != nil {

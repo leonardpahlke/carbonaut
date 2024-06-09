@@ -147,8 +147,12 @@ func (p p) PRequestResourceData(pName *resource.ProjectName) (map[resource.Resou
 	resourceData := make(map[resource.ResourceName]*resource.StaticResData)
 	if len(devices.Devices) != 0 {
 		for i := range devices.Devices {
-			d := devices.Devices[i]
-			resourceData[resource.ResourceName(devices.Devices[i].ID)] = EquinixDataIntegration(&d)
+			if devices.Devices[i].State == "active" {
+				d := devices.Devices[i]
+				resourceData[resource.ResourceName(devices.Devices[i].ID)] = EquinixDataIntegration(&d)
+			} else {
+				slog.Info("equinix resources not ready", "project name", *pName, "resource name", devices.Devices[i].ID, "resource state", devices.Devices[i].State)
+			}
 		}
 		slog.Debug("requested equinix resources", "resource names", compareutils.CollectKeys(resourceData))
 	} else {

@@ -102,7 +102,7 @@ func (c *C) Run(stopChan chan int, errChan chan error) {
 			for aID := range c.state.T.Accounts {
 				if err := c.updateStaticData(&aID); err != nil {
 					errMsg := fmt.Errorf("unable to fetch resources, err: %v", err)
-					slog.Error("error", errMsg)
+					slog.Error("unable to fetch resources", "error", err)
 					errChan <- errMsg
 				}
 			}

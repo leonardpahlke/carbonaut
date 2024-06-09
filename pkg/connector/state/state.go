@@ -1,6 +1,7 @@
 package state
 
 import (
+	"log/slog"
 	"sync"
 
 	"carbonaut.dev/pkg/provider/resource"
@@ -73,18 +74,20 @@ func (s *S) RemoveProjects(aID *topology.AccountID, pIDs []*topology.ProjectID) 
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	for i := range pIDs {
+		slog.Info("delete project", "project ID", pIDs[i])
 		delete(s.T.Accounts[*aID].Projects, *pIDs[i])
 	}
 }
 
-func (s *S) RemoveProjectsByName(aID *topology.AccountID, pIDs []*resource.ProjectName) {
-	if len(pIDs) == 0 {
+func (s *S) RemoveProjectsByName(aID *topology.AccountID, pNames []*resource.ProjectName) {
+	if len(pNames) == 0 {
 		return
 	}
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
-	for i := range pIDs {
-		delete(s.T.Accounts[*aID].Projects, *s.GetProjectID(aID, pIDs[i]))
+	for i := range pNames {
+		slog.Info("delete project", "project name", *pNames[i])
+		delete(s.T.Accounts[*aID].Projects, *s.GetProjectID(aID, pNames[i]))
 	}
 }
 
@@ -95,24 +98,27 @@ func (s *S) RemoveResources(aID *topology.AccountID, pID *topology.ProjectID, rI
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	for i := range rIDs {
+		slog.Info("delete resource", "resource name", *rIDs[i])
 		delete(s.T.Accounts[*aID].Projects[*pID].Resources, *rIDs[i])
 	}
 }
 
-func (s *S) RemoveResourceByName(aID *topology.AccountID, pID *topology.ProjectID, rIDs []*resource.ResourceName) {
-	if len(rIDs) == 0 {
+func (s *S) RemoveResourceByName(aID *topology.AccountID, pID *topology.ProjectID, rNames []*resource.ResourceName) {
+	if len(rNames) == 0 {
 		return
 	}
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
-	for i := range rIDs {
-		delete(s.T.Accounts[*aID].Projects[*pID].Resources, *s.GetResourceID(aID, pID, rIDs[i]))
+	for i := range rNames {
+		slog.Info("delete resource", "resource name", *rNames[i])
+		delete(s.T.Accounts[*aID].Projects[*pID].Resources, *s.GetResourceID(aID, pID, rNames[i]))
 	}
 }
 
 func (s *S) RemoveResource(aID *topology.AccountID, pID *topology.ProjectID, rID *topology.ResourceID) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
+	slog.Info("delete resource", "resource name", *rID)
 	delete(s.T.Accounts[*aID].Projects[*pID].Resources, *rID)
 }
 

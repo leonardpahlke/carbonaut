@@ -1,4 +1,4 @@
-.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push
+.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push container-local-run k8s-deploy k8s-collect-setup
 
 # Default target executed
 all: verify
@@ -59,6 +59,24 @@ container-build-local:
 # Build and push container image to the leonardpahlke/carbonaut repository
 container-image-push:
 	./hack/container-build-deploy.bash
+
+PWD := $(shell pwd)
+CONFIG_PATH := $(PWD)/dev/config.yaml
+
+container-local-run:
+	docker run --rm -it \
+		-v $(CONFIG_PATH):/app/config.yaml \
+		-e CONFIG_PATH=/app/config.yaml \
+		-e METAL_AUTH_TOKEN=$(METAL_AUTH_TOKEN) \
+		-e ELECTRICITY_MAP_AUTH_TOKEN=$(ELECTRICITY_MAP_AUTH_TOKEN) \
+		-p 8088:8088 \
+		carbonaut:latest
+
+k8s-deploy:
+	./hack/deploy-k8s.bash
+
+k8s-collect-setup:
+	./hack/k8s-collect.bash
 
 ########################################
 ### OPEN TOFU

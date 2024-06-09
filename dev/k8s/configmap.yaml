@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: carbonaut-config
-  namespace: carbonaut
-data:
-  config.yaml: |
-    # Your Carbonaut configuration here
-    key: value
