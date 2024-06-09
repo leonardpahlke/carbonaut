@@ -1,4 +1,4 @@
-.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push container-local-run k8s-deploy k8s-collect-setup
+.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push container-local-run k8s-deploy k8s-collect-setup 
 
 # Default target executed
 all: verify

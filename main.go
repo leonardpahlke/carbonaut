@@ -69,4 +69,5 @@ func main() {
 
 	slog.Info("starting carbonaut connector")
 	c.Run(exitChan, connectorErrChan)
+	slog.Info("carbonaut shuts down, bye bye")
 }

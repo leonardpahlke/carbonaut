@@ -113,7 +113,7 @@ func (c *C) Run(stopChan chan int, errChan chan error) {
 		}
 	}()
 	<-stopChan
-	slog.Debug("received signal to stop the connector, shutting down")
+	slog.Info("received signal to stop the connector, shutting down")
 }
 
 func (c *C) GetStaticData() *topology.T {
