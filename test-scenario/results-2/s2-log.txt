@@ -1,0 +1,51 @@
+STARTING SZENATIO 2
+
+[s2-s1-0] STEP 1 - starting initialization step
+[s2-s1-1] Setup Kubernetes cluster
+[s2-s1-2] Create Equinix Infrastructure 1xProject 1xResource
+[s2-sx-x] updating known_hosts SSH for 145.40.94.229
+# Host 145.40.94.229 found: line 19
+# Host 145.40.94.229 found: line 20
+# Host 145.40.94.229 found: line 21
+/Users/lvsp/.ssh/known_hosts updated.
+Original contents retained as /Users/lvsp/.ssh/known_hosts.old
+# 145.40.94.229:22 SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u2
+# 145.40.94.229:22 SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u2
+# 145.40.94.229:22 SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u2
+# 145.40.94.229:22 SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u2
+# 145.40.94.229:22 SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u2
+[s2-s1-3] configure created resource
+[WARNING]: Platform linux on host 145.40.94.229 is using the discovered Python
+interpreter at /usr/bin/python3.11, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[s2-s1-4] verify that the resource got configured
+[s2-s1-5] start stress configured resources
+[WARNING]: Platform linux on host 145.40.94.229 is using the discovered Python
+interpreter at /usr/bin/python3.11, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[s2-s1-6] configure kubernetes cluster with carbonaut resources
+[s2-s1-7] port-forward to access carbonaut pod
+tab 1 of window id 55402
+[s2-s1-8] collecting carbonaut state
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   966  100   966    0     0  48704      0 --:--:-- --:--:-- --:--:-- 50842
+[s2-s1-9] collecting carbonaut metrics json
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1322  100  1322    0     0   4384      0 --:--:-- --:--:-- --:--:--  4392
+
+[s2-s2-0] CLEAN UP
+[s2-s2-1] Remove created kubernetes resources
+pod "carbonaut-deployment-7db7f66674-r8vp2" deleted
+service "carbonaut-service" deleted
+deployment.apps "carbonaut-deployment" deleted
+[s2-s2-2] Shut down infrastructure
+[s2-s2-3] Stop the kubernetes cluster
+✋  Stopping node "minikube"  ...
+🛑  Powering off "minikube" via SSH ...
+🛑  1 node stopped.

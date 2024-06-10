@@ -1,0 +1,57 @@
+STARTING SZENATIO 1
+
+[s1-s1-0] STEP 1 - starting initialization step
+[s1-s1-1] Create Equinix Infrastructure 1xProject 1xResource
+[s1-sx-x] updating known_hosts SSH for 145.40.94.191
+# Host 145.40.94.191 found: line 19
+# Host 145.40.94.191 found: line 20
+# Host 145.40.94.191 found: line 21
+/Users/lvsp/.ssh/known_hosts updated.
+Original contents retained as /Users/lvsp/.ssh/known_hosts.old
+[s1-s1-2] configure created resource
+[s1-s1-3] verify that the resource got configured
+[s1-s1-4] start stress configured resources
+[s1-s1-5] starting carbonaut
+tab 1 of window id 54302
+[s1-s1-6] collecting carbonaut state
+[s1-s1-7] collecting carbonaut metrics json
+
+[s1-s2-0] STEP 2 - starting dereferencing step
+[s1-s2-1] dereference infrastructure in carbonaut by supplying an empty configuration
+{"status": "success"}[s1-s2-2] collecting carbonaut state
+[s1-s2-3] collecting carbonaut metrics json
+
+[s1-s3-0] STEP 3 - re-referencing step
+[s1-s3-1] reference configuration again to carbonaut that points to infrastructure
+{"status": "success"}[s1-s3-2] collecting carbonaut state
+[s1-s3-3] collecting carbonaut metrics json
+
+[s1-s4-0] STEP 4 - detecting new infrastructure resource
+[s1-s4-1] Create Equinix Infrastructure 1xProject 2xResource
+[s1-sx-x] updating known_hosts SSH for 145.40.94.191
+# Host 145.40.94.191 found: line 19
+# Host 145.40.94.191 found: line 20
+# Host 145.40.94.191 found: line 21
+/Users/lvsp/.ssh/known_hosts updated.
+Original contents retained as /Users/lvsp/.ssh/known_hosts.old
+[s1-sx-x] updating known_hosts SSH for 145.40.94.229
+# Host 145.40.94.229 found: line 16
+# Host 145.40.94.229 found: line 17
+# Host 145.40.94.229 found: line 18
+/Users/lvsp/.ssh/known_hosts updated.
+Original contents retained as /Users/lvsp/.ssh/known_hosts.old
+[s1-s4-2] configure created resource
+[s1-s4-3] verify that the resource got configured
+[s1-s4-4] start stress configured resources
+[s1-s4-5] collecting carbonaut state
+[s1-s4-6] collecting carbonaut metrics json
+
+[s1-s5-0] STEP 5 - detecting removed infrastructure resource
+[s1-s5-1] Create Equinix Infrastructure 1xProject 1xResource
+[s1-s5-2] collecting carbonaut state
+[s1-s5-3] collecting carbonaut metrics json
+
+[s1-s6-0] CLEAN UP
+[s1-s6-1] stop carbonaut
+Server is stopping
+[s1-s6-2] shut down infrastructure

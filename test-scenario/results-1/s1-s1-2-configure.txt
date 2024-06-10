@@ -1,0 +1,114 @@
+/Library/Developer/CommandLineTools/usr/bin/make tf cmd=configure
+./hack/tofu.bash configure
+Current private key path: /Users/lvsp/.ssh/id_equinix_carbonaut_ed25519
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [145.40.94.191]
+
+TASK [Update all packages] *****************************************************
+changed: [145.40.94.191]
+
+TASK [Create a non-root user with sudo access] *********************************
+changed: [145.40.94.191]
+
+TASK [Add non-root user to sudoers] ********************************************
+changed: [145.40.94.191]
+
+TASK [Ensure Ansible temp directory exists with correct permissions] ***********
+changed: [145.40.94.191]
+
+TASK [Remove any existing old Docker packages] *********************************
+ok: [145.40.94.191]
+
+TASK [Install required packages] ***********************************************
+changed: [145.40.94.191]
+
+TASK [Ensure the directory for the apt keyring is present] *********************
+ok: [145.40.94.191]
+
+TASK [Add Docker's official GPG key] *******************************************
+changed: [145.40.94.191]
+
+TASK [Echo Docker repository into sources list] ********************************
+changed: [145.40.94.191]
+
+TASK [Force update of apt cache] ***********************************************
+changed: [145.40.94.191]
+
+TASK [Install Docker Engine and associated tools] ******************************
+changed: [145.40.94.191]
+
+TASK [Add user to the Docker group] ********************************************
+changed: [145.40.94.191]
+
+TASK [Ensure Docker service is enabled and running] ****************************
+ok: [145.40.94.191]
+
+TASK [Verify Docker installation by running hello-world] ***********************
+changed: [145.40.94.191]
+
+TASK [Output the result from hello-world Docker image] *************************
+ok: [145.40.94.191] => {
+    "hello_world_output.stdout_lines": [
+        "",
+        "Hello from Docker!",
+        "This message shows that your installation appears to be working correctly.",
+        "",
+        "To generate this message, Docker took the following steps:",
+        " 1. The Docker client contacted the Docker daemon.",
+        " 2. The Docker daemon pulled the \"hello-world\" image from the Docker Hub.",
+        "    (amd64)",
+        " 3. The Docker daemon created a new container from that image which runs the",
+        "    executable that produces the output you are currently reading.",
+        " 4. The Docker daemon streamed that output to the Docker client, which sent it",
+        "    to your terminal.",
+        "",
+        "To try something more ambitious, you can run an Ubuntu container with:",
+        " $ docker run -it ubuntu bash",
+        "",
+        "Share images, automate workflows, and more with a free Docker ID:",
+        " https://hub.docker.com/",
+        "",
+        "For more examples and ideas, visit:",
+        " https://docs.docker.com/get-started/"
+    ]
+}
+
+TASK [Load intel_rapl_common module] *******************************************
+ok: [145.40.94.191]
+
+TASK [Install stress testing tools] ********************************************
+changed: [145.40.94.191]
+
+TASK [Copy benchmarking system_stress_test.bash script to the remote server] ***
+changed: [145.40.94.191]
+
+TASK [Test the stress command] *************************************************
+changed: [145.40.94.191]
+
+TASK [Output the result from the stress command] *******************************
+ok: [145.40.94.191] => {
+    "stress_test.stdout_lines": [
+        "stress 1.0.7"
+    ]
+}
+
+TASK [Ensure permissions for powercap] *****************************************
+changed: [145.40.94.191]
+
+TASK [Verify if powercap energy_uj files exist] ********************************
+ok: [145.40.94.191]
+
+TASK [Output powercap_rapl existence] ******************************************
+ok: [145.40.94.191] => {
+    "msg": "Powercap energy_uj file exists: True"
+}
+
+TASK [Run Scaphandre for power consumption monitoring] *************************
+changed: [145.40.94.191]
+
+PLAY RECAP *********************************************************************
+145.40.94.191              : ok=25   changed=16   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

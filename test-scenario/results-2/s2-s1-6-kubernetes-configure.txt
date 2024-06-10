@@ -1,0 +1,10 @@
+NAME        STATUS   AGE
+carbonaut   Active   75m
+Namespace carbonaut already exists. Skipping creation.
+Create or update the secret
+secret "carbonaut-secrets" deleted
+secret/carbonaut-secrets created
+Apply the Kubernetes configuration
+configmap/carbonaut-config unchanged
+deployment.apps/carbonaut-deployment created
+service/carbonaut-service created

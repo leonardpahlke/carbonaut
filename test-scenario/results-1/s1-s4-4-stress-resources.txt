@@ -1,0 +1,27 @@
+/Library/Developer/CommandLineTools/usr/bin/make tf cmd=stress-test
+./hack/tofu.bash stress-test
+Current private key path: /Users/lvsp/.ssh/id_equinix_carbonaut_ed25519
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [145.40.94.191]
+
+TASK [Run system stress test script in the background] *************************
+changed: [145.40.94.191]
+
+PLAY RECAP *********************************************************************
+145.40.94.191              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [145.40.94.229]
+
+TASK [Run system stress test script in the background] *************************
+changed: [145.40.94.229]
+
+PLAY RECAP *********************************************************************
+145.40.94.229              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

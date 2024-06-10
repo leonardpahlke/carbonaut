@@ -1,0 +1,4 @@
+/Library/Developer/CommandLineTools/usr/bin/make tf cmd=connection-verify
+./hack/tofu.bash connection-verify
+Current private key path: /Users/lvsp/.ssh/id_equinix_carbonaut_ed25519
+✅ 145.40.94.229

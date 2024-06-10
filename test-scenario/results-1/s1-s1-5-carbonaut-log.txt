@@ -1,0 +1,41 @@
+2024-06-10 12:07:58 INFO  main.go:57 | starting carbonaut
+2024-06-10 12:07:58 INFO  connector.go:90 | configuration applied
+2024-06-10 12:07:58 INFO  main.go:66 | starting carbonaut server address=http://0.0.0.0:8088
+2024-06-10 12:07:58 INFO  main.go:70 | starting carbonaut connector
+2024-06-10 12:07:59 INFO  staticupdate.go:81 | create new resource resource name=4ce59185-7b6e-4345-903e-2944705be7bc
+2024-06-10 12:08:07 INFO  server.go:89 | loaded static data from state data={map[1:0x140001e3dc0] 0x140001d1b34}
+2024-06-10 12:08:07 INFO  dynamiccollect.go:20 | start collecting data
+First Metric: {Labels:map[] TimestampMs: Value:4603}
+First Metric: {Labels:map[] TimestampMs: Value:0}
+First Metric: {Labels:map[cmdline: exe: pid:626] TimestampMs: Value:0}
+2024-06-10 12:08:07 INFO  dynamiccollect.go:47 | data collected
+2024-06-10 12:08:07 INFO  server.go:158 | collected new data data=map[equinix:map[605f7ac9-263f-4fb7-9b1c-223970b4d920:map[4ce59185-7b6e-4345-903e-2944705be7bc:0x140004afbf0]]]
+2024-06-10 12:08:07 INFO  connector.go:90 | configuration applied
+2024-06-10 12:08:07 INFO  server.go:126 | successfully loaded configuration config={carbonaut {carbonaut info 0x14000323fa0} {<nil> 0x14000323fb0}}
+2024-06-10 12:08:12 INFO  connector.go:90 | configuration applied
+2024-06-10 12:08:12 INFO  server.go:126 | successfully loaded configuration config={carbonaut {carbonaut info 0x140003fb170} {0x140004b30e0 0x140003fb190}}
+2024-06-10 12:08:20 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=queued
+2024-06-10 12:08:20 INFO  staticupdate.go:81 | create new resource resource name=4ce59185-7b6e-4345-903e-2944705be7bc
+2024-06-10 12:08:31 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=queued
+2024-06-10 12:08:41 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:08:52 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:09:03 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:09:14 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:09:24 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:09:35 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:09:46 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:09:57 INFO  equixplugin.go:154 | equinix resources not ready project name=605f7ac9-263f-4fb7-9b1c-223970b4d920 resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0 resource state=provisioning
+2024-06-10 12:10:07 INFO  staticupdate.go:81 | create new resource resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0
+2024-06-10 12:11:33 INFO  server.go:89 | loaded static data from state data={map[2:0x140003605c0] 0x140001d1b34}
+2024-06-10 12:11:33 INFO  dynamiccollect.go:20 | start collecting data
+First Metric: {Labels:map[] TimestampMs: Value:4600}
+First Metric: {Labels:map[] TimestampMs: Value:0}
+First Metric: {Labels:map[cmdline:sshd: root@notty exe: pid:4305] TimestampMs: Value:0}
+First Metric: {Labels:map[] TimestampMs: Value:4600}
+First Metric: {Labels:map[] TimestampMs: Value:0}
+First Metric: {Labels:map[cmdline: exe: pid:57] TimestampMs: Value:0}
+2024-06-10 12:11:33 INFO  dynamiccollect.go:47 | data collected
+2024-06-10 12:11:33 INFO  server.go:158 | collected new data data=map[equinix:map[605f7ac9-263f-4fb7-9b1c-223970b4d920:map[4ce59185-7b6e-4345-903e-2944705be7bc:0x140005900c0 c6ac3a39-3399-41eb-b4a9-267192a5a6e0:0x140005900a0]]]
+2024-06-10 12:11:43 INFO  state.go:113 | delete resource resource name=c6ac3a39-3399-41eb-b4a9-267192a5a6e0
+2024-06-10 12:11:47 INFO  connector.go:116 | received signal to stop the connector, shutting down
+2024-06-10 12:11:47 INFO  main.go:72 | carbonaut shuts down, bye bye

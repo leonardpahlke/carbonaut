@@ -1,4 +1,4 @@
-.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push container-local-run k8s-deploy k8s-collect-setup 
+.PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push container-local-run test-scenario-1 test-scenario-2
 
 # Default target executed
 all: verify
@@ -72,12 +72,6 @@ container-local-run:
 		-p 8088:8088 \
 		carbonaut:latest
 
-k8s-deploy:
-	./hack/deploy-k8s.bash
-
-k8s-collect-setup:
-	./hack/k8s-collect.bash
-
 ########################################
 ### OPEN TOFU
 
@@ -118,6 +112,15 @@ tf-connection-verify:
 
 tf-collect-scaph-data:
 	$(MAKE) tf cmd=collect-scaph-data
+
+########################################
+### TEST SCENARIO
+
+test-scenario-1:
+	./test-scenario/scenario-1.bash > ./test-scenario/results-1/s1-log.txt
+
+test-scenario-2:
+	./test-scenario/scenario-2.bash > ./test-scenario/results-2/s2-log.txt
 
 ########################################
 ### GENERAL

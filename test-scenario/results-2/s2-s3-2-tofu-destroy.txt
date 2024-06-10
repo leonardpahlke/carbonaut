@@ -1,0 +1,138 @@
+/Library/Developer/CommandLineTools/usr/bin/make tf cmd=destroy
+./hack/tofu.bash destroy
+Current SSH key path: /Users/lvsp/.ssh/id_equinix_carbonaut_ed25519.pub
+[0m[1mequinix_metal_project.project["0"]: Refreshing state... [id=72e5de9e-affd-4bc1-a7cd-a6d37625d04b][0m
+[0m[1mequinix_metal_project_ssh_key.project_key["0"]: Refreshing state... [id=f15427e8-6258-4ac1-ac71-fd245359555e][0m
+[0m[1mequinix_metal_device.vm["0-0"]: Refreshing state... [id=f9f6cbcb-fc4a-4c31-9023-f3c526c24aca][0m
+
+OpenTofu used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+OpenTofu will perform the following actions:
+
+[1m  # equinix_metal_device.vm["0-0"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "equinix_metal_device" "vm" {
+      [31m-[0m[0m access_private_ipv4              = "10.25.123.129" [90m-> null[0m[0m
+      [31m-[0m[0m access_public_ipv4               = "145.40.94.229" [90m-> null[0m[0m
+      [31m-[0m[0m access_public_ipv6               = "2604:1380:4092:2a00::1" [90m-> null[0m[0m
+      [31m-[0m[0m always_pxe                       = false [90m-> null[0m[0m
+      [31m-[0m[0m billing_cycle                    = "hourly" [90m-> null[0m[0m
+      [31m-[0m[0m created                          = "2024-06-10T11:59:03Z" [90m-> null[0m[0m
+      [31m-[0m[0m deployed_facility                = "fr2" [90m-> null[0m[0m
+      [31m-[0m[0m facilities                       = [
+          [31m-[0m[0m "fr2",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_volumes             = false [90m-> null[0m[0m
+      [31m-[0m[0m hostname                         = "tf-vm-0-0" [90m-> null[0m[0m
+      [31m-[0m[0m id                               = "f9f6cbcb-fc4a-4c31-9023-f3c526c24aca" [90m-> null[0m[0m
+      [31m-[0m[0m locked                           = false [90m-> null[0m[0m
+      [31m-[0m[0m metro                            = "fr" [90m-> null[0m[0m
+      [31m-[0m[0m network                          = [
+          [31m-[0m[0m {
+              [31m-[0m[0m address = "145.40.94.229"
+              [31m-[0m[0m cidr    = 31
+              [31m-[0m[0m family  = 4
+              [31m-[0m[0m gateway = "145.40.94.228"
+              [31m-[0m[0m public  = true
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m address = "2604:1380:4092:2a00::1"
+              [31m-[0m[0m cidr    = 127
+              [31m-[0m[0m family  = 6
+              [31m-[0m[0m gateway = "2604:1380:4092:2a00::"
+              [31m-[0m[0m public  = true
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m address = "10.25.123.129"
+              [31m-[0m[0m cidr    = 31
+              [31m-[0m[0m family  = 4
+              [31m-[0m[0m gateway = "10.25.123.128"
+              [31m-[0m[0m public  = false
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m network_type                     = "layer3" [90m-> null[0m[0m
+      [31m-[0m[0m operating_system                 = "debian_12" [90m-> null[0m[0m
+      [31m-[0m[0m plan                             = "c3.small.x86" [90m-> null[0m[0m
+      [31m-[0m[0m ports                            = [
+          [31m-[0m[0m {
+              [31m-[0m[0m bonded = true
+              [31m-[0m[0m id     = "e7fd5465-040a-480e-903b-8882405b1c46"
+              [31m-[0m[0m mac    = "b8:ce:f6:04:8b:14"
+              [31m-[0m[0m name   = "eth0"
+              [31m-[0m[0m type   = "NetworkPort"
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m bonded = true
+              [31m-[0m[0m id     = "2d2e8b98-c200-472f-9f7e-cc435e3b78f8"
+              [31m-[0m[0m mac    = "b8:ce:f6:04:8b:15"
+              [31m-[0m[0m name   = "eth1"
+              [31m-[0m[0m type   = "NetworkPort"
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m bonded = true
+              [31m-[0m[0m id     = "51fc77d4-667c-4981-8320-be6e9a30a5cd"
+              [31m-[0m[0m mac    = ""
+              [31m-[0m[0m name   = "bond0"
+              [31m-[0m[0m type   = "NetworkBondPort"
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m project_id                       = "72e5de9e-affd-4bc1-a7cd-a6d37625d04b" [90m-> null[0m[0m
+      [31m-[0m[0m project_ssh_key_ids              = [
+          [31m-[0m[0m "f15427e8-6258-4ac1-ac71-fd245359555e",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m root_password                    = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m sos_hostname                     = "f9f6cbcb-fc4a-4c31-9023-f3c526c24aca@sos.fr2.platformequinix.com" [90m-> null[0m[0m
+      [31m-[0m[0m ssh_key_ids                      = [
+          [31m-[0m[0m "f15427e8-6258-4ac1-ac71-fd245359555e",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m state                            = "active" [90m-> null[0m[0m
+      [31m-[0m[0m tags                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m updated                          = "2024-06-10T12:00:53Z" [90m-> null[0m[0m
+      [31m-[0m[0m wait_for_reservation_deprovision = false [90m-> null[0m[0m
+    }
+
+[1m  # equinix_metal_project.project["0"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "equinix_metal_project" "project" {
+      [31m-[0m[0m backend_transfer  = false [90m-> null[0m[0m
+      [31m-[0m[0m created           = "2024-06-10T11:59:02Z" [90m-> null[0m[0m
+      [31m-[0m[0m id                = "72e5de9e-affd-4bc1-a7cd-a6d37625d04b" [90m-> null[0m[0m
+      [31m-[0m[0m name              = "project-0" [90m-> null[0m[0m
+      [31m-[0m[0m organization_id   = "52a5acca-d03c-4d29-976b-a44775bdf9ec" [90m-> null[0m[0m
+      [31m-[0m[0m payment_method_id = "d90b084a-ad11-4e86-b3d8-85b1d73cba2e" [90m-> null[0m[0m
+      [31m-[0m[0m updated           = "2024-06-10T12:00:53Z" [90m-> null[0m[0m
+    }
+
+[1m  # equinix_metal_project_ssh_key.project_key["0"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "equinix_metal_project_ssh_key" "project_key" {
+      [31m-[0m[0m created     = "time.Date(2024, time.June, 10, 11, 59, 3, 0, time.UTC)" [90m-> null[0m[0m
+      [31m-[0m[0m fingerprint = "0a:a3:46:4c:4d:d8:16:eb:69:93:d6:bc:85:b7:c1:f2" [90m-> null[0m[0m
+      [31m-[0m[0m id          = "f15427e8-6258-4ac1-ac71-fd245359555e" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "key-0" [90m-> null[0m[0m
+      [31m-[0m[0m owner_id    = "72e5de9e-affd-4bc1-a7cd-a6d37625d04b" [90m-> null[0m[0m
+      [31m-[0m[0m project_id  = "72e5de9e-affd-4bc1-a7cd-a6d37625d04b" [90m-> null[0m[0m
+      [31m-[0m[0m public_key  = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m updated     = "time.Date(2024, time.June, 10, 11, 59, 3, 0, time.UTC)" [90m-> null[0m[0m
+    }
+
+[1mPlan:[0m 0 to add, 0 to change, 3 to destroy.
+[0m
+Changes to Outputs:
+  [31m-[0m[0m vm_public_ip = {
+      [31m-[0m[0m "0-0" = "145.40.94.229"
+    } [90m-> null[0m[0m
+[0m[1m
+Do you really want to destroy all resources?[0m
+  OpenTofu will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  [1mEnter a value:[0m [0m
+[0m[1mequinix_metal_device.vm["0-0"]: Destroying... [id=f9f6cbcb-fc4a-4c31-9023-f3c526c24aca][0m[0m
+[0m[1mequinix_metal_device.vm["0-0"]: Destruction complete after 2s[0m
+[0m[1mequinix_metal_project_ssh_key.project_key["0"]: Destroying... [id=f15427e8-6258-4ac1-ac71-fd245359555e][0m[0m
+[0m[1mequinix_metal_project_ssh_key.project_key["0"]: Destruction complete after 0s[0m
+[0m[1mequinix_metal_project.project["0"]: Destroying... [id=72e5de9e-affd-4bc1-a7cd-a6d37625d04b][0m[0m
+[0m[1mequinix_metal_project.project["0"]: Destruction complete after 1s[0m
+[0m[1m[32m
+Destroy complete! Resources: 3 destroyed.
+[0m

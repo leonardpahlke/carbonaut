@@ -1,0 +1,121 @@
+/Library/Developer/CommandLineTools/usr/bin/make tf cmd=apply
+./hack/tofu.bash apply
+Current SSH key path: /Users/lvsp/.ssh/id_equinix_carbonaut_ed25519.pub
+Current num_projects: 1
+Current vm_count_per_project: 1
+[0m[1mequinix_metal_project.project["0"]: Refreshing state... [id=605f7ac9-263f-4fb7-9b1c-223970b4d920][0m
+[0m[1mequinix_metal_project_ssh_key.project_key["0"]: Refreshing state... [id=370d7063-5ff9-464b-96b3-7d03fc7d8a04][0m
+[0m[1mequinix_metal_device.vm["0-1"]: Refreshing state... [id=c6ac3a39-3399-41eb-b4a9-267192a5a6e0][0m
+[0m[1mequinix_metal_device.vm["0-0"]: Refreshing state... [id=4ce59185-7b6e-4345-903e-2944705be7bc][0m
+
+OpenTofu used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+OpenTofu will perform the following actions:
+
+[1m  # equinix_metal_device.vm["0-1"][0m will be [1m[31mdestroyed[0m
+  # (because key ["0-1"] is not in for_each map)
+[0m  [31m-[0m[0m resource "equinix_metal_device" "vm" {
+      [31m-[0m[0m access_private_ipv4              = "10.25.123.131" [90m-> null[0m[0m
+      [31m-[0m[0m access_public_ipv4               = "145.40.94.229" [90m-> null[0m[0m
+      [31m-[0m[0m access_public_ipv6               = "2604:1380:4092:2a00::3" [90m-> null[0m[0m
+      [31m-[0m[0m always_pxe                       = false [90m-> null[0m[0m
+      [31m-[0m[0m billing_cycle                    = "hourly" [90m-> null[0m[0m
+      [31m-[0m[0m created                          = "2024-06-10T10:08:19Z" [90m-> null[0m[0m
+      [31m-[0m[0m deployed_facility                = "fr2" [90m-> null[0m[0m
+      [31m-[0m[0m facilities                       = [
+          [31m-[0m[0m "fr2",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_volumes             = false [90m-> null[0m[0m
+      [31m-[0m[0m hostname                         = "tf-vm-0-1" [90m-> null[0m[0m
+      [31m-[0m[0m id                               = "c6ac3a39-3399-41eb-b4a9-267192a5a6e0" [90m-> null[0m[0m
+      [31m-[0m[0m locked                           = false [90m-> null[0m[0m
+      [31m-[0m[0m metro                            = "fr" [90m-> null[0m[0m
+      [31m-[0m[0m network                          = [
+          [31m-[0m[0m {
+              [31m-[0m[0m address = "145.40.94.229"
+              [31m-[0m[0m cidr    = 31
+              [31m-[0m[0m family  = 4
+              [31m-[0m[0m gateway = "145.40.94.228"
+              [31m-[0m[0m public  = true
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m address = "2604:1380:4092:2a00::3"
+              [31m-[0m[0m cidr    = 127
+              [31m-[0m[0m family  = 6
+              [31m-[0m[0m gateway = "2604:1380:4092:2a00::2"
+              [31m-[0m[0m public  = true
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m address = "10.25.123.131"
+              [31m-[0m[0m cidr    = 31
+              [31m-[0m[0m family  = 4
+              [31m-[0m[0m gateway = "10.25.123.130"
+              [31m-[0m[0m public  = false
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m network_type                     = "layer3" [90m-> null[0m[0m
+      [31m-[0m[0m operating_system                 = "debian_12" [90m-> null[0m[0m
+      [31m-[0m[0m plan                             = "c3.small.x86" [90m-> null[0m[0m
+      [31m-[0m[0m ports                            = [
+          [31m-[0m[0m {
+              [31m-[0m[0m bonded = true
+              [31m-[0m[0m id     = "e1a17c98-98b9-40fa-81a0-3782e49b3f1e"
+              [31m-[0m[0m mac    = "b8:ce:f6:07:a6:46"
+              [31m-[0m[0m name   = "eth0"
+              [31m-[0m[0m type   = "NetworkPort"
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m bonded = true
+              [31m-[0m[0m id     = "21c6898a-165f-4e34-bb14-ad23b8e94c8f"
+              [31m-[0m[0m mac    = "b8:ce:f6:07:a6:47"
+              [31m-[0m[0m name   = "eth1"
+              [31m-[0m[0m type   = "NetworkPort"
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m bonded = true
+              [31m-[0m[0m id     = "c3c32a96-83ba-4ee9-884d-508841b1a889"
+              [31m-[0m[0m mac    = ""
+              [31m-[0m[0m name   = "bond0"
+              [31m-[0m[0m type   = "NetworkBondPort"
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m project_id                       = "605f7ac9-263f-4fb7-9b1c-223970b4d920" [90m-> null[0m[0m
+      [31m-[0m[0m project_ssh_key_ids              = [
+          [31m-[0m[0m "370d7063-5ff9-464b-96b3-7d03fc7d8a04",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m root_password                    = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m sos_hostname                     = "c6ac3a39-3399-41eb-b4a9-267192a5a6e0@sos.fr2.platformequinix.com" [90m-> null[0m[0m
+      [31m-[0m[0m ssh_key_ids                      = [
+          [31m-[0m[0m "370d7063-5ff9-464b-96b3-7d03fc7d8a04",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m state                            = "active" [90m-> null[0m[0m
+      [31m-[0m[0m tags                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m updated                          = "2024-06-10T10:10:05Z" [90m-> null[0m[0m
+      [31m-[0m[0m wait_for_reservation_deprovision = false [90m-> null[0m[0m
+    }
+
+[1mPlan:[0m 0 to add, 0 to change, 1 to destroy.
+[0m
+Changes to Outputs:
+  [33m~[0m[0m vm_public_ip = {
+      [31m-[0m[0m "0-1" = "145.40.94.229"
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+[0m[1m
+Do you want to perform these actions?[0m
+  OpenTofu will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  [1mEnter a value:[0m [0m
+[0m[1mequinix_metal_device.vm["0-1"]: Destroying... [id=c6ac3a39-3399-41eb-b4a9-267192a5a6e0][0m[0m
+[0m[1mequinix_metal_device.vm["0-1"]: Destruction complete after 1s[0m
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
+[0m[0m[1m[32m
+Outputs:
+
+[0mvm_public_ip = {
+  "0-0" = "145.40.94.191"
+}
