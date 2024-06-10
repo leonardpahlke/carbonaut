@@ -25,4 +25,4 @@ kubectl create secret generic carbonaut-secrets \
   -n $NAMESPACE
 
 echo "Apply the Kubernetes configuration"
-kubectl apply -f dev/k8s.yaml -n $NAMESPACE
+kubectl apply -f test-scenario/dev/k8s.yaml -n $NAMESPACE

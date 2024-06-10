@@ -20,7 +20,7 @@ ENDPOINT_JSON_METRICS="/metrics-json"
 mkdir -p $RESULTS_FOLDER
 
 function update_known_hosts {
-    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    OUTPUT=$(tofu -chdir=test-scenario/dev output -json vm_public_ip)
     IP_ADDRESSES=$(echo $OUTPUT | jq -r '.[]')
     for ip in $IP_ADDRESSES; do
         echo "[s2-sx-x] updating known_hosts SSH for $ip"

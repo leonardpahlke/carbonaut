@@ -9,9 +9,6 @@ set -o pipefail
 
 IMAGE_NAME="leonardpahlke/carbonaut"
 TAG="latest"
-SBOM_FILE="sbom.json"
-COSIGN_KEY="$HOME/.cosign/cosign.key"
-COSIGN_PUB_KEY="$HOME/.cosign/cosign.pub"
 BUILDER_NAME="carbonautbuilder"
 
 if docker buildx inspect $BUILDER_NAME > /dev/null 2>&1; then
@@ -46,25 +43,3 @@ if [[ -z "$IMAGE_DIGESTS" || "$IMAGE_DIGESTS" == "null" ]]; then
 fi
 
 echo $IMAGE_DIGESTS
-
-# echo "Check if Cosign key exists, if not, generate a new key pair"
-# if [ ! -f "$COSIGN_KEY" ]; then
-#     cosign generate-key-pair
-# fi
-
-# echo "Iterate over each digest to generate SBOM and attest the image"
-# for DIGEST in $IMAGE_DIGESTS; do
-#   echo "Generate the SBOM for digest: $DIGEST"
-#   SBOM_FILE="sbom-$DIGEST.json"
-#   syft $IMAGE_NAME@$DIGEST -o syft-json > $SBOM_FILE
-
-#   echo "Attest the image with the SBOM for digest: $DIGEST"
-#   cosign attest --key $COSIGN_KEY --predicate $SBOM_FILE --type https://spdx.dev/Document $IMAGE_NAME@$DIGEST
-
-#   echo "Verify the attestation for digest: $DIGEST"
-#   cosign verify-attestation --key $COSIGN_PUB_KEY $IMAGE_NAME@$DIGEST
-
-#   echo "SBOM generation and attestation completed for digest: $DIGEST"
-# done
-
-# echo "Build, SBOM generation, and push completed."

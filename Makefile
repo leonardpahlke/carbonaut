@@ -1,5 +1,8 @@
 .PHONY: all build verify format install upgrade test-coverage clean-coverage tf-init tf tf-plan tf-apply tf-destroy tf-connect tf-configure tf-stress-test container-build-local tf-connection-verify container-image-push container-local-run test-scenario-1 test-scenario-2
 
+########################################
+### GENERAL
+
 # Default target executed
 all: verify
 
@@ -52,6 +55,9 @@ test-coverage:
 	@open coverage.html
 	@echo "Cleaning test coverage reports..."
 
+########################################
+### CONTAINER OPERATIONS
+
 # Build container image locally
 container-build-local:
 	@docker build -f Containerfile -t carbonaut:latest .
@@ -61,7 +67,7 @@ container-image-push:
 	./hack/container-build-deploy.bash
 
 PWD := $(shell pwd)
-CONFIG_PATH := $(PWD)/dev/config.yaml
+CONFIG_PATH := $(PWD)/test-scenario/dev/config.yaml
 
 container-local-run:
 	docker run --rm -it \
@@ -99,11 +105,11 @@ tf-destroy:
 tf-connect:
 	$(MAKE) tf cmd=connect
 
-# uses ansible playbooks
+# Uses ansible playbooks
 tf-configure:
 	$(MAKE) tf cmd=configure
 
-# runs the stress test for all configured machines
+# Runs the stress test for all configured machines
 tf-stress-test:
 	$(MAKE) tf cmd=stress-test
 
@@ -123,16 +129,20 @@ test-scenario-2:
 	./test-scenario/scenario-2.bash > ./test-scenario/results-2/s2-log.txt
 
 ########################################
-### GENERAL
+### HELP
 
 help:
 	@echo "Available commands:"
+	@echo "  all                    - Default target executed"
 	@echo "  build                  - Build the go binary locally"
 	@echo "  verify                 - Run verifications on the project (lint, vet, tests)"
 	@echo "  install                - Install project dependencies"
 	@echo "  format                 - Format Go files"
 	@echo "  upgrade                - Upgrade project dependencies"
 	@echo "  test-coverage          - Generate and clean test coverage report"
+	@echo "  container-build-local  - Build container image locally"
+	@echo "  container-image-push   - Build and push container image"
+	@echo "  container-local-run    - Run the container locally"
 	@echo "  tf-init                - Initialize OpenTofu configuration"
 	@echo "  tf-plan                - Plan OpenTofu changes"
 	@echo "  tf-apply               - Apply OpenTofu changes"
@@ -140,6 +150,8 @@ help:
 	@echo "  tf-connect             - Connect to the created server"
 	@echo "  tf-configure           - Setup the machine with required packages using Ansible"
 	@echo "  tf-stress-test         - Run stress test script on all configured machines"
-	@echo "  container-build-local  - Builds a local container image using KO"
+	@echo "  tf-connection-verify   - Verify connection to the server"
+	@echo "  test-scenario-1        - Execute test scenario 1"
+	@echo "  test-scenario-2        - Execute test scenario 2"
 	@echo "  SSH_KEY_PATH           - Current SSH key path: $(SSH_KEY_PATH)"
 	@echo "  PRIVATE_KEY_PATH       - Current private SSH key path: $(PRIVATE_KEY_PATH)"

@@ -20,7 +20,7 @@ ENDPOINT_JSON_METRICS="/metrics-json"
 mkdir -p $RESULTS_FOLDER
 
 function update_known_hosts {
-    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    OUTPUT=$(tofu -chdir=test-scenario/dev output -json vm_public_ip)
     IP_ADDRESSES=$(echo $OUTPUT | jq -r '.[]')
     for ip in $IP_ADDRESSES; do
         echo "[s1-sx-x] updating known_hosts SSH for $ip"
@@ -85,7 +85,7 @@ configure_and_verify_resources "s1-s1-2" "s1-s1-3" "s1-s1-4"
 echo "[s1-s1-5] starting carbonaut"
 osascript <<EOF
 tell application "Terminal"
-    do script "cd '$(pwd)' && go run main.go -c dev/config.yaml > $RESULTS_FOLDER/s1-s1-5-carbonaut-log.txt 2>&1; exit"
+    do script "cd '$(pwd)' && go run main.go -c test-scenario/dev/config.yaml > $RESULTS_FOLDER/s1-s1-5-carbonaut-log.txt 2>&1; exit"
 end tell
 EOF
 
@@ -98,7 +98,7 @@ collect_carbonaut_state_and_metrics "s1-s1-6" "s1-s1-7"
 echo ""
 echo "[s1-s2-0] STEP 2 - starting dereferencing step"
 echo "[s1-s2-1] dereference infrastructure in carbonaut by supplying an empty configuration"
-curl -X POST -H "Content-Type: application/x-yaml" --data-binary @dev/empty-config.yaml http://$CARBONAUT_DEFAULT_IP:$CARBONAUT_DEFAULT_PORT/load-config
+curl -X POST -H "Content-Type: application/x-yaml" --data-binary @test-scenario/dev/empty-config.yaml http://$CARBONAUT_DEFAULT_IP:$CARBONAUT_DEFAULT_PORT/load-config
 wait
 
 collect_carbonaut_state_and_metrics "s1-s2-2" "s1-s2-3"
@@ -108,7 +108,7 @@ collect_carbonaut_state_and_metrics "s1-s2-2" "s1-s2-3"
 echo ""
 echo "[s1-s3-0] STEP 3 - re-referencing step"
 echo "[s1-s3-1] reference configuration again to carbonaut that points to infrastructure"
-curl -X POST -H "Content-Type: application/x-yaml" --data-binary @dev/config.yaml http://$CARBONAUT_DEFAULT_IP:$CARBONAUT_DEFAULT_PORT/load-config
+curl -X POST -H "Content-Type: application/x-yaml" --data-binary @test-scenario/dev/config.yaml http://$CARBONAUT_DEFAULT_IP:$CARBONAUT_DEFAULT_PORT/load-config
 wait
 
 collect_carbonaut_state_and_metrics "s1-s3-2" "s1-s3-3"

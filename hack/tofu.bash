@@ -75,29 +75,29 @@ fi
 case $1 in
   configure)
     ask_private_key
-    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    OUTPUT=$(tofu -chdir=test-scenario/dev output -json vm_public_ip)
     IP_ADDRESSES=$(echo $OUTPUT | jq -r '.[]')
     for IP in $IP_ADDRESSES; do
-      ansible-playbook -i "$IP," dev/setup_vm.yml -u root --private-key="$PRIVATE_KEY_PATH"
+      ansible-playbook -i "$IP," test-scenario/dev/setup_vm.yml -u root --private-key="$PRIVATE_KEY_PATH"
     done
     ;;
   apply)
     ask_ssh_key
     tf_vars
-    tofu -chdir=dev apply -var "public_key=$(cat $SSH_KEY_PATH)" -var "num_projects=$CARBONAUT_NUM_PROJECTS" -var "vm_count_per_project=$CARBONAUT_VM_COUNT_PROJECTS"
+    tofu -chdir=test-scenario/dev apply -var "public_key=$(cat $SSH_KEY_PATH)" -var "num_projects=$CARBONAUT_NUM_PROJECTS" -var "vm_count_per_project=$CARBONAUT_VM_COUNT_PROJECTS"
     ;;
   destroy)
     ask_ssh_key
-    tofu -chdir=dev destroy -var "public_key=$(cat $SSH_KEY_PATH)" -var "num_projects=$CARBONAUT_NUM_PROJECTS" -var "vm_count_per_project=$CARBONAUT_VM_COUNT_PROJECTS"
+    tofu -chdir=test-scenario/dev destroy -var "public_key=$(cat $SSH_KEY_PATH)" -var "num_projects=$CARBONAUT_NUM_PROJECTS" -var "vm_count_per_project=$CARBONAUT_VM_COUNT_PROJECTS"
     ;;
   plan)
     ask_ssh_key
     tf_vars
-    tofu -chdir=dev plan -var "public_key=$(cat $SSH_KEY_PATH)" -var "num_projects=$CARBONAUT_NUM_PROJECTS" -var "vm_count_per_project=$CARBONAUT_VM_COUNT_PROJECTS"
+    tofu -chdir=test-scenario/dev plan -var "public_key=$(cat $SSH_KEY_PATH)" -var "num_projects=$CARBONAUT_NUM_PROJECTS" -var "vm_count_per_project=$CARBONAUT_VM_COUNT_PROJECTS"
     ;;
   connect)
     ask_private_key
-    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    OUTPUT=$(tofu -chdir=test-scenario/dev output -json vm_public_ip)
     IP_ADDRESSES=($(echo $OUTPUT | jq -r '.[]'))
     
     echo "Select the IP address to connect to:"
@@ -112,7 +112,7 @@ case $1 in
     ;;
   connection-verify)
     ask_private_key
-    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    OUTPUT=$(tofu -chdir=test-scenario/dev output -json vm_public_ip)
     IP_ADDRESSES=($(echo $OUTPUT | jq -r '.[]'))
     
     for i in "${!IP_ADDRESSES[@]}"; do
@@ -125,10 +125,10 @@ case $1 in
     ;;
   stress-test)
     ask_private_key
-    OUTPUT=$(tofu -chdir=dev output -json vm_public_ip)
+    OUTPUT=$(tofu -chdir=test-scenario/dev output -json vm_public_ip)
     IP_ADDRESSES=$(echo $OUTPUT | jq -r '.[]')
     for IP in $IP_ADDRESSES; do
-      ansible-playbook -i "$IP," dev/stress_test.yml -u root --private-key="$PRIVATE_KEY_PATH"
+      ansible-playbook -i "$IP," test-scenario/dev/stress_test.yml -u root --private-key="$PRIVATE_KEY_PATH"
     done
     ;;
   *)
