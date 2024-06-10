@@ -44,13 +44,6 @@ repos:
         types: [go]
         pass_filenames: true
 
-      - id: go-doc
-        name: Go Markdown Documentation
-        entry: ./hack/docs-go-schema.bash
-        language: system
-        types: [go]
-        pass_filenames: true
-
       - id: staticcheck
         name: Staticcheck
         entry: staticcheck ./...
