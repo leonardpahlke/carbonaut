@@ -3,7 +3,7 @@ module carbonaut.dev
 go 1.22
 
 require (
-	github.com/creasty/defaults v1.7.0
+	github.com/creasty/defaults v1.8.0
 	github.com/fatih/color v1.17.0
 	github.com/gookit/validate v1.5.2
 	github.com/prometheus/client_model v0.6.1
